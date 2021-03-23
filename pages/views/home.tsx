@@ -1,11 +1,11 @@
 import React from 'react'
 
-function index() {
+function home() {
   return (
     <div>
-      Hi
+      Hello World!
     </div>
   )
 }
 
-export default index
+export default home
