@@ -5,7 +5,11 @@ import Next from 'next';
 import { RenderModule } from 'nest-next';
 
 @Module({
-  imports: [ RenderModule.forRootAsync(Next({ dev: process.env.NODE_ENV !== 'production' })),],
+  imports: [
+    RenderModule.forRootAsync(
+      Next({ dev: process.env.NODE_ENV !== 'production' }),
+    ),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
