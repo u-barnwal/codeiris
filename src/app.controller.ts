@@ -6,8 +6,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render("home")
+  @Render('home')
   public home() {
-    return { };
+    return {};
   }
 }
