@@ -11,7 +11,83 @@ generator client {
 }
 
 model User {
-  id    String         @id     @default(cuid())
-  email String      @unique
-  name  String?
+  id                    String          @id     @default(uuid())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  email                 String          @unique
+  firstName             String
+  middleName            String?
+  lastName              String?
+  status                UserStatus      @default(active)
+  googleToken           String?
+  githubToken           String?
+  image                 File?
+  comments              Comment[]       @relation(name: "UserOnComment")
+  posts                 Post[]          @relation(name: "UserOnPost")
+}
+
+model Post {
+  id                    String          @id @default(cuid())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  slug                  String
+  body                  String
+  title                 String
+  user                  User?           @relation(name: "UserOnPost", fields: [userId], references: [id])
+  userId                String?
+  deleted               Boolean         @default(false)
+  status                PostStatus      @default(draft)
+  comments              Comment[]       @relation(name: "PostOnComment")
+  image                 File?
+  tags                  Tag[]           @relation(name: "PostOnTags")
+}
+
+model Comment {
+  id                    String          @id @default(cuid())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  body                  String
+  children              Comment[]       @relation(name: "CommentOnComment")
+  parent                Comment?        @relation(name: "CommentOnComment", fields: [parentId], references: [id])
+  parentId              String?
+  user                  User?           @relation(name: "UserOnComment", fields: [userId], references: [id])
+  userId                String?
+  post                  Post?           @relation(name: "PostOnComment", fields: [postId], references: [id])
+  postId                String?
+}
+
+model Tag {
+  id                    String          @id @default(cuid())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  name                  String
+  post                  Post[]          @relation(name: "PostOnTags")
+}
+
+model File {
+  id                    String          @id @default(cuid())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  name                  String?
+  preview               String?
+  source                String?
+  size                  Int?
+  user                  User?           @relation(fields: [userId], references: [id])
+  userId                String?
+  post                  Post?           @relation(fields: [postId], references: [id])
+  postId                String?
+}
+
+
+enum UserStatus {
+    active
+    blocked
+    inactive
+}
+
+enum PostStatus {
+    draft
+    published
+    hidden
+    blocked
 }
