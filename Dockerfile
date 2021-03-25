@@ -1,5 +1,6 @@
 FROM node:alpine AS builder
 
+#Create app directory
 WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
