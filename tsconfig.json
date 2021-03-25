@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "esnext",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": ".next",
     "baseUrl": "./",
-    "incremental": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -29,6 +28,7 @@
   },
   "include": [
     "next-env.d.ts",
+    "./src/**/*",
     "**/*.ts",
     "**/*.tsx"
   ],
