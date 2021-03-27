@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ConfigService } from '@nestjs/config';
 import { GraphQLConfig } from '../config/config.interface';
 import { DateScalar } from '../common/scalar/date.scalar';
+import { AuthModule } from './resolvers/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,10 @@ import { DateScalar } from '../common/scalar/date.scalar';
       },
       inject: [ConfigService],
     }),
+    AuthModule,
   ],
-  providers: [DateScalar],
+  providers: [
+    /*DateScalar*/
+  ],
 })
 export class ApiModule {}

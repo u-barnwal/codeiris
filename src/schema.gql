@@ -1,0 +1,15 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type MagicLinkDto {
+  status: Boolean!
+}
+
+type Query {
+  dummyQuery: Boolean!
+}
+
+type Mutation {
+  sendMagicLink(email: String!): MagicLinkDto!
+}
