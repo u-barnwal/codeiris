@@ -17,15 +17,7 @@ export class User extends BaseModel {
   firstName: string;
   middleName?: string;
   lastName?: string;
-  status: UserStatus;
+  status?: 'active' | 'blocked' | 'inactive';
   googleToken?: string;
   githubToken?: string;
-
-  get getFullName() {
-    return this.firstName + ' ' + this.middleName + ' ' + this.lastName;
-  }
-
-  get getName() {
-    return this.firstName + ' ' + this.lastName;
-  }
 }

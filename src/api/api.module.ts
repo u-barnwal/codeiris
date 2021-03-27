@@ -4,6 +4,8 @@ import { ConfigService } from '@nestjs/config';
 import { GraphQLConfig } from '../config/config.interface';
 import { DateScalar } from '../common/scalar/date.scalar';
 import { AuthModule } from './resolvers/auth/auth.module';
+import { AuthController } from './controllers/auth/auth.controller';
+import { ServicesModule } from '../services/services.module';
 
 @Module({
   imports: [
@@ -23,7 +25,9 @@ import { AuthModule } from './resolvers/auth/auth.module';
       inject: [ConfigService],
     }),
     AuthModule,
+    ServicesModule,
   ],
+  controllers: [AuthController],
   providers: [
     /*DateScalar*/
   ],
