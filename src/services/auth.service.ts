@@ -7,7 +7,8 @@ import { MagicLinkDto } from '../api/resolvers/auth/dto/magic-link.dto';
 import { Auth } from '../models/auth.model';
 import { Token } from '../models/token.model';
 import { SecurityConfig } from '../config/config.interface';
-import { UserStatus } from '../models/user.model';
+import { EventBus } from '../event-bus/event-bus';
+import { MagicLinkEvent } from '../event-bus/events';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
     private readonly jwtService: JwtService,
+    private eventBus: EventBus,
   ) {}
 
   /**
@@ -40,8 +42,8 @@ export class AuthService {
    */
   async sendMagicLink({ email }): Promise<MagicLinkDto> {
     const token = this.generateMagicToken({ email });
-    console.log(token);
     // TODO emit send magic link event
+    this.eventBus.publish(new MagicLinkEvent(token, email));
     return { status: true };
   }
 
@@ -49,7 +51,6 @@ export class AuthService {
     token,
   }): Promise<{ auth: Auth; isRegistered: boolean }> {
     const extractedToken = await this.validateMagicToken({ token });
-    console.log(extractedToken);
     const user = await this.prisma.user.findUnique({
       where: { email: extractedToken.email },
     });
