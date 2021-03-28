@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { SecurityConfig } from '../../../config/config.interface';
+import { GQLAuthGuard } from './guards/auth.guard';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SecurityConfig } from '../../../config/config.interface';
     }),
     ServicesModule,
   ],
-  providers: [JwtStrategy, AuthResolver],
+  providers: [JwtStrategy, AuthResolver, GQLAuthGuard],
+  exports: [GQLAuthGuard],
 })
 export class AuthModule {}

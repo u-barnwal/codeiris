@@ -6,6 +6,7 @@ import { DateScalar } from '../common/scalar/date.scalar';
 import { AuthModule } from './resolvers/auth/auth.module';
 import { AuthController } from './controllers/auth/auth.controller';
 import { ServicesModule } from '../services/services.module';
+import { UserModule } from './resolvers/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { ServicesModule } from '../services/services.module';
           autoSchemaFile: gqlConfig.schema,
           debug: gqlConfig.debug,
           playground: gqlConfig.playground,
+          sortSchema: true,
           buildSchemaOptions: {
             numberScalarMode: 'integer',
           },
@@ -25,6 +27,7 @@ import { ServicesModule } from '../services/services.module';
       inject: [ConfigService],
     }),
     AuthModule,
+    UserModule,
     ServicesModule,
   ],
   controllers: [AuthController],
