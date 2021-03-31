@@ -1,0 +1,9 @@
+export enum Intent {
+  PRIMARY = 'PRIMARY',
+  SECONDARY = 'SECONDARY',
+  ERROR = 'ERROR',
+  SUCCESS = 'SUCCESS',
+  WARNING = 'WARNING',
+  INFO = 'INFO',
+  QUESTION = 'QUESTION',
+}
