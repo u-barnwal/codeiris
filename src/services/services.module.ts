@@ -5,6 +5,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { SecurityConfig } from '../config/config.interface';
+import { EventBusModule } from '../event-bus/event-bus.module';
+import { EmailService } from './email.service';
 
 @Module({
   imports: [
@@ -21,8 +23,9 @@ import { SecurityConfig } from '../config/config.interface';
       },
       inject: [ConfigService],
     }),
+    EventBusModule,
   ],
-  providers: [PrismaService, AuthService],
-  exports: [PrismaService, AuthService],
+  providers: [PrismaService, AuthService, EmailService],
+  exports: [PrismaService, AuthService, EmailService],
 })
 export class ServicesModule {}
