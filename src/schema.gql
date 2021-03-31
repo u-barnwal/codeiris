@@ -21,8 +21,21 @@ type Mutation {
   sendMagicLink(email: String!): MagicLinkDto!
 }
 
+enum OrderDirection {
+  asc
+  desc
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
 type Query {
   getAuth: Auth!
+  getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
   me: User!
 }
 
@@ -40,6 +53,29 @@ type User {
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: DateTime!
+}
+
+type UserConnection {
+  edges: [UserEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+input UserOrder {
+  direction: OrderDirection!
+  field: UserOrderField!
+}
+
+enum UserOrderField {
+  email
+  firstName
+  lastName
+  middleName
 }
 
 enum UserStatus {

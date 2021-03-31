@@ -1,18 +1,23 @@
-import { Query, Resolver } from '@nestjs/graphql';
-import { User } from '../../../models/user.model';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { User, UserRole } from '../../../models/user.model';
 import { UserEntity } from '../../decorators/user.decorator';
-import { UseGuards } from '@nestjs/common';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { GQLAuthGuard } from '../auth/guards/auth.guard';
+import { UserConnection } from '../../../models/pagination/user-connection.model';
+import { PaginationArgs } from '../../../common/pagination/pagination.args';
+import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
+import { PrismaService } from '../../../services/prisma.service';
+import { UserOrder } from '../../../models/input/user-order.input';
 
 @Resolver((of) => User)
 @UseGuards(GQLAuthGuard)
 export class UserResolver {
+  constructor(private readonly prisma: PrismaService) {}
+
   @Query((returns) => User)
   async me(@UserEntity() user: User): Promise<User> {
     return user;
   }
-<<<<<<< HEAD
-
   @Query(() => UserConnection)
   async getUsers(
     @UserEntity() user: User,
@@ -40,6 +45,4 @@ export class UserResolver {
     );
     return userCursors;
   }
-=======
->>>>>>> parent of 83664be (add pagination and order gql interfaces, implemented it for users)
 }
