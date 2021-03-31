@@ -1,8 +1,8 @@
 import React from 'react';
 import { NextPageContext } from 'next';
 
-function Home({ data }) {
-  return <div>Hello ____ {data.data}!</div>;
+function MagicLinkLanding({ data }) {
+  return <div>Hello ____ !</div>;
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
@@ -13,4 +13,4 @@ export async function getServerSideProps(ctx: NextPageContext) {
   };
 }
 
-export default Home;
+export default MagicLinkLanding;

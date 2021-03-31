@@ -8,6 +8,8 @@ export class AppController {
   @Get()
   @Render('home')
   public home() {
-    return {};
+    return {
+      data: 'world',
+    };
   }
 }
