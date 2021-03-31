@@ -32,7 +32,7 @@ export class UserResolver {
   ) {
     if (user.role === UserRole.user) {
       throw new UnauthorizedException(
-        'Your are not authorized to access this function',
+        'Your are not authorized to access this function!',
       );
     }
     const userCursors = findManyCursorConnection(
