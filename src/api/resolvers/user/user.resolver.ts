@@ -18,6 +18,7 @@ export class UserResolver {
   async me(@UserEntity() user: User): Promise<User> {
     return user;
   }
+
   @Query(() => UserConnection)
   async getUsers(
     @UserEntity() user: User,
