@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPageContext } from 'next';
 
 function Home({ data }) {
-  return <div>Hello ____ {data.data}!</div>;
+  return <div className="mt-10 bg-primary">Hello ____ {data.data}!</div>;
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
