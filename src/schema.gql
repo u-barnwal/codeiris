@@ -49,6 +49,7 @@ type User {
   id: ID!
   lastName: String!
   middleName: String!
+  role: UserRole!
   status: UserStatus!
 
   """Identifies the date and time when the object was last updated."""
@@ -76,6 +77,12 @@ enum UserOrderField {
   firstName
   lastName
   middleName
+}
+
+enum UserRole {
+  admin
+  moderator
+  user
 }
 
 enum UserStatus {
