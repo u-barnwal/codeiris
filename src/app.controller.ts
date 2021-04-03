@@ -7,7 +7,7 @@ export class AppController {
 
   @Get()
   @Render('home')
-  public home() {
+  public async home() {
     return {
       data: 'world',
     };

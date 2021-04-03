@@ -6,6 +6,7 @@ import { RenderModule } from 'nest-next';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from './config/config';
 import { ApiModule } from './api/api.module';
+import { ServicesModule } from './services/services.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ApiModule } from './api/api.module';
     ),
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     ApiModule,
+    ServicesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
