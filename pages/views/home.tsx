@@ -27,6 +27,7 @@ function Home({ data }) {
           <div className="w-10 h-10 bg-question-dark"></div>
         </div>
 
+        <div className="text-heading-light text-2xl mb-5">GOOGLE</div>
         <div className="text-heading-light text-2xl mb-5">Dummy Heading</div>
         <div className="text-heading text-2xl mb-5">Dummy Heading</div>
         <div className="text-heading-dark text-2xl mb-5">Dummy Heading</div>
