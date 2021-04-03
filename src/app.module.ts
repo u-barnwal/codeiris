@@ -8,6 +8,7 @@ import config from './config/config';
 import { ApiModule } from './api/api.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ServicesModule } from './services/services.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { join } from 'path';
     ),
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     ApiModule,
+    ServicesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
