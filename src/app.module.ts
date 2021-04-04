@@ -6,6 +6,8 @@ import { RenderModule } from 'nest-next';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from './config/config';
 import { ApiModule } from './api/api.module';
+import { PrismaService } from './services/prisma.service';
+import { DateScalar } from './common/scalar/date.scalar';
 
 @Module({
   imports: [
@@ -16,6 +18,6 @@ import { ApiModule } from './api/api.module';
     ApiModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
