@@ -45,6 +45,7 @@
     "@nestjs/jwt": "^7.2.0",
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.6.13",
+    "@nestjs/serve-static": "^2.1.4",
     "@prisma/client": "2.19.0",
     "@types/react-dom": "^17.0.3",
     "apollo-server-express": "^2.22.1",
