@@ -6,7 +6,7 @@ function Home({ data }) {
   return (
     <div className="mt-10 bg-primary">
       Hello ____ {data.data}!
-      <PostList initialPosts={data.initialPosts} />
+      <PostList initialPosts={JSON.parse(data.initialPosts)} />
     </div>
   );
 }
