@@ -8,6 +8,7 @@ import { AuthController } from './controllers/auth/auth.controller';
 import { ServicesModule } from '../services/services.module';
 import { UserModule } from './resolvers/user/user.module';
 import { PostModule } from './resolvers/post/post.module';
+import { PostController } from './controllers/post/post.controller';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { PostModule } from './resolvers/post/post.module';
     PostModule,
     ServicesModule,
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, PostController],
   providers: [
     /*DateScalar*/
   ],

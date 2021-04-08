@@ -1,5 +1,6 @@
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, ResolveField, Parent } from '@nestjs/graphql';
+import { User } from '../../../models/user.model';
 import { PaginationArgs } from '../../../common/pagination/pagination.args';
 import { PostOrder } from '../../../models/input/post-order.input';
 import { PostConnection } from '../../../models/pagination/post-connection.model';
@@ -29,5 +30,11 @@ export class PostResolver {
       { first, last, before, after },
     );
     return postCursors;
+  }
+
+  @ResolveField('user', (returns) => User)
+  async user(@Parent() post: Post) {
+    const { userId } = post;
+    return this.prisma.user.findUnique({ where: { id: userId } });
   }
 }

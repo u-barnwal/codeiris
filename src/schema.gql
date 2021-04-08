@@ -49,6 +49,8 @@ type Post {
   updatedAt: DateTime!
   url: String!
   user: User!
+  userId: String!
+  votes: Vote!
 }
 
 type PostConnection {
@@ -142,4 +144,21 @@ enum UserStatus {
   active
   blocked
   inactive
+}
+
+type Vote {
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  id: ID!
+  post: Post!
+  type: VoteType!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+  user: User!
+}
+
+enum VoteType {
+  downvotes
+  upvotes
 }

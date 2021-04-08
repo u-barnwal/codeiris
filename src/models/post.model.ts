@@ -1,7 +1,8 @@
 import { PostStatus, PostType } from '.prisma/client';
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { BaseModel } from './base.model';
 import { User } from './user.model';
+import { Vote } from './vote.model';
 
 registerEnumType(PostStatus, { name: 'PostStatus' });
 registerEnumType(PostType, { name: 'PostType' });
@@ -16,12 +17,16 @@ export class Post extends BaseModel {
   url?: string;
   @Field()
   title: string;
+  @Field(() => User)
+  user: User;
   @Field()
-  user?: User;
+  userId: string;
   @Field()
   deleted: boolean;
   @Field(() => PostStatus)
   status: 'draft' | 'published' | 'hidden' | 'blocked';
   @Field(() => PostType)
   type: 'link' | 'ask' | 'job';
+  @Field(() => Vote)
+  votes: Vote[];
 }
