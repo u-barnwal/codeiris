@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+@tailwind utilities;
+
 body {
   font-family: 'Product Sans';
   src: url('/fonts/ProductSans-Regular.woff2') format('woff2'),
