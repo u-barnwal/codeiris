@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { SecurityConfig } from '../config/config.interface';
 import { EventBusModule } from '../event-bus/event-bus.module';
 import { EmailService } from './email.service';
+import { PostService } from './post.service';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { EmailService } from './email.service';
     }),
     EventBusModule,
   ],
-  providers: [PrismaService, AuthService, EmailService],
-  exports: [PrismaService, AuthService, EmailService],
+  providers: [PrismaService, AuthService, EmailService, PostService],
+  exports: [PrismaService, AuthService, EmailService, PostService],
 })
 export class ServicesModule {}
