@@ -1,15 +1,13 @@
-import { Controller, Get, Render } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Redirect } from '@nestjs/common';
+import { PostService } from './services/post.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly post: PostService) {}
 
   @Get()
-  @Render('home')
-  public async home() {
-    return {
-      data: 'world',
-    };
+  @Redirect('/posts/ask')
+  async home() {
+    return;
   }
 }
