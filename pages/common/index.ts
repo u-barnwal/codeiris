@@ -1,10 +1,10 @@
 // enums
-export * from './enums/Intent';
-export * from './enums/Postitions';
+export { Intent } from './enums/Intent';
+export { Position } from './enums/Postitions';
 
 // props
-export * from './props/IntentProps';
-export * from './props/CommonProps';
+// export * from './props/IntentProps';
+// export * from './props/CommonProps';
 
 // helpers
-export * from './helpers/AbstractPureComponent';
+export { AbstractPureComponent } from './helpers/AbstractPureComponent';

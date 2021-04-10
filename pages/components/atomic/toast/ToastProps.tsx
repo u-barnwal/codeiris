@@ -3,7 +3,7 @@ import {
   CommonProps,
   IntentProps,
   MaybeElement,
-} from '../../common';
+} from '../../../common';
 
 export interface ToastProps extends CommonProps, IntentProps {
   action?: ActionProps;
