@@ -15,11 +15,11 @@ import { ServicesModule } from './services/services.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'static'),
     }),
+    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+    ApiModule,
     RenderModule.forRootAsync(
       Next({ dev: process.env.NODE_ENV !== 'production' }),
     ),
-    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
-    ApiModule,
     ServicesModule,
   ],
   controllers: [AppController],
