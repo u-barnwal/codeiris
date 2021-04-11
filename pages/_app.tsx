@@ -1,5 +1,5 @@
 import './styles/app.css';
-import { withApollo } from './lib/apollo';
+import { withApollo } from '../lib/apollo';
 import { ApolloProvider } from '@apollo/client';
 
 function MyApp({ Component, pageProps, apolloClient }) {

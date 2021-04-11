@@ -1,7 +1,7 @@
-import { AbstractPureComponent } from '../../../common';
-import { ToastProps } from './ToastProps';
+import { AbstractPureComponent } from '../../../../lib/common';
+import { ToastProps } from '../../../../lib/common/props/ToastProps';
 
-export class Toast extends AbstractPureComponent<ToastProps> {
+export default class Toast extends AbstractPureComponent<ToastProps> {
   public static defaultProps: ToastProps = {
     className: '',
     message: '',

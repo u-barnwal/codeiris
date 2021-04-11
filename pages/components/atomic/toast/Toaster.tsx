@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom';
-import { AbstractPureComponent, Position } from '../../../common';
-import { ToastProps } from './ToastProps';
+import { AbstractPureComponent, Position } from '../../../../lib/common';
+import { ToastProps } from '../../../../lib/common/props/ToastProps';
 import Overlay from '../overlay';
-import { Toast } from './Toast';
-import { CommonProps } from 'pages/common/props/CommonProps';
+import { CommonProps } from 'lib/common/props/CommonProps';
+import Toast from './Toast';
 
 // TODO Toaster is still not ready for SSR usage
 

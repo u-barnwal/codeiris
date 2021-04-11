@@ -1,4 +1,4 @@
-import { HeadingSize } from './HeadingProps';
+import { HeadingSize } from '../../../../lib/common/props/HeadingProps';
 import React, { CSSProperties } from 'react';
 import clsx from 'clsx';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IntentProps } from '../../../common';
 import clsx from 'clsx';
+import { IntentProps } from '../../../../lib/common/props/IntentProps';
 
 export interface TextFieldProps
   extends React.DetailedHTMLProps<

@@ -1,7 +1,7 @@
 import React from 'react';
-import { IntentProps } from '../../../common';
 import './button.module.scss';
 import clsx from 'clsx';
+import { IntentProps } from '../../../../lib/common/props/IntentProps';
 
 export interface ButtonProps
   extends React.DetailedHTMLProps<

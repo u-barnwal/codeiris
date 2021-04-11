@@ -1,2 +1,2 @@
 export { default } from './Heading';
-export { HeadingSize } from './HeadingProps';
+export { HeadingSize } from '../../../../lib/common/props/HeadingProps';
