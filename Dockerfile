@@ -8,7 +8,7 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 # Install app dependencies
-RUN npm ci
+RUN yarn --frozen-lockfile
 # Required if not done in postinstall
 # RUN npx prisma generate
 
