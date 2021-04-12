@@ -20,7 +20,7 @@ function Login() {
                   style={{ fontSize: 60 }}
                   className="text-heading-light"
                 >
-                  Sing In
+                  Sign In
                 </Heading>
               </div>
               <div>

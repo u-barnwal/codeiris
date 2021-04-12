@@ -9,7 +9,7 @@ import { EventBusModule } from '../event-bus/event-bus.module';
 import { EmailService } from './email.service';
 import { PostService } from './post.service';
 import { AwsSdkModule } from 'nest-aws-sdk';
-import { Credentials, SES } from 'aws-sdk';
+import { Credentials, S3, SES } from 'aws-sdk';
 import { EmailGeneratorService } from './email-generator.service';
 
 @Module({
@@ -43,7 +43,7 @@ import { EmailGeneratorService } from './email-generator.service';
         imports: [ConfigService],
         inject: [ConfigService],
       },
-      services: [SES],
+      services: [SES, S3],
     }),
     EventBusModule,
   ],

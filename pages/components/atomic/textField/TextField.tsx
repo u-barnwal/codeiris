@@ -45,7 +45,7 @@ function TextField({
         />
         {error && (
           <span className="text-red-400 transition duration-500 ease-in-out text-sm">
-            error
+            {error}
           </span>
         )}
       </div>

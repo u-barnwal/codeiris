@@ -13,14 +13,22 @@ export interface ButtonProps
   loading?: boolean;
 }
 
-function Button({ children, loading, icon, className, ...rest }: ButtonProps) {
+function Button({
+  children,
+  loading,
+  icon,
+  className,
+  disabled,
+  ...rest
+}: ButtonProps) {
   return (
     <React.Fragment>
       <button
-        className={clsx([
+        className={clsx(
           'flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary m-1',
           className,
-        ])}
+        )}
+        disabled={disabled || loading}
         {...rest}
       >
         {icon}
