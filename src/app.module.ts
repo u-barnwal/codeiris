@@ -13,6 +13,7 @@ import { ServicesModule } from './services/services.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
+      serveRoot: 'dev.codeiris.dev',
       rootPath: join(__dirname, 'static'),
     }),
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
