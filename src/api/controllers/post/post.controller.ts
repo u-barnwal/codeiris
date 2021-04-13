@@ -1,4 +1,4 @@
-import { PostType } from '.prisma/client';
+import { PostType, VoteType } from '.prisma/client';
 import {
   BadRequestException,
   Controller,
@@ -43,6 +43,16 @@ export class PostController {
             firstName: true,
             lastName: true,
             image: true,
+          },
+        },
+        _count: {
+          select: {
+            votes: {
+              where: {
+                type: 'upvotes',
+              },
+              comments: true,
+            },
           },
         },
       };
