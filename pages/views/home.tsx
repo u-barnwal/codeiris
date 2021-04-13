@@ -1,22 +1,10 @@
 import React from 'react';
-import { NextPageContext } from 'next';
-import PostList from 'pages/components/PostList';
+import DefaultLayout from '../layouts/defaultLayout';
 
 function Home({ data }) {
-  return (
-    <div className="mt-10 bg-primary">
-      Hello ____ {data.data}!
-      <PostList initialPosts={JSON.parse(data.initialPosts)} />
-    </div>
-  );
+  return <div className="mt-10 bg-primary">Hello ____ Coreiris!</div>;
 }
 
-export async function getServerSideProps(ctx: NextPageContext) {
-  return {
-    props: {
-      data: ctx.query,
-    },
-  };
-}
+Home.getLayout = (page) => <DefaultLayout>{page}</DefaultLayout>;
 
 export default Home;

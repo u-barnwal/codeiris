@@ -13,13 +13,13 @@ import { ServicesModule } from './services/services.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'static'),
+      rootPath: process.env.NODE_ENV === 'production' ? join(__dirname, '../../..', 'public') : join(__dirname, '..', 'public') ,
     }),
+    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
+    ApiModule,
     RenderModule.forRootAsync(
       Next({ dev: process.env.NODE_ENV !== 'production' }),
     ),
-    ConfigModule.forRoot({ isGlobal: true, load: [config] }),
-    ApiModule,
     ServicesModule,
   ],
   controllers: [AppController],

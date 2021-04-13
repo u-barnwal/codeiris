@@ -20,8 +20,6 @@ model User {
   middleName            String?
   lastName              String?
   status                UserStatus      @default(value: active)
-  googleToken           String?
-  githubToken           String?
   image                 File?
   comments              Comment[]       @relation(name: "UserOnComment")
   posts                 Post[]          @relation(name: "UserOnPost")
@@ -29,6 +27,19 @@ model User {
   role                  UserRole        @default(value: user)
   moderatorFlag         Flag[]          @relation(name: "ModeratorOnFlag")
   flag                  Flag[]          @relation(name: "UserOnFlag")
+  session               Session[]       @relation(name: "UserOnSessions")
+}
+
+model Session {
+  id                    String          @id     @default(uuid())
+  type                  SessionType
+  token                 String?
+  expires               DateTime?
+  invalidate            Boolean         @default(false)
+  user                  User?           @relation(name: "UserOnSessions", fields: [userId], references: [id])
+  userId                String?
+  googleToken           String?
+  githubToken           String?
 }
 
 model Post {
@@ -139,4 +150,9 @@ enum PostStatus {
 enum VoteType {
     upvotes
     downvotes
+}
+
+enum SessionType {
+    AUTHENTICATED
+    ANONYMOUS
 }
