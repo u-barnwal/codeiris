@@ -1,9 +1,5 @@
-import {
-  ActionProps,
-  CommonProps,
-  IntentProps,
-  MaybeElement,
-} from '../../common';
+import { ActionProps, CommonProps, MaybeElement } from './CommonProps';
+import { IntentProps } from './IntentProps';
 
 export interface ToastProps extends CommonProps, IntentProps {
   action?: ActionProps;

@@ -5,10 +5,11 @@ WORKDIR /app
 
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
+COPY yarn.lock ./
 COPY prisma ./prisma/
 
 # Install app dependencies
-RUN npm install
+RUN yarn --frozen-lockfile
 # Required if not done in postinstall
 # RUN npx prisma generate
 
