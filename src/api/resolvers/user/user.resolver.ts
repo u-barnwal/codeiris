@@ -1,6 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { User, UserRole } from '../../../models/user.model';
-import { UserEntity } from '../../decorators/user.decorator';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { GQLAuthGuard } from '../auth/guards/auth.guard';
 import { UserConnection } from '../../../models/pagination/user-connection.model';
@@ -8,6 +7,8 @@ import { PaginationArgs } from '../../../common/pagination/pagination.args';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PrismaService } from '../../../services/prisma.service';
 import { UserOrder } from '../../../models/input/user-order.input';
+import { Ctx } from '../../decorators/request-context.decorator';
+import { RequestContext } from '../../common/request-context';
 
 @Resolver((of) => User)
 @UseGuards(GQLAuthGuard)
@@ -15,13 +16,13 @@ export class UserResolver {
   constructor(private readonly prisma: PrismaService) {}
 
   @Query((returns) => User)
-  async me(@UserEntity() user: User): Promise<User> {
-    return user;
+  async me(@Ctx() context: RequestContext): Promise<User> {
+    return context.user;
   }
 
   @Query(() => UserConnection)
   async getUsers(
-    @UserEntity() user: User,
+    @Ctx() context: RequestContext,
     @Args() { skip, after, before, first, last }: PaginationArgs,
     @Args({
       name: 'orderBy',
@@ -30,7 +31,7 @@ export class UserResolver {
     })
     orderBy: UserOrder,
   ) {
-    if (user.role === UserRole.user) {
+    if (context.user.role === UserRole.user) {
       throw new UnauthorizedException(
         'Your are not authorized to access this function!',
       );

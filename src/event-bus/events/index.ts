@@ -1,1 +1,1 @@
-export * from './magic-link.events'
+export * from './magic-link.events';

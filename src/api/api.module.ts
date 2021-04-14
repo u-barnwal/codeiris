@@ -9,6 +9,11 @@ import { ServicesModule } from '../services/services.module';
 import { UserModule } from './resolvers/user/user.module';
 import { PostModule } from './resolvers/post/post.module';
 import { PostController } from './controllers/post/post.controller';
+import { APP_GUARD } from '@nestjs/core';
+import { GQLAuthGuard } from './resolvers/auth/guards/auth.guard';
+import { RequestContextService } from './common/request-context.service';
+import { MagicLinkGateway } from "./gateway/magiclink.gateway";
+import { EventBusModule } from "../event-bus/event-bus.module";
 
 @Module({
   imports: [
@@ -28,6 +33,7 @@ import { PostController } from './controllers/post/post.controller';
       },
       inject: [ConfigService],
     }),
+    EventBusModule,
     AuthModule,
     UserModule,
     PostModule,
@@ -35,6 +41,11 @@ import { PostController } from './controllers/post/post.controller';
   ],
   controllers: [AuthController, PostController],
   providers: [
+    RequestContextService,
+    {
+      provide: APP_GUARD,
+      useClass: GQLAuthGuard,
+    },
     /*DateScalar*/
   ],
 })
