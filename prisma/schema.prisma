@@ -32,8 +32,12 @@ model User {
 
 model Session {
   id                    String          @id     @default(uuid())
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
   type                  SessionType
-  token                 String?
+  token                 String?         @unique
+  authToken             String?
+  refreshToken          String?
   expires               DateTime?
   invalidate            Boolean         @default(false)
   user                  User?           @relation(name: "UserOnSessions", fields: [userId], references: [id])
@@ -155,4 +159,5 @@ enum VoteType {
 enum SessionType {
     AUTHENTICATED
     ANONYMOUS
+    MAGIC
 }

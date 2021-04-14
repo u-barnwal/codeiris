@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { SecurityConfig } from '../../../config/config.interface';
 import { GQLAuthGuard } from './guards/auth.guard';
+import { RequestContextService } from '../../common/request-context.service';
 
 @Module({
   imports: [
@@ -25,7 +26,6 @@ import { GQLAuthGuard } from './guards/auth.guard';
     }),
     ServicesModule,
   ],
-  providers: [JwtStrategy, AuthResolver, GQLAuthGuard],
-  exports: [GQLAuthGuard],
+  providers: [JwtStrategy, AuthResolver, RequestContextService],
 })
 export class AuthModule {}

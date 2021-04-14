@@ -1,0 +1,10 @@
+query getPosts{
+    getPosts {
+        edges {
+            node {
+                id
+                url
+            }
+        }
+    }
+}

@@ -8,7 +8,12 @@ import { Auth } from '../models/auth.model';
 import { Token } from '../models/token.model';
 import { SecurityConfig } from '../config/config.interface';
 import { EventBus } from '../event-bus/event-bus';
-import { MagicLinkEvent } from '../event-bus/events';
+import {
+  MagicLinkEvent,
+  MagicLinkVerificationEvent,
+} from '../event-bus/events';
+import { SessionService } from './session.service';
+import { Session } from '../models/session.model';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +22,7 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly jwtService: JwtService,
     private eventBus: EventBus,
+    private readonly sessionService: SessionService,
   ) {}
 
   /**
@@ -41,10 +47,10 @@ export class AuthService {
    * @param email - String
    */
   async sendMagicLink({ email }): Promise<MagicLinkDto> {
-    const token = this.generateMagicToken({ email });
+    const session = await this.generateMagicToken({ email });
     // TODO emit send magic link event
-    this.eventBus.publish(new MagicLinkEvent(token, email));
-    return { status: true };
+    this.eventBus.publish(new MagicLinkEvent(session.authToken, email));
+    return { status: true, listener: session.token };
   }
 
   async validateMagicLink({
@@ -63,29 +69,22 @@ export class AuthService {
             firstName: '',
           },
         });
-    const accessToken = this.generateAccessToken({ userId: currentUser.id });
-    return {
+    const magicSession = await this.sessionService.getSessionData(
+      extractedToken.session,
+    );
+    const session = await this.sessionService.authenticate(user);
+    const deliveryData = {
       auth: {
         user: currentUser,
-        accessToken: accessToken.accessToken,
+        accessToken: session.authToken,
+        refreshToken: session.refreshToken,
       },
       isRegistered: !!user,
     };
-  }
-
-  /**
-   *
-   * @param payload - String
-   * @private
-   */
-  private generateAccessToken(payload: { userId: string }): Token {
-    const security = this.config.get<SecurityConfig>('security');
-    const accessToken = this.jwtService.sign(payload, {
-      expiresIn: security.expiresIn,
-    });
-    return {
-      accessToken,
-    };
+    this.eventBus.publish(
+      new MagicLinkVerificationEvent(magicSession.token, deliveryData),
+    );
+    return deliveryData;
   }
 
   /**
@@ -93,7 +92,9 @@ export class AuthService {
    * @param token - String
    * @private
    */
-  private validateMagicToken({ token }): Promise<{ email: string }> {
+  private validateMagicToken({
+    token,
+  }): Promise<{ email: string; session: string }> {
     try {
       const validate: any = this.jwtService.decode(token);
       return validate;
@@ -107,11 +108,9 @@ export class AuthService {
    * @param payload - { email: String}
    * @private
    */
-  private generateMagicToken(payload: { email: string }): string {
-    const secret = this.config.get<string>('MAGIC_SECRET');
-    const token = this.jwtService.sign(payload, {
-      expiresIn: '10m',
-    });
-    return token;
+  private async generateMagicToken(payload: {
+    email: string;
+  }): Promise<Session> {
+    return this.sessionService.createMagicSession(payload);
   }
 }
