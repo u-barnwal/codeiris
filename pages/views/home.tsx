@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
 
-function Home({ data }) {
+function Home() {
   return <div className="mt-10 bg-primary">Hello ____ Coreiris!</div>;
 }
 

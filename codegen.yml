@@ -1,8 +1,8 @@
 overwrite: true
-schema: "http://localhost:3000/gql"
-documents: "gql/*.gql"
+schema: "http://localhost:3000/graphql"
+documents: "gql/*.graphql"
 generates:
-  graphql/index.tsx:
+  gql/index.tsx:
     plugins:
       - "typescript"
       - "typescript-operations"
