@@ -3,12 +3,17 @@ import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { BaseModel } from './base.model';
 import { User } from './user.model';
 import { Vote } from './vote.model';
+import { DeepPartial } from '../common';
 
 registerEnumType(PostStatus, { name: 'PostStatus' });
 registerEnumType(PostType, { name: 'PostType' });
 
 @ObjectType()
 export class Post extends BaseModel {
+  constructor(input?: DeepPartial<Post>) {
+    super(input);
+  }
+
   @Field()
   slug: string;
   @Field()

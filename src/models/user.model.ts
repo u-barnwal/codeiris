@@ -1,5 +1,6 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { BaseModel } from './base.model';
+import { DeepPartial } from '../common';
 
 export enum UserStatus {
   active = 'active',
@@ -23,6 +24,10 @@ registerEnumType(UserRole, {
 
 @ObjectType()
 export class User extends BaseModel {
+  constructor(input?: DeepPartial<User>) {
+    super(input);
+  }
+
   @Field()
   email: string;
   @Field()

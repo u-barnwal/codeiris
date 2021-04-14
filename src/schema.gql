@@ -5,6 +5,9 @@
 type Auth {
   """JWT access token"""
   accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
   user: User!
 }
 
@@ -14,6 +17,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type MagicLinkDto {
+  listener: String!
   status: Boolean!
 }
 

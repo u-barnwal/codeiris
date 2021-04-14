@@ -24,6 +24,7 @@ export class AuthResolver {
   async getAuth(): Promise<Auth> {
     return {
       accessToken: '',
+      refreshToken: '',
       user: null,
     };
   }
