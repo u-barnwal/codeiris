@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Post as PostData } from '.prisma/client';
+// This is not to be imported form prisma client
+// import { Post as PostData } from '.prisma/client';
 import Post from '../Post';
 
 export interface PostListProps {
-  initialPosts?: PostData[];
+  initialPosts?: any[];
 }
 const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
-  const [posts, setPosts] = useState(initialPosts);
+  const [posts, setPosts] = useState<any[]>(initialPosts);
   return (
     <div className="flex flex-col    ">
       {posts.map((ele) => (

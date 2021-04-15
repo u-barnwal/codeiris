@@ -7,10 +7,10 @@ export abstract class AbstractPureComponent<
   // eslint-disable-next-line @typescript-eslint/ban-types
   SS = {}
 > extends React.PureComponent<P, S, SS> {
-  public componentDidMount: never;
+  // public componentDidMount: never;
   public getDerivedStateFromProps: never;
 
-  protected constructor(props: P, context?: any) {
+  constructor(props: P, context?: any) {
     super(props, context);
   }
 
@@ -20,6 +20,12 @@ export abstract class AbstractPureComponent<
 
   public componentWillUnmount() {
     this.clearTimeouts();
+  }
+
+  public setTimeout(callback: () => void, timeout?: number) {
+    const handle = window.setTimeout(callback, timeout);
+    this.timeoutIds.push(handle);
+    return () => window.clearTimeout(handle);
   }
 
   public clearTimeouts = () => {

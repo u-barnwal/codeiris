@@ -10,7 +10,7 @@ const config: Config = {
     schema: './src/schema.gql',
   },
   security: {
-    expiresIn: '30d',
+    expiresIn: '1d',
     salt: 10,
   },
 };

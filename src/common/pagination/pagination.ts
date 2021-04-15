@@ -3,7 +3,7 @@ import { Type } from '@nestjs/common';
 import { PageInfo } from './page-info.model';
 
 // @ts-ignore
-export default function Paginated<T>(TClass: Type<T>) {
+export default function Paginated<T>(TClass: Type<T>): any {
   @ObjectType(`${TClass.name}Edge`)
   abstract class EdgeType {
     @Field()
