@@ -16,4 +16,10 @@ export class AppController {
   async Login() {
     return {};
   }
+
+  @Get('/save_post')
+  @Render('save_post')
+  async SavePost() {
+    return {};
+  }
 }

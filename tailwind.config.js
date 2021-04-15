@@ -57,6 +57,9 @@ module.exports = {
       },
       ...colors,
     },
+    container: {
+      center: true,
+    },
     extend: {},
   },
   variants: {
