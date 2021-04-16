@@ -36,10 +36,10 @@ function TextField({
           placeholder={focus ? '' : placeholder}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={clsx([
+          className={clsx(
             'border-2 border-gray-300 rounded placeholder-gray-300 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 focus:shadow-md py-1 px-1.5',
             className,
-          ])}
+          )}
           style={{ fontSize: 22 }}
           {...rest}
         />
