@@ -6,6 +6,7 @@ export class AppController {
   constructor(private readonly post: PostService) {}
 
   @Get()
+  @Redirect('/posts')
   @Render('home')
   async home() {
     return {};

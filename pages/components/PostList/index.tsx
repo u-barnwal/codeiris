@@ -8,11 +8,18 @@ export interface PostListProps {
 }
 const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
   const [posts, setPosts] = useState<any[]>(initialPosts);
+  console.log(initialPosts);
   return (
-    <div className="flex flex-col    ">
+    <div className="container">
       {posts.map((ele) => (
-        <div className="my-5">
-          <Post title={ele.title} body={ele.body} upvotes={0} user={ele.user} />
+        <div className="my-10">
+          <Post
+            title={ele.title}
+            body={ele.body}
+            upvotes={ele._count.votes}
+            user={ele.user}
+            totalComments={ele._count.comments}
+          />
         </div>
       ))}
     </div>

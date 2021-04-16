@@ -5,4 +5,5 @@ export interface PostProps {
   body?: string;
   upvotes?: number;
   user?: UserProps;
+  totalComments?: number;
 }

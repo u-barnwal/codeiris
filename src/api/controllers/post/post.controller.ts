@@ -47,12 +47,8 @@ export class PostController {
         },
         _count: {
           select: {
-            votes: {
-              where: {
-                type: 'upvotes',
-              },
-              comments: true,
-            },
+            votes: true,
+            comments: true,
           },
         },
       };
@@ -63,7 +59,6 @@ export class PostController {
         10,
       );
       return {
-        data: 'word',
         initialPosts: JSON.stringify(initialPosts),
       };
     }
