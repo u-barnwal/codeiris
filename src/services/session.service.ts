@@ -14,7 +14,7 @@ export class SessionService {
   private readonly sessionDurationInMs: number;
 
   constructor(
-    private readonly jwtService: JwtService,
+    private jwtService: JwtService,
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
   ) {
@@ -32,7 +32,7 @@ export class SessionService {
   async createMagicSession(payload): Promise<Session> {
     const sessionToken = await this.generateSessionToken();
     const token = this.jwtService.sign(
-      { session: sessionToken, ...payload },
+      { session: sessionToken, email: payload.email },
       {
         expiresIn: '10m',
       },
@@ -54,11 +54,16 @@ export class SessionService {
     return this.createNewAuthenticatedSession({ user });
   }
 
-  async createNewAuthenticatedSession({ user }): Promise<Session> {
+  async createNewAuthenticatedSession({
+    user,
+  }): Promise<{ user: User; authToken: string; refreshToken: string }> {
     const token = await this.generateSessionToken();
-    const session = await this.prisma.session.create({
+    const authToken = await this.generateAccessToken(user.id, token);
+    const awaitSession = await this.prisma.session.create({
       data: {
         token,
+        authToken: authToken.accessToken,
+        refreshToken: authToken.refreshToken,
         user: {
           connect: {
             id: user.id,
@@ -68,21 +73,15 @@ export class SessionService {
         invalidate: false,
         type: 'AUTHENTICATED',
       },
-    });
-    const authToken = await this.generateAccessToken({
-      userId: user.id,
-      session: session.id,
-    });
-    return this.prisma.session.update({
-      where: { id: session.id },
-      data: {
-        authToken: authToken.accessToken,
-        refreshToken: authToken.refreshToken,
-      },
       include: {
         user: true,
       },
     });
+    return {
+      user: awaitSession.user,
+      authToken: authToken.accessToken,
+      refreshToken: authToken.refreshToken,
+    };
   }
 
   async createAnonymousSession(): Promise<Session> {
@@ -101,23 +100,35 @@ export class SessionService {
     });
   }
 
-  async revalidateSession(sessionToken: string): Promise<Session | undefined> {
-    const session = await this.prisma.session.findUnique({
-      where: { token: sessionToken },
+  async revalidateSession(
+    refreshToken: string,
+  ): Promise<
+    { user: User; authToken: string; refreshToken: string } | undefined
+  > {
+    const extracted: any = this.jwtService.decode(refreshToken, {
+      complete: true,
+    });
+    const existSession = await this.prisma.session.findUnique({
+      where: { token: extracted.payload.session },
       include: {
         user: true,
       },
     });
-    if (session && session.expires > new Date() && !session.invalidate) {
-      const { user }: any = this.jwtService.decode(session.authToken);
-      await this.updateSessionExpiry(session);
-      const newTokens = await this.generateAccessToken({
-        userId: user,
-        session: session.id,
-      });
-      return this.prisma.session.update({
+    if (
+      existSession &&
+      existSession.expires > new Date() &&
+      !existSession.invalidate
+    ) {
+      await this.updateSessionExpiry(existSession);
+      const newTokens = await this.generateAccessToken(
+        existSession.user.id,
+        existSession.token,
+      );
+      // TODO remove this useless
+      /*console.log(newTokens);
+      const updatedSession = await this.prisma.session.update({
         where: {
-          id: session.id,
+          id: existSession.id,
         },
         data: {
           authToken: newTokens.accessToken,
@@ -127,16 +138,24 @@ export class SessionService {
           user: true,
         },
       });
+      console.log(updatedSession);*/
+      return {
+        user: existSession.user,
+        authToken: newTokens.accessToken,
+        refreshToken: newTokens.refreshToken,
+      };
     } else {
       return undefined;
     }
   }
 
   async validateSession(token: string): Promise<Session> {
-    const { session }: any = this.jwtService.decode(token);
+    console.log(token);
+    const payload: any = this.jwtService.decode(token, { complete: true });
+    console.log(payload);
     const existSession = await this.prisma.session.findFirst({
       where: {
-        token,
+        token: payload.payload.session,
         invalidate: false,
       },
       include: {
@@ -172,15 +191,24 @@ export class SessionService {
    * @param payload - String
    * @private
    */
-  generateAccessToken(payload: { userId: string; session: string }): Token {
+  async generateAccessToken(userId: string, session: string): Promise<Token> {
+    console.log(userId, session);
     const security = this.config.get<SecurityConfig>('security');
-    const accessToken = this.jwtService.sign(payload, {
-      expiresIn: security.expiresIn,
-    });
-    const refreshToken = this.jwtService.sign(
-      { session: payload.session },
+    const accessToken = await this.jwtService.signAsync(
+      {
+        session: session,
+        userId: userId,
+      },
+      {
+        expiresIn: '1d',
+      },
+    );
+    const refreshToken = await this.jwtService.signAsync(
+      { session: session },
       { expiresIn: '30d' },
     );
+    console.log(refreshToken);
+    console.log(accessToken);
     return {
       accessToken,
       refreshToken,

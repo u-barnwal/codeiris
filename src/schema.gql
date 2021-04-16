@@ -95,7 +95,7 @@ type Query {
   getAuth: Auth!
   getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
-  me: User!
+  me: User
 }
 
 type User {
@@ -103,11 +103,9 @@ type User {
   createdAt: DateTime!
   email: String!
   firstName: String!
-  githubToken: String!
-  googleToken: String!
   id: ID!
-  lastName: String!
-  middleName: String!
+  lastName: String
+  middleName: String
   role: UserRole!
   status: UserStatus!
 

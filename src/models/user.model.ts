@@ -32,16 +32,12 @@ export class User extends BaseModel {
   email: string;
   @Field()
   firstName: string;
-  @Field()
+  @Field({ nullable: true })
   middleName?: string;
-  @Field()
+  @Field({ nullable: true })
   lastName?: string;
   @Field(() => UserStatus)
   status?: 'active' | 'blocked' | 'inactive';
-  @Field()
-  googleToken?: string;
-  @Field()
-  githubToken?: string;
   @Field(() => UserRole)
   role: 'admin' | 'moderator' | 'user';
 }

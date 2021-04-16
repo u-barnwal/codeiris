@@ -8,3 +8,15 @@ query getPosts{
         }
     }
 }
+
+
+query getMe{
+    me {
+        id
+        firstName
+        lastName
+        middleName
+        role
+        status
+    }
+}

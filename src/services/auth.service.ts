@@ -14,6 +14,7 @@ import {
 } from '../event-bus/events';
 import { SessionService } from './session.service';
 import { Session } from '../models/session.model';
+import moment from 'moment';
 
 @Injectable()
 export class AuthService {
@@ -55,8 +56,23 @@ export class AuthService {
 
   async validateMagicLink({
     token,
-  }): Promise<{ auth: Auth; isRegistered: boolean }> {
-    const extractedToken = await this.validateMagicToken({ token });
+  }): Promise<{ auth?: Auth; isRegistered?: boolean; invalid: boolean }> {
+    let extractedToken;
+    try {
+      extractedToken = await this.validateMagicToken({ token });
+    } catch (e) {
+      return {
+        invalid: true,
+      };
+    }
+    const magicSession = await this.sessionService.getSessionData(
+      extractedToken.session,
+    );
+    if (moment(magicSession.expires).isBefore(moment())) {
+      return {
+        invalid: true,
+      };
+    }
     const user = await this.prisma.user.findUnique({
       where: { email: extractedToken.email },
     });
@@ -69,9 +85,6 @@ export class AuthService {
             firstName: '',
           },
         });
-    const magicSession = await this.sessionService.getSessionData(
-      extractedToken.session,
-    );
     const session = await this.sessionService.authenticate(user);
     const deliveryData = {
       auth: {
@@ -80,6 +93,7 @@ export class AuthService {
         refreshToken: session.refreshToken,
       },
       isRegistered: !!user,
+      invalid: false,
     };
     this.eventBus.publish(
       new MagicLinkVerificationEvent(magicSession.token, deliveryData),
