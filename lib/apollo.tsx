@@ -96,6 +96,8 @@ function createApolloClient(initialState = {}, accessToken?: string) {
     },
     handleError: (err) => {
       console.log(err);
+      setAccessToken(null);
+      setRefreshToken(null);
     },
   });
 

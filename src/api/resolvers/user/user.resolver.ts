@@ -15,7 +15,7 @@ import { RequestContext } from '../../common/request-context';
 export class UserResolver {
   constructor(private readonly prisma: PrismaService) {}
 
-  @Query((returns) => User)
+  @Query((returns) => User, { nullable: true })
   async me(@Ctx() context: RequestContext): Promise<User> {
     return context.user;
   }

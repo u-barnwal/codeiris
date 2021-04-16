@@ -20,6 +20,7 @@ export class AuthResolver {
     return this.authService.sendMagicLink({ email });
   }
 
+  //TODO remove this
   @Query(() => Auth)
   async getAuth(): Promise<Auth> {
     return {

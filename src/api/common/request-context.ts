@@ -61,13 +61,13 @@ export class RequestContext {
 
   get user(): User | undefined {
     if (this.session) {
-      if (this.isAuthnticatedSession(this.session)) {
+      if (this.isAuthenticatedSession(this.session)) {
         return this.session.user;
       }
     }
   }
 
-  private isAuthnticatedSession(session: Session): boolean {
+  private isAuthenticatedSession(session: Session): boolean {
     return session.type === 'AUTHENTICATED';
   }
 }
