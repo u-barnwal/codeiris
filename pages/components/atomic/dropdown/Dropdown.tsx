@@ -10,7 +10,7 @@ export interface DropdownProps
   menu?: Array<React.ReactNode>;
 }
 
-export function Dropdown({ children, menu }: DropdownProps) {
+export default function Dropdown({ children, menu }: DropdownProps) {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
   const [enter, setEnter] = useState(null);

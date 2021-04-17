@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useEffect } from 'react';
 import { host } from '../../../utils/GlobalConstants';
 
-export function MagicLinkSendingSuccess({ listener }) {
+export default function MagicLinkSendingSuccess({ listener }) {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {
     const socket = io('http://localhost:3000/');

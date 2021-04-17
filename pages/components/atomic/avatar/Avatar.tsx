@@ -17,7 +17,7 @@ export interface AvatarProps
   color?: string;
 }
 
-export function Avatar({ label, size, image, color }: AvatarProps) {
+export default function Avatar({ label, size, image, color }: AvatarProps) {
   return (
     <div>
       {image && (
@@ -50,7 +50,7 @@ export function Avatar({ label, size, image, color }: AvatarProps) {
               size={checkHeadingSize(size)}
               className="text-white uppercase"
             >
-              {label[0]}
+              {label && label[0]}
             </Heading>
           </div>
         </div>

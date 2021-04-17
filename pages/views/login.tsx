@@ -10,7 +10,7 @@ import {
   SendMagicLinkMutation,
 } from '../../gql';
 import { useEffect, useState } from 'react';
-import { MagicLinkSendingSuccess } from '../components/MagicLink/MagicLinkSendingSuccess';
+import MagicLinkSendingSuccess from '../components/MagicLink/MagicLinkSendingSuccess';
 import io from 'socket.io-client';
 
 function Login() {

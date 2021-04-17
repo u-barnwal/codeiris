@@ -5,8 +5,8 @@ import { GetMeDocument, GetMeQuery, GetMeQueryVariables } from '../../../gql';
 import { getAccessToken, logout, skipper } from '../../../lib/accessToken';
 import Spinner from '../atomic/spinner';
 import { SpinnerSize } from '../../../lib/common/props/SpinnerProps';
-import { Avatar } from '../atomic/avatar/Avatar';
-import { Dropdown } from '../atomic/dropdown/Dropdown';
+import Avatar from '../atomic/avatar/Avatar';
+import Dropdown from '../atomic/dropdown/Dropdown';
 
 function Header() {
   const { data, loading } = useQuery<GetMeQuery, GetMeQueryVariables>(
