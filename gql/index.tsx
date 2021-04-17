@@ -25,6 +25,43 @@ export type Auth = {
   user: User;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  body: Scalars['String'];
+  children?: Maybe<Array<Comment>>;
+  /** Identifies the date and time when the object was created. */
+  createdAt: Scalars['DateTime'];
+  id: Scalars['ID'];
+  parent?: Maybe<Comment>;
+  post: Post;
+  /** Identifies the date and time when the object was last updated. */
+  updatedAt: Scalars['DateTime'];
+  user?: Maybe<User>;
+};
+
+export type CommentConnection = {
+  __typename?: 'CommentConnection';
+  edges?: Maybe<Array<CommentEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type CommentEdge = {
+  __typename?: 'CommentEdge';
+  cursor: Scalars['String'];
+  node: Comment;
+};
+
+export type CommentOrder = {
+  direction: OrderDirection;
+  field: CommentOrderField;
+};
+
+export enum CommentOrderField {
+  UpdatedAt = 'updatedAt',
+  Votes = 'votes'
+}
+
 
 export type MagicLinkDto = {
   __typename?: 'MagicLinkDto';
@@ -58,6 +95,7 @@ export type PageInfo = {
 export type Post = {
   __typename?: 'Post';
   body: Scalars['String'];
+  comments?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime'];
   deleted: Scalars['Boolean'];
@@ -113,9 +151,43 @@ export enum PostType {
 export type Query = {
   __typename?: 'Query';
   getAuth: Auth;
+  getComments: CommentConnection;
+  getMeComments: CommentConnection;
+  getMePosts: PostConnection;
   getPosts: PostConnection;
   getUsers: UserConnection;
-  me: User;
+  me?: Maybe<User>;
+};
+
+
+export type QueryGetCommentsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<CommentOrder>;
+  postId?: Maybe<Scalars['String']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetMeCommentsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<CommentOrder>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetMePostsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<PostOrder>;
+  skip?: Maybe<Scalars['Int']>;
 };
 
 
@@ -144,11 +216,9 @@ export type User = {
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   firstName: Scalars['String'];
-  githubToken: Scalars['String'];
-  googleToken: Scalars['String'];
   id: Scalars['ID'];
-  lastName: Scalars['String'];
-  middleName: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
   role: UserRole;
   status: UserStatus;
   /** Identifies the date and time when the object was last updated. */
@@ -244,9 +314,31 @@ export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeQuery = (
   { __typename?: 'Query' }
-  & { me: (
+  & { me?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName' | 'middleName' | 'role' | 'status'>
+  )> }
+);
+
+export type GetMeCommentsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeCommentsCountQuery = (
+  { __typename?: 'Query' }
+  & { getMeComments: (
+    { __typename?: 'CommentConnection' }
+    & Pick<CommentConnection, 'totalCount'>
+  ) }
+);
+
+export type GetMePostsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMePostsCountQuery = (
+  { __typename?: 'Query' }
+  & { getMePosts: (
+    { __typename?: 'PostConnection' }
+    & Pick<PostConnection, 'totalCount'>
   ) }
 );
 
@@ -363,3 +455,71 @@ export function useGetMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetM
 export type GetMeQueryHookResult = ReturnType<typeof useGetMeQuery>;
 export type GetMeLazyQueryHookResult = ReturnType<typeof useGetMeLazyQuery>;
 export type GetMeQueryResult = Apollo.QueryResult<GetMeQuery, GetMeQueryVariables>;
+export const GetMeCommentsCountDocument = gql`
+    query getMeCommentsCount {
+  getMeComments {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useGetMeCommentsCountQuery__
+ *
+ * To run a query within a React component, call `useGetMeCommentsCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeCommentsCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeCommentsCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeCommentsCountQuery(baseOptions?: Apollo.QueryHookOptions<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>(GetMeCommentsCountDocument, options);
+      }
+export function useGetMeCommentsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>(GetMeCommentsCountDocument, options);
+        }
+export type GetMeCommentsCountQueryHookResult = ReturnType<typeof useGetMeCommentsCountQuery>;
+export type GetMeCommentsCountLazyQueryHookResult = ReturnType<typeof useGetMeCommentsCountLazyQuery>;
+export type GetMeCommentsCountQueryResult = Apollo.QueryResult<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>;
+export const GetMePostsCountDocument = gql`
+    query getMePostsCount {
+  getMePosts {
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useGetMePostsCountQuery__
+ *
+ * To run a query within a React component, call `useGetMePostsCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMePostsCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMePostsCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMePostsCountQuery(baseOptions?: Apollo.QueryHookOptions<GetMePostsCountQuery, GetMePostsCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMePostsCountQuery, GetMePostsCountQueryVariables>(GetMePostsCountDocument, options);
+      }
+export function useGetMePostsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMePostsCountQuery, GetMePostsCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMePostsCountQuery, GetMePostsCountQueryVariables>(GetMePostsCountDocument, options);
+        }
+export type GetMePostsCountQueryHookResult = ReturnType<typeof useGetMePostsCountQuery>;
+export type GetMePostsCountLazyQueryHookResult = ReturnType<typeof useGetMePostsCountLazyQuery>;
+export type GetMePostsCountQueryResult = Apollo.QueryResult<GetMePostsCountQuery, GetMePostsCountQueryVariables>;

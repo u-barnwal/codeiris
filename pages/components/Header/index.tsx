@@ -2,7 +2,7 @@ import Heading, { HeadingSize } from '../atomic/typography';
 import Router from 'next/router';
 import { useQuery } from '@apollo/client';
 import { GetMeDocument, GetMeQuery, GetMeQueryVariables } from '../../../gql';
-import { getAccessToken, skipper } from '../../../lib/accessToken';
+import { getAccessToken, logout, skipper } from '../../../lib/accessToken';
 import Spinner from '../atomic/spinner';
 import { SpinnerSize } from '../../../lib/common/props/SpinnerProps';
 import { Avatar } from '../atomic/avatar/Avatar';
@@ -14,7 +14,11 @@ function Header() {
     { skip: skipper() },
   );
 
-  console.log(data);
+  const onTriggerLogout = () => {
+    localStorage.clear();
+    logout();
+    Router.push('/');
+  };
 
   return (
     <div>
@@ -53,7 +57,8 @@ function Header() {
                       Account settings
                     </a>,
                     <a
-                      href="#"
+                      href="javascript:;"
+                      onClick={() => Router.push('/user/profile')}
                       className="text-gray-700 block px-4 py-2 text-sm"
                       role="menuitem"
                       id="menu-item-0"
@@ -61,7 +66,8 @@ function Header() {
                       Profile
                     </a>,
                     <a
-                      href="#"
+                      href="javascript:;"
+                      onClick={onTriggerLogout}
                       className="text-gray-700 block px-4 py-2 text-sm"
                       role="menuitem"
                       id="menu-item-0"

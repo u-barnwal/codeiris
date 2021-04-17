@@ -32,40 +32,41 @@ function Login() {
             <div>
               {listener && <MagicLinkSendingSuccess listener={listener} />}
               {!listener && (
-                <div className="flex justify-center mb-5">
-                  <Heading
-                    size={HeadingSize.H600}
-                    style={{ fontSize: 60 }}
-                    className="text-heading-light"
-                  >
-                    Sign In
-                  </Heading>
+                <div>
+                  <div className="flex justify-center mb-5">
+                    <Heading
+                      size={HeadingSize.H600}
+                      style={{ fontSize: 60 }}
+                      className="text-heading-light"
+                    >
+                      Sign In
+                    </Heading>
+                  </div>
+                  <div>
+                    <TextField
+                      placeholder="Email"
+                      className="2xl:w-80"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Button
+                      loading={loading}
+                      disabled={loading}
+                      onClick={async () => {
+                        SendMagicLink({ variables: { email: email } }).then(
+                          (value) => {
+                            setListener(value.data.sendMagicLink.listener);
+                          },
+                        );
+                      }}
+                    >
+                      Sign In
+                    </Button>
+                  </div>
                 </div>
               )}
-              <div>
-                <TextField
-                  placeholder="Email"
-                  className="2xl:w-80"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-              </div>
-              <div>
-                <Button
-                  loading={loading}
-                  disabled={loading}
-                  onClick={async () => {
-                    SendMagicLink({ variables: { email: email } }).then(
-                      (value) => {
-                        console.log(value.data);
-                        setListener(value.data.sendMagicLink.listener);
-                      },
-                    );
-                  }}
-                >
-                  Sing In
-                </Button>
-              </div>
             </div>
           </div>
           <div className="bg-primary"></div>

@@ -6,6 +6,11 @@ let accessToken = undefined;
 let refreshToken = undefined;
 let expiry = null;
 
+export const logout = () => {
+  accessToken = undefined;
+  refreshToken = undefined;
+};
+
 export const setAccessToken = (s: string) => (accessToken = s);
 export const getAccessToken = () => accessToken;
 export const setRefreshToken = (s: string) => {

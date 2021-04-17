@@ -20,3 +20,15 @@ query getMe{
         status
     }
 }
+
+query getMeCommentsCount {
+    getMeComments {
+        totalCount
+    }
+}
+
+query getMePostsCount {
+    getMePosts {
+        totalCount
+    }
+}
