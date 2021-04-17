@@ -11,6 +11,42 @@ type Auth {
   user: User!
 }
 
+type Comment {
+  body: String!
+  children: [Comment!]
+
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  id: ID!
+  parent: Comment
+  post: Post!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+  user: User
+}
+
+type CommentConnection {
+  edges: [CommentEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type CommentEdge {
+  cursor: String!
+  node: Comment!
+}
+
+input CommentOrder {
+  direction: OrderDirection!
+  field: CommentOrderField!
+}
+
+enum CommentOrderField {
+  updatedAt
+  votes
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -39,6 +75,7 @@ type PageInfo {
 
 type Post {
   body: String!
+  comments: [Comment!]
 
   """Identifies the date and time when the object was created."""
   createdAt: DateTime!
@@ -93,6 +130,9 @@ enum PostType {
 
 type Query {
   getAuth: Auth!
+  getComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, postId: String, skip: Int): CommentConnection!
+  getMeComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
+  getMePosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
   me: User
