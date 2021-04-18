@@ -1,10 +1,10 @@
-#CODEIRIS
+# CODEIRIS
 Three lazy programmer create tech post app for other lazy programmers. Build with NestJS.
 
-#Links
-##Production 
+# Links
+## Production 
 https://codeiris.dev/h 
-##Developement
+## Developement
 https://dev.codeiris.dev/
 
 #Features
