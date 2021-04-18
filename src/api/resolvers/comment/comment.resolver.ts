@@ -38,7 +38,16 @@ export class CommentResolver {
           orderBy: orderBy && { [orderBy.field]: orderBy.direction },
           ...args,
         }),
-      () => this.prisma.comment.count(),
+      () =>
+        this.prisma.comment.count({
+          where: {
+            user: {
+              id: {
+                equals: context.user.id,
+              },
+            },
+          },
+        }),
       { first, last, before, after },
     );
     return commentCursor;

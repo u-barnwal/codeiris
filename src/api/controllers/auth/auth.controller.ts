@@ -48,7 +48,6 @@ export class AuthController {
       res.setHeader('Cache-Control', 'no-cache');
       res.setHeader('Access-Control-Allow-Origin', serverPath);
       res.setHeader('Access-Control-Allow-Credentials', 'true');
-      console.log(sessioninfo);
       if (sessioninfo) {
         res.send({
           tokens: {

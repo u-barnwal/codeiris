@@ -7,4 +7,5 @@ export interface ToastProps extends CommonProps, IntentProps {
   message: React.ReactNode;
   onDismiss?: (timeoutExpired: boolean) => void;
   timeout?: number;
+  loading?: boolean;
 }

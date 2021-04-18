@@ -72,11 +72,17 @@ export type MagicLinkDto = {
 export type Mutation = {
   __typename?: 'Mutation';
   sendMagicLink: MagicLinkDto;
+  updateUser: User;
 };
 
 
 export type MutationSendMagicLinkArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationUpdateUserArgs = {
+  data: UpdateUserInput;
 };
 
 export enum OrderDirection {
@@ -212,6 +218,12 @@ export type QueryGetUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+export type UpdateUserInput = {
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   /** Identifies the date and time when the object was created. */
@@ -308,7 +320,7 @@ export type GetPostsQuery = (
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
@@ -325,7 +337,7 @@ export type GetMeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'middleName' | 'role' | 'status'>
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'middleName' | 'role' | 'email' | 'status'>
   )> }
 );
 
@@ -393,7 +405,6 @@ export const GetPostsDocument = gql`
       node {
         id
         body
-        url
         title
         updatedAt
         user {
@@ -444,6 +455,7 @@ export const GetMeDocument = gql`
     lastName
     middleName
     role
+    email
     status
   }
 }

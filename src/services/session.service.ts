@@ -150,7 +150,6 @@ export class SessionService {
   }
 
   async validateSession(token: string): Promise<Session> {
-    console.log(token);
     const payload: any = this.jwtService.decode(token, { complete: true });
     console.log(payload);
     const existSession = await this.prisma.session.findFirst({
