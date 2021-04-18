@@ -1,4 +1,4 @@
-import { PostType } from '.prisma/client';
+import { PostType, VoteType } from '.prisma/client';
 import {
   BadRequestException,
   Controller,
@@ -45,6 +45,12 @@ export class PostController {
             image: true,
           },
         },
+        _count: {
+          select: {
+            votes: true,
+            comments: true,
+          },
+        },
       };
       const initialPosts = await this.post.getTopPost(
         postType,
@@ -53,7 +59,6 @@ export class PostController {
         10,
       );
       return {
-        data: 'word',
         initialPosts: JSON.stringify(initialPosts),
       };
     }

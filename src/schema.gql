@@ -84,6 +84,8 @@ type Post {
   slug: String!
   status: PostStatus!
   title: String!
+  totalComments: Int!
+  totalVotes: Int!
   type: PostType!
 
   """Identifies the date and time when the object was last updated."""
@@ -91,7 +93,7 @@ type Post {
   url: String!
   user: User!
   userId: String!
-  votes: Vote!
+  votes: [Vote!]!
 }
 
 type PostConnection {
