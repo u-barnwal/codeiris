@@ -65,13 +65,15 @@ export type Post = {
   slug: Scalars['String'];
   status: PostStatus;
   title: Scalars['String'];
+  totalComments: Scalars['Int'];
+  totalVotes: Scalars['Int'];
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['DateTime'];
   url: Scalars['String'];
   user: User;
   userId: Scalars['String'];
-  votes: Vote;
+  votes: Array<Vote>;
 };
 
 export type PostConnection = {
@@ -222,7 +224,10 @@ export type SendMagicLinkMutation = (
   ) }
 );
 
-export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPostsQueryVariables = Exact<{
+  after: Scalars['String'];
+  first: Scalars['Int'];
+}>;
 
 
 export type GetPostsQuery = (
@@ -233,7 +238,11 @@ export type GetPostsQuery = (
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-        & Pick<Post, 'id'>
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
+        & { user: (
+          { __typename?: 'User' }
+          & Pick<User, 'firstName' | 'lastName'>
+        ) }
       ) }
     )>> }
   ) }
@@ -275,11 +284,20 @@ export type SendMagicLinkMutationHookResult = ReturnType<typeof useSendMagicLink
 export type SendMagicLinkMutationResult = Apollo.MutationResult<SendMagicLinkMutation>;
 export type SendMagicLinkMutationOptions = Apollo.BaseMutationOptions<SendMagicLinkMutation, SendMagicLinkMutationVariables>;
 export const GetPostsDocument = gql`
-    query getPosts {
-  getPosts {
+    query getPosts($after: String!, $first: Int!) {
+  getPosts(after: $after, first: $first) {
     edges {
       node {
         id
+        body
+        title
+        updatedAt
+        user {
+          firstName
+          lastName
+        }
+        totalVotes
+        totalComments
       }
     }
   }
@@ -298,10 +316,12 @@ export const GetPostsDocument = gql`
  * @example
  * const { data, loading, error } = useGetPostsQuery({
  *   variables: {
+ *      after: // value for 'after'
+ *      first: // value for 'first'
  *   },
  * });
  */
-export function useGetPostsQuery(baseOptions?: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
+export function useGetPostsQuery(baseOptions: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
       }

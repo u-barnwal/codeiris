@@ -6,7 +6,17 @@ import { NextPageContext } from 'next';
 function Home({ data }) {
   return (
     <div className="mt-10 bg-secondary-light ">
-      <PostList initialPosts={JSON.parse(data.initialPosts)} />
+      <PostList
+        initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
+          ...ele,
+          id: ele.id,
+          body: ele.body,
+          title: ele.title,
+          user: ele.user,
+          upvotes: ele._count.upvote,
+          totalComments: ele._count.comment,
+        }))}
+      />
     </div>
   );
 }

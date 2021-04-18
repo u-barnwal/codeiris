@@ -32,6 +32,6 @@ export class Post extends BaseModel {
   status: 'draft' | 'published' | 'hidden' | 'blocked';
   @Field(() => PostType)
   type: 'link' | 'ask' | 'job';
-  @Field(() => Vote)
+  @Field(() => [Vote])
   votes: Vote[];
 }

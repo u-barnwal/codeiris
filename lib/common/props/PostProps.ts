@@ -1,6 +1,7 @@
 import { UserProps } from './UserProps';
 
 export interface PostProps {
+  id: string;
   title?: string;
   body?: string;
   upvotes?: number;

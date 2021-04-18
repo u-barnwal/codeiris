@@ -1,10 +1,18 @@
-query getPosts{
-    getPosts {
-        edges {
-            node {
-                id
-                url
-            }
+query getPosts($after: String!, $first: Int!) {
+  getPosts(after: $after, first: $first) {
+    edges {
+      node {
+        id
+        body
+        title
+        updatedAt
+        user {
+          firstName
+          lastName
         }
+        totalVotes
+        totalComments
+      }
     }
+  }
 }
