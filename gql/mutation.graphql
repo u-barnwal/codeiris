@@ -10,3 +10,9 @@ mutation updateUserProfileInfo($firstName: String, $lastName: String, $middleNam
     id
   }
 }
+
+mutation CreateComment($postId:String, $parentId:String, $body:String!){
+  CreateComment(input:{postId:$postId, parentId:$parentId, body:$body}) {
+    id
+  }
+}

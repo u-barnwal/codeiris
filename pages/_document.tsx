@@ -12,7 +12,7 @@ class MyDocument extends Document {
         <Head>
           <link href="/fonts/stylesheet.css" />
         </Head>
-        <body>
+        <body className="bg-body-light">
           <Main />
           <NextScript />
         </body>

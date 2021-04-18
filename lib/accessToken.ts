@@ -15,7 +15,9 @@ export const setAccessToken = (s: string) => (accessToken = s);
 export const getAccessToken = () => accessToken;
 export const setRefreshToken = (s: string) => {
   refreshToken = s;
-  localStorage.setItem(refresh, s);
+  if (!isServer()) {
+    localStorage.setItem(refresh, s);
+  }
 };
 
 export const isExpired = () => {

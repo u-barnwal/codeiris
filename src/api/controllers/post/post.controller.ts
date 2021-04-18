@@ -7,11 +7,22 @@ import {
   Render,
 } from '@nestjs/common';
 import { PostService } from '../../../services/post.service';
+import superjson from 'superjson';
 
 @Controller('posts')
 export class PostController {
   constructor(private readonly post: PostService) {}
 
+  @Get(':id')
+  @Render('postPage')
+  async getPost(@Param('id') id: string) {
+    const post = await this.post.getSinglePost(id);
+    return {
+      data: superjson.stringify(post),
+    };
+  }
+
+  // TODO remove this
   @Get(':type')
   @Render('home')
   async getPostList(@Param('type') postType: string) {

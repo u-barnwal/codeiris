@@ -16,13 +16,13 @@ type Comment {
   children: [Comment!]
 
   """Identifies the date and time when the object was created."""
-  createdAt: DateTime!
+  createdAt: Date!
   id: ID!
   parent: Comment
-  post: Post!
+  post: Post
 
   """Identifies the date and time when the object was last updated."""
-  updatedAt: DateTime!
+  updatedAt: Date!
   user: User
 }
 
@@ -30,6 +30,12 @@ type CommentConnection {
   edges: [CommentEdge!]
   pageInfo: PageInfo!
   totalCount: Int!
+}
+
+input CommentCreateInput {
+  body: String!
+  parentId: String
+  postId: String
 }
 
 type CommentEdge {
@@ -43,14 +49,13 @@ input CommentOrder {
 }
 
 enum CommentOrderField {
+  createdAt
   updatedAt
   votes
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+"""Date custom scalar type"""
+scalar Date
 
 type MagicLinkDto {
   listener: String!
@@ -58,6 +63,7 @@ type MagicLinkDto {
 }
 
 type Mutation {
+  CreateComment(input: CommentCreateInput!): Comment!
   sendMagicLink(email: String!): MagicLinkDto!
   updateUserProfileInfo(data: UpdateUserInput!): User!
 }
@@ -79,7 +85,7 @@ type Post {
   comments: [Comment!]
 
   """Identifies the date and time when the object was created."""
-  createdAt: DateTime!
+  createdAt: Date!
   deleted: Boolean!
   id: ID!
   slug: String!
@@ -90,7 +96,7 @@ type Post {
   type: PostType!
 
   """Identifies the date and time when the object was last updated."""
-  updatedAt: DateTime!
+  updatedAt: Date!
   url: String!
   user: User!
   userId: String!
@@ -149,7 +155,7 @@ input UpdateUserInput {
 
 type User {
   """Identifies the date and time when the object was created."""
-  createdAt: DateTime!
+  createdAt: Date!
   email: String!
   firstName: String!
   id: ID!
@@ -159,7 +165,7 @@ type User {
   status: UserStatus!
 
   """Identifies the date and time when the object was last updated."""
-  updatedAt: DateTime!
+  updatedAt: Date!
 }
 
 type UserConnection {
@@ -199,13 +205,13 @@ enum UserStatus {
 
 type Vote {
   """Identifies the date and time when the object was created."""
-  createdAt: DateTime!
+  createdAt: Date!
   id: ID!
   post: Post!
   type: VoteType!
 
   """Identifies the date and time when the object was last updated."""
-  updatedAt: DateTime!
+  updatedAt: Date!
   user: User!
 }
 
