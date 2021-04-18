@@ -31,7 +31,7 @@ function Card({
         <div className="font-bold text-xl mb-2 text-heading-dark">{title}</div>
         <p
           className="text-body-dark text-base"
-          dangerouslySetInnerHTML={body}
+          dangerouslySetInnerHTML={{ __html: body }}
         ></p>
       </div>
       <div className="px-6 pt-4 pb-2">

@@ -72,7 +72,7 @@ export type MagicLinkDto = {
 export type Mutation = {
   __typename?: 'Mutation';
   sendMagicLink: MagicLinkDto;
-  updateUser: User;
+  updateUserProfileInfo: User;
 };
 
 
@@ -81,7 +81,7 @@ export type MutationSendMagicLinkArgs = {
 };
 
 
-export type MutationUpdateUserArgs = {
+export type MutationUpdateUserProfileInfoArgs = {
   data: UpdateUserInput;
 };
 
@@ -306,6 +306,21 @@ export type SendMagicLinkMutation = (
   ) }
 );
 
+export type UpdateUserProfileInfoMutationVariables = Exact<{
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateUserProfileInfoMutation = (
+  { __typename?: 'Mutation' }
+  & { updateUserProfileInfo: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
 export type GetPostsQueryVariables = Exact<{
   after: Scalars['String'];
   first: Scalars['Int'];
@@ -398,6 +413,43 @@ export function useSendMagicLinkMutation(baseOptions?: Apollo.MutationHookOption
 export type SendMagicLinkMutationHookResult = ReturnType<typeof useSendMagicLinkMutation>;
 export type SendMagicLinkMutationResult = Apollo.MutationResult<SendMagicLinkMutation>;
 export type SendMagicLinkMutationOptions = Apollo.BaseMutationOptions<SendMagicLinkMutation, SendMagicLinkMutationVariables>;
+export const UpdateUserProfileInfoDocument = gql`
+    mutation updateUserProfileInfo($firstName: String, $lastName: String, $middleName: String) {
+  updateUserProfileInfo(
+    data: {firstName: $firstName, lastName: $lastName, middleName: $middleName}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateUserProfileInfoMutationFn = Apollo.MutationFunction<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>;
+
+/**
+ * __useUpdateUserProfileInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserProfileInfoMutation, { data, loading, error }] = useUpdateUserProfileInfoMutation({
+ *   variables: {
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
+ *      middleName: // value for 'middleName'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileInfoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>(UpdateUserProfileInfoDocument, options);
+      }
+export type UpdateUserProfileInfoMutationHookResult = ReturnType<typeof useUpdateUserProfileInfoMutation>;
+export type UpdateUserProfileInfoMutationResult = Apollo.MutationResult<UpdateUserProfileInfoMutation>;
+export type UpdateUserProfileInfoMutationOptions = Apollo.BaseMutationOptions<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>;
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {

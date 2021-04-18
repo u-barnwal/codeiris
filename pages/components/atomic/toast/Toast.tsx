@@ -35,7 +35,7 @@ export default class Toast extends AbstractPureComponent<
   render() {
     const { message, loading } = this.props;
     return (
-      <div className="flex items-center transition-opacity duration-500 ease-linear max-w-sm w-full bg-warmGray-50 shadow-xl rounded-md overflow-hidden mx-auto mt-2 mb-2 border-green-600 border-1">
+      <div className="flex items-center transition-opacity duration-500 ease-linear max-w-sm w-full bg-warmGray-100 shadow-xl rounded-md overflow-hidden mx-auto mt-2 mb-2 border-green-600 border-1">
         {loading && (
           <div className="p-10 flex flex-col space-y-3 w-full">
             <div className="slider">
@@ -53,7 +53,7 @@ export default class Toast extends AbstractPureComponent<
             <div className="col-span-4">
               <div className="flex items-center py-3">
                 <div className="mx-3">
-                  <p className="text-lg text-blueGray-500">{message}</p>
+                  <p className="text-lg text-blueGray-500 py-2">{message}</p>
                 </div>
               </div>
             </div>

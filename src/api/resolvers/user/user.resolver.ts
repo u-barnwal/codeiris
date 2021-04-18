@@ -21,7 +21,7 @@ export class UserResolver {
   ) {}
 
   @Mutation(() => User)
-  async updateUser(
+  async updateUserProfileInfo(
     @Args('data') data: UpdateUserInput,
     @Ctx() context: RequestContext,
   ) {

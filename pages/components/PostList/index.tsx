@@ -40,7 +40,7 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
           upvotes: ele.node.totalVotes,
           totalComments: ele.node.totalComments,
         }));
-        setPosts((prev) => [...prev, ...newPosts]);
+        // setPosts((prev) => [...prev, ...newPosts]);
       }
     }
   }, [loading, data, error]);
