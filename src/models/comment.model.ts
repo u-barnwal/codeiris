@@ -20,4 +20,3 @@ export class Comment extends BaseModel {
   user: User;
   @Field(() => Post)
   post: Post;
-}
