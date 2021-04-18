@@ -5,7 +5,7 @@ import { NextPageContext } from 'next';
 
 function Home({ data }) {
   return (
-    <div className="mt-10 bg-secondary-light ">
+    <div className="mt-10 ">
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,

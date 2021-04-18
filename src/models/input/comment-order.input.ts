@@ -4,6 +4,7 @@ import { Order } from '../../common/order/order';
 export enum CommentOrderField {
   votes = 'votes',
   updatedAt = 'updatedAt',
+  createdAt = 'createdAt',
 }
 
 registerEnumType(CommentOrderField, {

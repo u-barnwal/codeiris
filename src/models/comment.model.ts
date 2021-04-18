@@ -18,6 +18,6 @@ export class Comment extends BaseModel {
   parent: Comment;
   @Field(() => User, { nullable: true })
   user: User;
-  @Field(() => Post)
+  @Field(() => Post, { nullable: true })
   post: Post;
 }

@@ -1,9 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 
-export interface CardProps {
+export interface CardProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   image?: string;
-  title?: React.ReactNode;
+  title?: string;
   body?: string;
   totalUpvotes?: number;
   totalComments?: number;

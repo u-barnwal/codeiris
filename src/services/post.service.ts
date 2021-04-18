@@ -5,6 +5,22 @@ import { PrismaService } from './prisma.service';
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
+  async getSinglePost(id: string) {
+    return this.prisma.post.findUnique({
+      where: { id },
+      include: {
+        user: true,
+        tags: true,
+        flag: true,
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
+      },
+    });
+  }
+
   async getTopPost(
     type: 'link' | 'job' | 'ask',
     orderBy = {},

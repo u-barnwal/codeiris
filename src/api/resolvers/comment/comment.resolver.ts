@@ -1,4 +1,11 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { Comment } from '../../../models/comment.model';
 import { PrismaService } from '../../../services/prisma.service';
 import { CommentConnection } from '../../../models/pagination/comment-connection.model';
@@ -7,8 +14,8 @@ import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection
 import { Ctx } from '../../decorators/request-context.decorator';
 import { RequestContext } from '../../common/request-context';
 import { CommentOrder } from '../../../models/input/comment-order.input';
-import { User } from '../../../models/user.model';
-import { Post } from '../../../models/post.model';
+import { CommentCreateInput } from '../../../models/input/comment-create.input';
+import { BadRequestException } from '@nestjs/common';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -81,6 +88,30 @@ export class CommentResolver {
       { first, last, before, after },
     );
     return commentCursor;
+  }
+
+  @Mutation(() => Comment)
+  async CreateComment(
+    @Args('input') input: CommentCreateInput,
+    @Ctx() context: RequestContext,
+  ) {
+    if (input.parentId === undefined && input.postId === undefined) {
+      throw new BadRequestException();
+    }
+    return this.prisma.comment.create({
+      data: {
+        parentId: input.parentId,
+        postId: input.postId,
+        body: input.body,
+        userId: context.user ? context.user.id : undefined,
+      },
+      include: {
+        post: true,
+        parent: true,
+        children: true,
+        user: true,
+      },
+    });
   }
 
   @ResolveField('children', (returns) => [Comment])

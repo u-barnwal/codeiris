@@ -15,7 +15,7 @@ import { RequestContextService } from './common/request-context.service';
 import { MagicLinkGateway } from './gateway/magiclink.gateway';
 import { EventBusModule } from '../event-bus/event-bus.module';
 import { UserController } from './controllers/user/user.controller';
-import { CommentModule } from "./resolvers/comment/comment.module";
+import { CommentModule } from './resolvers/comment/comment.module';
 
 @Module({
   imports: [
@@ -49,7 +49,7 @@ import { CommentModule } from "./resolvers/comment/comment.module";
       provide: APP_GUARD,
       useClass: GQLAuthGuard,
     },
-    /*DateScalar*/
+    DateScalar,
   ],
 })
 export class ApiModule {}
