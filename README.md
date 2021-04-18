@@ -3,7 +3,7 @@ Three lazy programmer create tech post app for other lazy programmers. Build wit
 
 # Links
 ## Production 
-https://codeiris.dev/h 
+https://codeiris.dev/
 ## Developement
 https://dev.codeiris.dev/
 
