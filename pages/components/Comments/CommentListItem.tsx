@@ -9,8 +9,14 @@ interface CommentListItemProps {
 }
 function CommentListItem({ comment }: CommentListItemProps) {
   const [add, setAdd] = useState(false);
+  if (comment === undefined) {
+    return <div />;
+  }
   return (
-    <div className="w-full rounded rounded-lg overflow-hidden shadow-sm p-2 bg-white" key={comment.id}>
+    <div
+      className="w-full rounded rounded-lg overflow-hidden shadow-sm p-2 bg-white"
+      key={comment.id}
+    >
       <div className="flex items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"

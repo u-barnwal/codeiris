@@ -20,10 +20,12 @@ type Comment {
   id: ID!
   parent: Comment
   post: Post
+  postId: String!
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date!
   user: User
+  userId: String!
 }
 
 type CommentConnection {

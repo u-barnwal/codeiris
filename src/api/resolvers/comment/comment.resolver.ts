@@ -16,6 +16,7 @@ import { RequestContext } from '../../common/request-context';
 import { CommentOrder } from '../../../models/input/comment-order.input';
 import { CommentCreateInput } from '../../../models/input/comment-create.input';
 import { BadRequestException } from '@nestjs/common';
+import { User } from '../../../models/user.model';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -109,7 +110,6 @@ export class CommentResolver {
         post: true,
         parent: true,
         children: true,
-        user: true,
       },
     });
   }
@@ -121,7 +121,7 @@ export class CommentResolver {
     });
   }
 
-  @ResolveField('parent', (returns) => Comment)
+  @ResolveField('parent', (returns) => Comment, { nullable: true })
   async parent(@Parent() comment: Comment) {
     return this.prisma.comment.findFirst({
       where: { children: { some: { id: comment.id } } },
