@@ -1,13 +1,8 @@
 import { PostProps } from '../../../lib/common/props/PostProps';
 import Image from 'next/image';
+
 //TODO due to build error the user part is disabled
-const Post: React.FC<PostProps> = ({
-  title,
-  body,
-  upvotes,
-  totalComments,
-  user,
-}: PostProps) => {
+function Post({ title, body, upvotes, totalComments, user }: PostProps) {
   return (
     <div className="max-w-md rounded-md shadow-lg mx-auto bg-white">
       <Image
@@ -81,7 +76,7 @@ const Post: React.FC<PostProps> = ({
                 </svg>
               </div>
               <div className="text-base text-body">
-                {user.firstName + ' ' + user.lastName}
+                {user && user.firstName + ' ' + user.lastName}
               </div>
             </div>
             <div className="flex flex-row">
@@ -108,6 +103,6 @@ const Post: React.FC<PostProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default Post;

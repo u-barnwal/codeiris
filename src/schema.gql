@@ -59,7 +59,7 @@ type MagicLinkDto {
 
 type Mutation {
   sendMagicLink(email: String!): MagicLinkDto!
-  updateUser(data: UpdateUserInput!): User!
+  updateUserProfileInfo(data: UpdateUserInput!): User!
 }
 
 enum OrderDirection {
