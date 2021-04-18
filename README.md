@@ -7,7 +7,7 @@ https://codeiris.dev/h
 ## Developement
 https://dev.codeiris.dev/
 
-#Features
+# Features
 - **Password less Login and Signup:** User should be able to login with Google, GitHub etc. using their email address
 - **Link Posts:** User should be able to create link posts and add tags.
 - **Ask HN Posts:** User should be able to create Ask HN post and add tags
