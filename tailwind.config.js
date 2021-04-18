@@ -16,7 +16,7 @@ module.exports = {
         dark: colors.coolGray['900'],
       },
       body: {
-        light: colors.trueGray['300'],
+        light: colors.trueGray['100'],
         DEFAULT: colors.trueGray['400'],
         dark: colors.trueGray['500'],
       },

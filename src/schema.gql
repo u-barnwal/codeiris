@@ -59,6 +59,7 @@ type MagicLinkDto {
 
 type Mutation {
   sendMagicLink(email: String!): MagicLinkDto!
+  updateUser(data: UpdateUserInput!): User!
 }
 
 enum OrderDirection {
@@ -138,6 +139,12 @@ type Query {
   getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
   me: User
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  middleName: String
 }
 
 type User {

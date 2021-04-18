@@ -25,6 +25,7 @@ query getMe{
         lastName
         middleName
         role
+        email
         status
     }
 }

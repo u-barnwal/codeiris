@@ -57,15 +57,20 @@ export class PostResolver {
         this.prisma.post.findMany({
           where: {
             user: {
-              id: {
-                equals: context.user.id,
-              },
+              id: context.user.id,
             },
           },
           orderBy: orderBy && { [orderBy.field]: orderBy.direction },
           ...args,
         }),
-      () => this.prisma.post.count(),
+      () =>
+        this.prisma.post.count({
+          where: {
+            user: {
+              id: context.user.id,
+            },
+          },
+        }),
       { first, last, before, after },
     );
     return postCursors;

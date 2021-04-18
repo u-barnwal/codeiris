@@ -30,7 +30,7 @@ function Profile() {
   const { ...postCount } = useQuery<
     GetMePostsCountQuery,
     GetMePostsCountQueryVariables
-  >(GetMePostsCountDocument);
+  >(GetMePostsCountDocument, { skip: skipper() });
 
   return (
     <div>
