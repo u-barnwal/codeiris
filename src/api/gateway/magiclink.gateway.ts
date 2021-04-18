@@ -19,14 +19,12 @@ export class MagicLinkGateway implements OnModuleInit {
   constructor(private eventBus: EventBus) {}
 
   onModuleInit() {
-    console.log(this.server);
     const magicLinkVerificationEvent$ = this.eventBus.ofType(
       MagicLinkVerificationEvent,
     );
     merge(magicLinkVerificationEvent$)
       .pipe(debounceTime(50))
       .subscribe(async (event: MagicLinkVerificationEvent) => {
-        console.log(event);
         this.server
           .to(event.sessionToken)
           .emit('linkstatus', JSON.stringify(event.authenticationData));

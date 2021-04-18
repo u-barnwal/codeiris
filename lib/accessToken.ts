@@ -6,9 +6,17 @@ let accessToken = undefined;
 let refreshToken = undefined;
 let expiry = null;
 
+export const logout = () => {
+  accessToken = undefined;
+  refreshToken = undefined;
+};
+
 export const setAccessToken = (s: string) => (accessToken = s);
 export const getAccessToken = () => accessToken;
-export const setRefreshToken = (s: string) => (refreshToken = s);
+export const setRefreshToken = (s: string) => {
+  refreshToken = s;
+  localStorage.setItem(refresh, s);
+};
 
 export const isExpired = () => {
   if (accessToken === '' || accessToken === undefined || expiry === null) {
@@ -24,11 +32,21 @@ export const getExpiry = () => expiry;
 export const getRefreshToken = () => {
   if (refreshToken === '' || refreshToken === undefined) {
     if (!isServer()) {
-      const token = sessionStorage.getItem(refresh);
+      const token = localStorage.getItem(refresh);
       if (token) {
         refreshToken = token;
       }
     }
   }
   return refreshToken;
+};
+
+export const skipper = () => {
+  if (isServer()) {
+    return true;
+  } else {
+    if (!getAccessToken() && !getRefreshToken()) {
+      return true;
+    }
+  }
 };

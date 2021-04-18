@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { useEffect } from 'react';
 import { host } from '../../../utils/GlobalConstants';
 
-export function MagicLinkSendingSuccess({ listener }) {
+export default function MagicLinkSendingSuccess({ listener }) {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   useEffect(() => {
     const socket = io('http://localhost:3000/');
@@ -25,7 +25,7 @@ export function MagicLinkSendingSuccess({ listener }) {
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-green-500"
+            className="h-20 w-20 text-green-500"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -40,7 +40,7 @@ export function MagicLinkSendingSuccess({ listener }) {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <Heading size={HeadingSize.H600} style={{ fontSize: 30 }}>
+        <Heading size={HeadingSize.H600} style={{ fontSize: 30 }} className='text-gray-500'>
           Login Email Sent
         </Heading>
       </div>

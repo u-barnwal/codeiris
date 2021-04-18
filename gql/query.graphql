@@ -16,3 +16,27 @@ query getPosts($after: String!, $first: Int!) {
     }
   }
 }
+
+
+query getMe{
+    me {
+        id
+        firstName
+        lastName
+        middleName
+        role
+        status
+    }
+}
+
+query getMeCommentsCount {
+    getMeComments {
+        totalCount
+    }
+}
+
+query getMePostsCount {
+    getMePosts {
+        totalCount
+    }
+}
