@@ -95,7 +95,6 @@ function createApolloClient(initialState = {}, accessToken?: string) {
       setExpiry();
     },
     handleError: (err) => {
-      console.log(err);
       setAccessToken(null);
       setRefreshToken(null);
     },

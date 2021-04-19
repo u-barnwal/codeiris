@@ -11,6 +11,8 @@ import { join } from 'path';
 import { ServicesModule } from './services/services.module';
 import { MagicLinkGateway } from './api/gateway/magiclink.gateway';
 import { EventBusModule } from './event-bus/event-bus.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './api/common/filters/http-exception.filter';
 
 @Module({
   imports: [
@@ -23,12 +25,19 @@ import { EventBusModule } from './event-bus/event-bus.module';
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     ApiModule,
     RenderModule.forRootAsync(
-      Next({ dev: process.env.NODE_ENV !== 'production' }),
+      Next({ dev: process.env.NODE_ENV !== 'production', quiet: true, customServer: true }),
     ),
     ServicesModule,
     EventBusModule,
   ],
   controllers: [AppController],
-  providers: [AppService, MagicLinkGateway],
+  providers: [
+    AppService,
+    MagicLinkGateway,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

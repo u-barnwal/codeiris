@@ -124,21 +124,6 @@ export class SessionService {
         existSession.user.id,
         existSession.token,
       );
-      // TODO remove this useless
-      /*console.log(newTokens);
-      const updatedSession = await this.prisma.session.update({
-        where: {
-          id: existSession.id,
-        },
-        data: {
-          authToken: newTokens.accessToken,
-          refreshToken: newTokens.refreshToken,
-        },
-        include: {
-          user: true,
-        },
-      });
-      console.log(updatedSession);*/
       return {
         user: existSession.user,
         authToken: newTokens.accessToken,
@@ -151,7 +136,6 @@ export class SessionService {
 
   async validateSession(token: string): Promise<Session> {
     const payload: any = this.jwtService.decode(token, { complete: true });
-    console.log(payload);
     const existSession = await this.prisma.session.findFirst({
       where: {
         token: payload.payload.session,
@@ -191,7 +175,6 @@ export class SessionService {
    * @private
    */
   async generateAccessToken(userId: string, session: string): Promise<Token> {
-    console.log(userId, session);
     const security = this.config.get<SecurityConfig>('security');
     const accessToken = await this.jwtService.signAsync(
       {
@@ -206,8 +189,6 @@ export class SessionService {
       { session: session },
       { expiresIn: '30d' },
     );
-    console.log(refreshToken);
-    console.log(accessToken);
     return {
       accessToken,
       refreshToken,

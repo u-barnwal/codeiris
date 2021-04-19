@@ -53,6 +53,8 @@
     "@nestjs/swagger": "^4.8.0",
     "@nestjs/websockets": "^7.6.15",
     "@prisma/client": "^2.20.1",
+    "@sentry/hub": "^6.2.5",
+    "@sentry/node": "^6.2.5",
     "@types/react-dom": "^17.0.3",
     "apollo-link-token-refresh": "^0.3.2",
     "apollo-server-express": "^2.22.1",
