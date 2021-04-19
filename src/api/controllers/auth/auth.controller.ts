@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Controller,
   Get,
+  Header,
+  Headers,
   Param,
   Post,
   Render,
@@ -45,36 +47,48 @@ export class AuthController {
     };
   }
 
+  // TODO this we will revisit again due to some unexpected behaviour
   @Post('/refresh-token')
-  async refreshToken(@Req() req, @Res() res: Response): Promise<any> {
+  @Header('Cache-Control', 'no-cache')
+  async refreshToken(@Headers('refresh_token') reftoken): Promise<any> {
     const serverPath = this.configService.get<string>(
       'NEXT_PUBLIC_SERVER_PATH',
     );
-    const reftoken = req.headers.refresh_token;
-    if (reftoken === null || reftoken === undefined) {
-      throw new BadRequestException();
-    }
-    const sessioninfo = await this.sessionService.revalidateSession(reftoken);
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Access-Control-Allow-Origin', serverPath);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    if (sessioninfo) {
-      res.send({
-        tokens: {
-          jwt_token: sessioninfo?.authToken,
-          refresh_token: sessioninfo?.refreshToken,
-          invalid: false,
-        },
-      });
-    } else {
-      res.send({
+    if (reftoken === undefined || reftoken === 'undefined') {
+      return {
         tokens: {
           jwt_token: undefined,
           refresh_token: undefined,
           invalid: true,
         },
-      });
+      };
+    } else if (reftoken === null || reftoken === 'null') {
+      return {
+        tokens: {
+          jwt_token: undefined,
+          refresh_token: undefined,
+          invalid: true,
+        },
+      };
+    } else {
+      const sessioninfo = await this.sessionService.revalidateSession(reftoken);
+      if (sessioninfo) {
+        return {
+          tokens: {
+            jwt_token: sessioninfo?.authToken,
+            refresh_token: sessioninfo?.refreshToken,
+            invalid: false,
+          },
+        };
+      } else {
+        return {
+          tokens: {
+            jwt_token: undefined,
+            refresh_token: undefined,
+            invalid: true,
+          },
+        };
+      }
     }
   }
 }

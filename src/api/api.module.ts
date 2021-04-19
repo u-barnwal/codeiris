@@ -9,12 +9,13 @@ import { ServicesModule } from '../services/services.module';
 import { UserModule } from './resolvers/user/user.module';
 import { PostModule } from './resolvers/post/post.module';
 import { PostController } from './controllers/post/post.controller';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { GQLAuthGuard } from './resolvers/auth/guards/auth.guard';
 import { RequestContextService } from './common/request-context.service';
 import { EventBusModule } from '../event-bus/event-bus.module';
 import { UserController } from './controllers/user/user.controller';
 import { CommentModule } from './resolvers/comment/comment.module';
+import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
 
 @Module({
   imports: [
