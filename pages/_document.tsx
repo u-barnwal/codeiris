@@ -16,7 +16,7 @@ class MyDocument extends Document {
             content="width=device-width, initial-scale=1"
           ></meta>
         </Head>
-        <body className="bg-secondary-light">
+        <body className="bg-body-light">
           <Main />
           <NextScript />
         </body>

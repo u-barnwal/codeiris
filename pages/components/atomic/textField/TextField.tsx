@@ -10,6 +10,7 @@ export interface TextFieldProps
     IntentProps {
   error?: string;
   placeholder?: string;
+  floating?: boolean;
 }
 
 // TODO as better sliding animation
@@ -19,14 +20,15 @@ function TextField({
   error,
   placeholder,
   className,
+  floating,
   ...rest
 }: TextFieldProps) {
   const [focus, setFocus] = useState(false);
   return (
     <React.Fragment>
       <div className="flex flex-col m-1">
-        {focus && !!placeholder && (
-          <span className="text-primary transition-opacity duration-1000 ease-in transform text-lg">
+        {((focus && !!placeholder) || floating) && (
+          <span className="text-primary transition ease-in-out transform text-lg">
             {placeholder}
           </span>
         )}

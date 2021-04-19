@@ -4,6 +4,9 @@ import { ToastProps } from '../../../../lib/common/props/ToastProps';
 import Overlay from '../overlay';
 import { CommonProps } from 'lib/common/props/CommonProps';
 import Toast from './Toast';
+import { isServer } from '../../../../lib/apollo';
+import clsx from 'clsx';
+import './toast.module.css';
 
 // TODO Toaster is still not ready for SSR usage
 
@@ -35,9 +38,9 @@ class Toaster
 
   public static create(
     props?: ToasterProps,
-    container = window !== undefined ? document.body : null,
+    container = !isServer() ? document.body : null,
   ): Toaster | null {
-    if (window !== undefined) {
+    if (!isServer()) {
       const containerElement = document.createElement('div');
       container.appendChild(containerElement);
       return ReactDOM.render<ToasterProps>(
@@ -57,11 +60,27 @@ class Toaster
 
   render() {
     return (
-      <Overlay>
+      <div
+        className={clsx(
+          this.getPosition(),
+          'flex justify-center items-center absolute w-full',
+        )}
+      >
         {this.state.toasts.map(this.renderToast, this)}
         {this.props.children}
-      </Overlay>
+      </div>
     );
+  }
+
+  getPosition() {
+    switch (this.props.position) {
+      case Position.TOP:
+        return 'top-2';
+      case Position.BOTTOM:
+        return 'bottom-2';
+      default:
+        return 'bottom-2';
+    }
   }
 
   public show(props: ToastProps, key?: string): string {

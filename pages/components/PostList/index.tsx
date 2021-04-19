@@ -1,18 +1,62 @@
-import React, { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GetPostsDocument, GetPostsQuery, QueryGetPostsArgs } from 'gql';
+import { PostProps } from 'lib/common/props/PostProps';
+import React, { useEffect, useState } from 'react';
 // This is not to be imported form prisma client
 // import { Post as PostData } from '.prisma/client';
 import Post from '../Post';
+import Router from 'next/router';
 
 export interface PostListProps {
-  initialPosts?: any[];
+  initialPosts?: PostProps[];
 }
 const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
-  const [posts, setPosts] = useState<any[]>(initialPosts);
+  const [posts, setPosts] = useState<PostProps[]>(initialPosts);
+  const [cursor, setCursor] = useState(
+    initialPosts.length > 0 ? initialPosts[initialPosts.length - 1].id : '',
+  );
+  const { loading, data, error } = useQuery<GetPostsQuery, QueryGetPostsArgs>(
+    GetPostsDocument,
+    {
+      variables: {
+        after: cursor,
+        first: 10,
+      },
+    },
+  );
+  useEffect(() => {
+    if (!loading) {
+      if (!!data) {
+        const length = data.getPosts.edges.length;
+        if (length < 1) return;
+        setCursor(data.getPosts.edges[length - 1].node.id);
+        const newPosts = data.getPosts.edges.map((ele) => ({
+          id: ele.node.id,
+          title: ele.node.title,
+          body: ele.node.body,
+          user: {
+            firstName: ele.node.user.firstName,
+            lastName: ele.node.user.lastName,
+          },
+          upvotes: ele.node.totalVotes,
+          totalComments: ele.node.totalComments,
+        }));
+        // setPosts((prev) => [...prev, ...newPosts]);
+      }
+    }
+  }, [loading, data, error]);
   return (
-    <div className="flex flex-col    ">
+    <div className="container">
       {posts.map((ele) => (
-        <div className="my-5">
-          <Post title={ele.title} body={ele.body} upvotes={0} user={ele.user} />
+        <div className="my-10" onClick={() => Router.push(`/posts/${ele.id}`)}>
+          <Post
+            id={ele.id}
+            title={ele.title}
+            body={ele.body}
+            upvotes={ele.upvotes}
+            user={ele.user}
+            totalComments={ele.totalComments}
+          />
         </div>
       ))}
     </div>
