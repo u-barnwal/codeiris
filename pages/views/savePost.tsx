@@ -24,7 +24,7 @@ const initialFields = {
 
 function SavePost() {
   const {
-    props: { imageURL, title, url },
+    props: { title, url },
     dispatch,
     handleFieldChange,
   } = useForm(initialFields);
@@ -82,20 +82,6 @@ function SavePost() {
 
       <div className="flex">
         <div className="flex-grow p-3 bg-white mr-5 rounded-md">
-          <div className="flex items-end w-full">
-            {imageURL && (
-              <img src={imageURL} alt="he" style={{ maxHeight: '100px' }} />
-            )}
-
-            <TextField
-              placeholder="Paste image URL here..."
-              className="flex-grow"
-              onChange={(e) => {
-                handleFieldChange('imageURL', e);
-              }}
-            />
-          </div>
-
           <TextField
             value={title}
             placeholder="Title"
