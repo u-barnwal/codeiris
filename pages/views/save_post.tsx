@@ -1,9 +1,19 @@
+import { Position } from 'lib/common';
+import Button from 'pages/components/atomic/button';
 import TextField from 'pages/components/atomic/textField';
+import Toaster from 'pages/components/atomic/toast/Toaster';
+import useForm from 'pages/hooks/useForm';
 import DefaultLayout from 'pages/layouts/defaultLayout';
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
+
+const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
 function SavePost() {
-  const [imageUrl, setImageURL] = useState('');
+  const [{ imageURL, title, link }, dispatch] = useForm({
+    imageURL: '',
+    title: '',
+    link: '',
+  });
 
   return (
     <div className="container px-40 mt-10">
@@ -12,20 +22,22 @@ function SavePost() {
       <div className="flex">
         <div className="flex-grow p-3 bg-white mr-5 rounded-md">
           <div className="flex items-end w-full">
-            {imageUrl && (
-              <img src={imageUrl} alt="he" style={{ maxHeight: '100px' }} />
+            {imageURL && (
+              <img src={imageURL} alt="he" style={{ maxHeight: '100px' }} />
             )}
             <TextField
               placeholder="Paste image URL here..."
               className="flex-grow"
               onChange={(e) => {
-                setImageURL(e.target.value);
+                dispatch({ imageURL: e.target.value });
               }}
             />
           </div>
 
           <TextField placeholder="Title" />
           <TextField placeholder="Link" type="url" />
+
+          <Button>Add</Button>
         </div>
 
         <div style={{ minWidth: '200px' }}>
