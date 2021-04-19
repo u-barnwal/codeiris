@@ -142,6 +142,7 @@ enum PostType {
 type Query {
   getAuth: Auth!
   getComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, postId: String, skip: Int): CommentConnection!
+  getCommentsChildren(after: String, before: String, commentId: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
   getMeComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
   getMePosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!

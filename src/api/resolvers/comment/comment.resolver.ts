@@ -16,7 +16,6 @@ import { RequestContext } from '../../common/request-context';
 import { CommentOrder } from '../../../models/input/comment-order.input';
 import { CommentCreateInput } from '../../../models/input/comment-create.input';
 import { BadRequestException } from '@nestjs/common';
-import { User } from '../../../models/user.model';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -82,10 +81,65 @@ export class CommentResolver {
               },
             },
           },
+          include: {
+            user: true,
+          },
           orderBy: orderBy && { [orderBy.field]: orderBy.direction },
           ...args,
         }),
-      () => this.prisma.comment.count(),
+      () =>
+        this.prisma.comment.count({
+          where: {
+            post: {
+              id: {
+                contains: postId ? postId : '',
+              },
+            },
+          },
+        }),
+      { first, last, before, after },
+    );
+    return commentCursor;
+  }
+
+  @Query(() => CommentConnection)
+  async getCommentsChildren(
+    @Args() { skip, after, before, first, last }: PaginationArgs,
+    @Args('commentId', { nullable: true, type: () => String })
+    commentId: string,
+    @Args({
+      name: 'orderBy',
+      type: () => CommentOrder,
+      nullable: true,
+    })
+    orderBy: CommentOrder,
+  ) {
+    const commentCursor = findManyCursorConnection(
+      (args) =>
+        this.prisma.comment.findMany({
+          where: {
+            parent: {
+              id: {
+                contains: commentId,
+              },
+            },
+          },
+          include: {
+            user: true,
+          },
+          orderBy: orderBy && { [orderBy.field]: orderBy.direction },
+          ...args,
+        }),
+      () =>
+        this.prisma.comment.count({
+          where: {
+            parent: {
+              id: {
+                contains: commentId,
+              },
+            },
+          },
+        }),
       { first, last, before, after },
     );
     return commentCursor;
