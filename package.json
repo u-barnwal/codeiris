@@ -52,7 +52,7 @@
     "@nestjs/serve-static": "^2.1.4",
     "@nestjs/swagger": "^4.8.0",
     "@nestjs/websockets": "^7.6.15",
-    "@prisma/client": "^2.20.1",
+    "@prisma/client": "^2.21.2",
     "@types/react-dom": "^17.0.3",
     "apollo-link-token-refresh": "^0.3.2",
     "apollo-server-express": "^2.22.1",
