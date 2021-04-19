@@ -9,9 +9,10 @@ import {
   AddPostDocument,
   AddPostMutation,
   AddPostMutationVariables,
+  PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
-import { PostType } from '.prisma/client';
+// import { PostType } from '.prisma/client';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
@@ -52,7 +53,7 @@ function SavePost() {
       variables: {
         title,
         url,
-        // type: PostType.link,
+        type: PostType.Link,
       },
     })
       .then((value) => {

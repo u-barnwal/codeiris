@@ -59,7 +59,7 @@ model Post {
   deleted               Boolean         @default(false)
   status                PostStatus      @default(value: draft)
   comments              Comment[]       @relation(name: "PostOnComment")
-  image                 String?
+  image                 File?
   tags                  Tag[]           @relation(name: "PostOnTags")
   votes                 Vote[]          @relation(name: "PostOnVotes")
   type                  PostType        @default(value: link)
@@ -121,6 +121,8 @@ model File {
   size                  Int?
   user                  User?           @relation(fields: [userId], references: [id])
   userId                String?
+  post                  Post?           @relation(fields: [postId], references: [id])
+  postId                String?
 }
 
 

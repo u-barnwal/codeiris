@@ -12,6 +12,9 @@ export class PostCreateInput {
   @Field({ nullable: true })
   url: string;
 
+  @Field({ nullable: true })
+  image: string;
+
   @Field(() => PostType, { nullable: true, defaultValue: 'link' })
   type: 'link' | 'ask' | 'job';
 }

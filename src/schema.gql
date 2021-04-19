@@ -114,6 +114,7 @@ type PostConnection {
 
 input PostCreateInput {
   body: String
+  image: String
   title: String!
   type: PostType = link
   url: String
