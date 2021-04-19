@@ -66,6 +66,7 @@ type MagicLinkDto {
 
 type Mutation {
   CreateComment(input: CommentCreateInput!): Comment!
+  addPost(post: PostCreateInput!): Post!
   sendMagicLink(email: String!): MagicLinkDto!
   updateUserProfileInfo(data: UpdateUserInput!): User!
 }
@@ -109,6 +110,13 @@ type PostConnection {
   edges: [PostEdge!]
   pageInfo: PageInfo!
   totalCount: Int!
+}
+
+input PostCreateInput {
+  body: String
+  title: String!
+  type: PostType = link
+  url: String
 }
 
 type PostEdge {

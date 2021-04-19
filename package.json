@@ -79,6 +79,7 @@
     "rxjs": "^6.6.6",
     "sass": "^1.32.8",
     "sass-loader": "10.1.1",
+    "slugify": "^1.5.0",
     "socket.io-client": "^2.4.0",
     "superjson": "^1.7.4",
     "swagger-ui-express": "^4.1.6",

@@ -12,8 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: any;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type Auth = {
@@ -30,13 +30,15 @@ export type Comment = {
   body: Scalars['String'];
   children?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   parent?: Maybe<Comment>;
-  post: Post;
+  post?: Maybe<Post>;
+  postId: Scalars['String'];
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   user?: Maybe<User>;
+  userId: Scalars['String'];
 };
 
 export type CommentConnection = {
@@ -79,6 +81,7 @@ export type MagicLinkDto = {
 export type Mutation = {
   __typename?: 'Mutation';
   CreateComment: Comment;
+  addPost: Post;
   sendMagicLink: MagicLinkDto;
   updateUserProfileInfo: User;
 };
@@ -86,6 +89,11 @@ export type Mutation = {
 
 export type MutationCreateCommentArgs = {
   input: CommentCreateInput;
+};
+
+
+export type MutationAddPostArgs = {
+  post: PostCreateInput;
 };
 
 
@@ -116,7 +124,7 @@ export type Post = {
   body: Scalars['String'];
   comments?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   deleted: Scalars['Boolean'];
   id: Scalars['ID'];
   slug: Scalars['String'];
@@ -126,7 +134,7 @@ export type Post = {
   totalVotes: Scalars['Int'];
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   url: Scalars['String'];
   user: User;
   userId: Scalars['String'];
@@ -138,6 +146,13 @@ export type PostConnection = {
   edges?: Maybe<Array<PostEdge>>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type PostCreateInput = {
+  body?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  type?: Maybe<PostType>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type PostEdge = {
@@ -240,7 +255,7 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
@@ -249,7 +264,7 @@ export type User = {
   role: UserRole;
   status: UserStatus;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
 };
 
 export type UserConnection = {
@@ -292,12 +307,12 @@ export enum UserStatus {
 export type Vote = {
   __typename?: 'Vote';
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   post: Post;
   type: VoteType;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   user: User;
 };
 
@@ -346,6 +361,22 @@ export type CreateCommentMutation = (
   & { CreateComment: (
     { __typename?: 'Comment' }
     & Pick<Comment, 'id'>
+  ) }
+);
+
+export type AddPostMutationVariables = Exact<{
+  title: Scalars['String'];
+  body?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  type?: Maybe<PostType>;
+}>;
+
+
+export type AddPostMutation = (
+  { __typename?: 'Mutation' }
+  & { addPost: (
+    { __typename?: 'Post' }
+    & Pick<Post, 'id'>
   ) }
 );
 
@@ -428,10 +459,10 @@ export type GetCommentsQuery = (
         & { user?: Maybe<(
           { __typename?: 'User' }
           & Pick<User, 'id' | 'firstName'>
-        )>, post: (
+        )>, post?: Maybe<(
           { __typename?: 'Post' }
           & Pick<Post, 'id'>
-        ) }
+        )> }
       ) }
     )>> }
   ) }
@@ -544,6 +575,42 @@ export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
 export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const AddPostDocument = gql`
+    mutation addPost($title: String!, $body: String, $url: String, $type: PostType) {
+  addPost(post: {title: $title, body: $body, url: $url, type: $type}) {
+    id
+  }
+}
+    `;
+export type AddPostMutationFn = Apollo.MutationFunction<AddPostMutation, AddPostMutationVariables>;
+
+/**
+ * __useAddPostMutation__
+ *
+ * To run a mutation, you first call `useAddPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPostMutation, { data, loading, error }] = useAddPostMutation({
+ *   variables: {
+ *      title: // value for 'title'
+ *      body: // value for 'body'
+ *      url: // value for 'url'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useAddPostMutation(baseOptions?: Apollo.MutationHookOptions<AddPostMutation, AddPostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddPostMutation, AddPostMutationVariables>(AddPostDocument, options);
+      }
+export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>;
+export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
+export type AddPostMutationOptions = Apollo.BaseMutationOptions<AddPostMutation, AddPostMutationVariables>;
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
