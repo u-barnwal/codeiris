@@ -37,4 +37,18 @@ export class PostService {
     });
     return topPosts;
   }
+
+  // async addPost(type: 'link' | 'job' | 'ask', title, body, url) {
+  //   const result = await this.prisma.post.create({
+  //     data: {
+  //       type,
+  //       title,
+  //       body,
+  //       // TODO: generate random slug
+  //       slug: '',
+  //       url,
+  //     },
+  //   });
+  //   return result;
+  // }
 }
