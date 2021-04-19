@@ -1,25 +1,78 @@
-import { Position } from 'lib/common';
+import { Intent, Position } from 'lib/common';
 import Button from 'pages/components/atomic/button';
 import TextField from 'pages/components/atomic/textField';
 import Toaster from 'pages/components/atomic/toast/Toaster';
 import useForm from 'pages/hooks/useForm';
 import DefaultLayout from 'pages/layouts/defaultLayout';
 import React from 'react';
+import {
+  AddPostDocument,
+  AddPostMutation,
+  AddPostMutationVariables,
+} from 'gql';
+import { useMutation } from '@apollo/client';
+import { PostType } from '.prisma/client';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
+
+const initialFields = {
+  imageURL: '',
+  title: '',
+  url: '',
+};
 
 function SavePost() {
   const {
     props: { imageURL, title, url },
+    dispatch,
     handleFieldChange,
-  } = useForm({
-    imageURL: '',
-    title: '',
-    url: '',
-  });
+  } = useForm(initialFields);
+
+  const [AddPost, { ...addPostData }] = useMutation<
+    AddPostMutation,
+    AddPostMutationVariables
+  >(AddPostDocument);
 
   const handleSubmit = () => {
-    // if(titlt)
+    let error;
+
+    if (title === '') error = 'You must enter a title!';
+    else if (url === '') error = 'You must enter a URL!';
+
+    if (error) {
+      AppToaster.show({
+        message: error,
+        intent: Intent.ERROR,
+      });
+      return;
+    }
+
+    // + inserting row
+    AddPost({
+      variables: {
+        title,
+        url,
+        // type: PostType.link,
+      },
+    })
+      .then((value) => {
+        AppToaster.show({
+          message: 'Post Added!',
+          intent: Intent.SUCCESS,
+        });
+
+        reset();
+      })
+      .catch((error) =>
+        AppToaster.show({
+          message: error.message,
+          intent: Intent.ERROR,
+        }),
+      );
+  };
+
+  const reset = () => {
+    dispatch(initialFields);
   };
 
   return (
