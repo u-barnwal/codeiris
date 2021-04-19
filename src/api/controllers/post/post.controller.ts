@@ -1,4 +1,4 @@
-import { PostType } from '.prisma/client';
+import { PostType, VoteType } from '.prisma/client';
 import {
   BadRequestException,
   Controller,
@@ -7,11 +7,22 @@ import {
   Render,
 } from '@nestjs/common';
 import { PostService } from '../../../services/post.service';
+import superjson from 'superjson';
 
 @Controller('posts')
 export class PostController {
   constructor(private readonly post: PostService) {}
 
+  @Get(':id')
+  @Render('postPage')
+  async getPost(@Param('id') id: string) {
+    const post = await this.post.getSinglePost(id);
+    return {
+      data: superjson.stringify(post),
+    };
+  }
+
+  // TODO remove this
   @Get(':type')
   @Render('home')
   async getPostList(@Param('type') postType: string) {
@@ -45,6 +56,12 @@ export class PostController {
             image: true,
           },
         },
+        _count: {
+          select: {
+            votes: true,
+            comments: true,
+          },
+        },
       };
       const initialPosts = await this.post.getTopPost(
         postType,
@@ -53,7 +70,6 @@ export class PostController {
         10,
       );
       return {
-        data: 'word',
         initialPosts: JSON.stringify(initialPosts),
       };
     }

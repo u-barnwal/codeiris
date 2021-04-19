@@ -1,5 +1,4 @@
 import React from 'react';
-import './button.module.scss';
 import clsx from 'clsx';
 import { IntentProps } from '../../../../lib/common/props/IntentProps';
 
