@@ -12,18 +12,24 @@ import {
   GetCommentsQueryVariables,
 } from '../../gql';
 import CommentListItem from '../components/Comments/CommentListItem';
+import Button from "../components/atomic/button";
+import Spinner from "../components/atomic/spinner";
+import { SpinnerSize } from "../../lib/common/props/SpinnerProps";
 
 interface Props {
   postData: string;
 }
 
 function PostPage({ postData }: Props) {
-  const [first, setFirst] = useState(40);
+  const [first, setFirst] = useState(10);
   const post: any = superjson.parse(postData);
   const { data, loading, error } = useQuery<
     GetCommentsQuery,
     GetCommentsQueryVariables
-  >(GetCommentsDocument, { variables: { post: post.id, first } });
+  >(GetCommentsDocument, {
+    variables: { post: post.id, first },
+    pollInterval: 3000,
+  });
   console.log(data);
   return (
     <div className="container mx-auto px-4 mt-10 mb-10">
@@ -66,15 +72,42 @@ function PostPage({ postData }: Props) {
           Comments <span className="ml-5">[{post._count.comments}]</span>
         </div>
         <CommentsInput postId={post.id} />
+        {loading && (
+          <div className="flex justify-center items-center">
+            <Spinner size={SpinnerSize.small} />
+          </div>
+        )}
         <div className="mt-5">
-          {!loading && !error && (
+          {!loading && !error && data && (
             <div>
               {data.getComments.edges.map((comments) => (
-                <CommentListItem comment={comments.node} />
+                <CommentListItem comment={comments.node} child={true} />
               ))}
             </div>
           )}
         </div>
+        {data && data.getComments.totalCount > first && (
+          <div className="flex justify-center items-center">
+            <Button
+              loading={loading}
+              disabled={loading}
+              className="bg-white text-blueGray-500"
+              loaderClass="bg-primary"
+              onClick={() => {
+                if (
+                  data.getComments.totalCount + 10 >
+                  data.getComments.totalCount
+                ) {
+                  setFirst(first + 10);
+                } else {
+                  setFirst(data.getComments.totalCount);
+                }
+              }}
+            >
+              Load More
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

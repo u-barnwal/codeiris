@@ -58,6 +58,7 @@
     "apollo-server-express": "^2.22.1",
     "aws-sdk": "^2.884.0",
     "babel-plugin-superjson-next": "^0.2.3",
+    "braft-editor": "^2.3.9",
     "clsx": "^1.1.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.0",

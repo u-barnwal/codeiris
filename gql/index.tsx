@@ -12,8 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: any;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type Auth = {
@@ -30,13 +30,15 @@ export type Comment = {
   body: Scalars['String'];
   children?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   parent?: Maybe<Comment>;
-  post: Post;
+  post?: Maybe<Post>;
+  postId: Scalars['String'];
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   user?: Maybe<User>;
+  userId: Scalars['String'];
 };
 
 export type CommentConnection = {
@@ -116,7 +118,7 @@ export type Post = {
   body: Scalars['String'];
   comments?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   deleted: Scalars['Boolean'];
   id: Scalars['ID'];
   slug: Scalars['String'];
@@ -126,7 +128,7 @@ export type Post = {
   totalVotes: Scalars['Int'];
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   url: Scalars['String'];
   user: User;
   userId: Scalars['String'];
@@ -173,6 +175,7 @@ export type Query = {
   __typename?: 'Query';
   getAuth: Auth;
   getComments: CommentConnection;
+  getCommentsChildren: CommentConnection;
   getMeComments: CommentConnection;
   getMePosts: PostConnection;
   getPosts: PostConnection;
@@ -188,6 +191,17 @@ export type QueryGetCommentsArgs = {
   last?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<CommentOrder>;
   postId?: Maybe<Scalars['String']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryGetCommentsChildrenArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  commentId?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<CommentOrder>;
   skip?: Maybe<Scalars['Int']>;
 };
 
@@ -240,7 +254,7 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
@@ -249,7 +263,7 @@ export type User = {
   role: UserRole;
   status: UserStatus;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
 };
 
 export type UserConnection = {
@@ -292,12 +306,12 @@ export enum UserStatus {
 export type Vote = {
   __typename?: 'Vote';
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   post: Post;
   type: VoteType;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   user: User;
 };
 
@@ -428,10 +442,38 @@ export type GetCommentsQuery = (
         & { user?: Maybe<(
           { __typename?: 'User' }
           & Pick<User, 'id' | 'firstName'>
-        )>, post: (
+        )>, post?: Maybe<(
           { __typename?: 'Post' }
           & Pick<Post, 'id'>
-        ) }
+        )> }
+      ) }
+    )>> }
+  ) }
+);
+
+export type GetCommentsChildrenQueryVariables = Exact<{
+  comment?: Maybe<Scalars['String']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type GetCommentsChildrenQuery = (
+  { __typename?: 'Query' }
+  & { getCommentsChildren: (
+    { __typename?: 'CommentConnection' }
+    & Pick<CommentConnection, 'totalCount'>
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+    ), edges?: Maybe<Array<(
+      { __typename?: 'CommentEdge' }
+      & { node: (
+        { __typename?: 'Comment' }
+        & Pick<Comment, 'id' | 'body' | 'createdAt'>
+        & { user?: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'id' | 'firstName'>
+        )> }
       ) }
     )>> }
   ) }
@@ -706,7 +748,7 @@ export const GetCommentsDocument = gql`
   getComments(
     postId: $post
     first: $first
-    orderBy: {direction: asc, field: createdAt}
+    orderBy: {direction: desc, field: createdAt}
   ) {
     pageInfo {
       endCursor
@@ -760,3 +802,58 @@ export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
 export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
+export const GetCommentsChildrenDocument = gql`
+    query getCommentsChildren($comment: String, $first: Int!) {
+  getCommentsChildren(
+    commentId: $comment
+    first: $first
+    orderBy: {direction: desc, field: createdAt}
+  ) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+    edges {
+      node {
+        id
+        body
+        createdAt
+        user {
+          id
+          firstName
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCommentsChildrenQuery__
+ *
+ * To run a query within a React component, call `useGetCommentsChildrenQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsChildrenQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentsChildrenQuery({
+ *   variables: {
+ *      comment: // value for 'comment'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetCommentsChildrenQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>(GetCommentsChildrenDocument, options);
+      }
+export function useGetCommentsChildrenLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>(GetCommentsChildrenDocument, options);
+        }
+export type GetCommentsChildrenQueryHookResult = ReturnType<typeof useGetCommentsChildrenQuery>;
+export type GetCommentsChildrenLazyQueryHookResult = ReturnType<typeof useGetCommentsChildrenLazyQuery>;
+export type GetCommentsChildrenQueryResult = Apollo.QueryResult<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>;

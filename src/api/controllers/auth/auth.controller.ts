@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Post, Render, Req, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Render,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from '../../../services/auth.service';
 import { Response } from 'express';
 import { SessionService } from '../../../services/session.service';
@@ -42,29 +51,22 @@ export class AuthController {
       'NEXT_PUBLIC_SERVER_PATH',
     );
     const reftoken = req.headers.refresh_token;
-    if (reftoken !== undefined) {
-      const sessioninfo = await this.sessionService.revalidateSession(reftoken);
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Cache-Control', 'no-cache');
-      res.setHeader('Access-Control-Allow-Origin', serverPath);
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      if (sessioninfo) {
-        res.send({
-          tokens: {
-            jwt_token: sessioninfo?.authToken,
-            refresh_token: sessioninfo?.refreshToken,
-            invalid: false,
-          },
-        });
-      } else {
-        res.send({
-          tokens: {
-            jwt_token: undefined,
-            refresh_token: undefined,
-            invalid: true,
-          },
-        });
-      }
+    if (reftoken === null || reftoken === undefined) {
+      throw new BadRequestException();
+    }
+    const sessioninfo = await this.sessionService.revalidateSession(reftoken);
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Access-Control-Allow-Origin', serverPath);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    if (sessioninfo) {
+      res.send({
+        tokens: {
+          jwt_token: sessioninfo?.authToken,
+          refresh_token: sessioninfo?.refreshToken,
+          invalid: false,
+        },
+      });
     } else {
       res.send({
         tokens: {
