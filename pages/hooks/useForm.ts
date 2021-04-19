@@ -5,9 +5,13 @@ const reducer = (state, updateObject) => {
 };
 
 const useForm = (defaultProperties) => {
-  const [properties, dispatch] = useReducer(reducer, defaultProperties);
+  const [props, dispatch] = useReducer(reducer, defaultProperties);
 
-  return [properties, dispatch];
+  const handleFieldChange = (key, event) => {
+    dispatch({ [key]: event.target.value });
+  };
+
+  return { props, dispatch, handleFieldChange };
 };
 
 export default useForm;

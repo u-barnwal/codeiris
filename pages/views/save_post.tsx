@@ -4,16 +4,23 @@ import TextField from 'pages/components/atomic/textField';
 import Toaster from 'pages/components/atomic/toast/Toaster';
 import useForm from 'pages/hooks/useForm';
 import DefaultLayout from 'pages/layouts/defaultLayout';
-import React, { useReducer, useState } from 'react';
+import React from 'react';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
 function SavePost() {
-  const [{ imageURL, title, link }, dispatch] = useForm({
+  const {
+    props: { imageURL, title, url },
+    handleFieldChange,
+  } = useForm({
     imageURL: '',
     title: '',
-    link: '',
+    url: '',
   });
+
+  const handleSubmit = () => {
+    // if(titlt)
+  };
 
   return (
     <div className="container px-40 mt-10">
@@ -25,19 +32,30 @@ function SavePost() {
             {imageURL && (
               <img src={imageURL} alt="he" style={{ maxHeight: '100px' }} />
             )}
+
             <TextField
               placeholder="Paste image URL here..."
               className="flex-grow"
               onChange={(e) => {
-                dispatch({ imageURL: e.target.value });
+                handleFieldChange('imageURL', e);
               }}
             />
           </div>
 
-          <TextField placeholder="Title" />
-          <TextField placeholder="Link" type="url" />
+          <TextField
+            value={title}
+            placeholder="Title"
+            onChange={(e) => handleFieldChange('title', e)}
+          />
 
-          <Button>Add</Button>
+          <TextField
+            value={url}
+            placeholder="URL"
+            type="url"
+            onChange={(e) => handleFieldChange('url', e)}
+          />
+
+          <Button onClick={handleSubmit}>Add</Button>
         </div>
 
         <div style={{ minWidth: '200px' }}>
