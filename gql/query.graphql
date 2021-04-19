@@ -47,7 +47,7 @@ query getComments($post: String, $first: Int!){
         postId: $post,
         first: $first,
         orderBy: {
-            direction:asc,
+            direction:desc,
             field:createdAt
         }
     ) {
@@ -68,6 +68,34 @@ query getComments($post: String, $first: Int!){
                 }
                 post {
                     id
+                }
+            }
+        }
+    }
+}
+
+query getCommentsChildren($comment: String, $first: Int!){
+    getCommentsChildren(
+        commentId:$comment,
+        first:$first,
+        orderBy: {
+            direction:desc,
+            field:createdAt
+        }
+    ) {
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        totalCount
+        edges {
+            node {
+                id
+                body
+                createdAt
+                user {
+                    id
+                    firstName
                 }
             }
         }
