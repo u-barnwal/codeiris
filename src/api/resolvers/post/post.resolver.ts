@@ -6,6 +6,7 @@ import {
   ResolveField,
   Parent,
   Int,
+  Mutation,
 } from '@nestjs/graphql';
 import { User } from '../../../models/user.model';
 import { PaginationArgs } from '../../../common/pagination/pagination.args';
@@ -15,10 +16,31 @@ import { Post } from '../../../models/post.model';
 import { PrismaService } from '../../../services/prisma.service';
 import { Ctx } from '../../decorators/request-context.decorator';
 import { RequestContext } from '../../common/request-context';
+import { PostCreateInput } from '../../../models/input/post-create-input';
+import slugify from 'slugify';
 
 @Resolver((of) => Post)
 export class PostResolver {
   constructor(private readonly prisma: PrismaService) {}
+
+  @Mutation(() => Post)
+  async addPost(
+    @Args('post') input: PostCreateInput,
+    @Ctx() context: RequestContext,
+  ) {
+    const result = await this.prisma.post.create({
+      data: {
+        type: input.type,
+        title: input.title,
+        body: input.body,
+        slug: slugify(input.title),
+        url: input.url,
+        userId: context.user ? context.user.id : undefined,
+      },
+    });
+    return result;
+  }
+
   @Query((returns) => PostConnection)
   async getPosts(
     @Args() { skip, after, before, first, last }: PaginationArgs,
