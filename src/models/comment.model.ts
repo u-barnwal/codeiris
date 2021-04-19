@@ -16,7 +16,12 @@ export class Comment extends BaseModel {
   children: Comment[];
   @Field(() => Comment, { nullable: true })
   parent: Comment;
+  @Field()
+  userId: string;
   @Field(() => User, { nullable: true })
   user: User;
-  @Field(() => Post)
+  @Field()
+  postId: string;
+  @Field(() => Post, { nullable: true })
   post: Post;
+}

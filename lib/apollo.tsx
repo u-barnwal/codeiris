@@ -25,7 +25,7 @@ import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
-export const restrictedPath = ['/profile'];
+export const restrictedPath = ['/user/profile', '/user/account'];
 
 export const isServer = () => typeof window === 'undefined';
 

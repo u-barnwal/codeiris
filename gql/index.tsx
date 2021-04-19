@@ -46,6 +46,12 @@ export type CommentConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type CommentCreateInput = {
+  body: Scalars['String'];
+  parentId?: Maybe<Scalars['String']>;
+  postId?: Maybe<Scalars['String']>;
+};
+
 export type CommentEdge = {
   __typename?: 'CommentEdge';
   cursor: Scalars['String'];
@@ -58,6 +64,7 @@ export type CommentOrder = {
 };
 
 export enum CommentOrderField {
+  CreatedAt = 'createdAt',
   UpdatedAt = 'updatedAt',
   Votes = 'votes'
 }
@@ -71,12 +78,24 @@ export type MagicLinkDto = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  CreateComment: Comment;
   sendMagicLink: MagicLinkDto;
+  updateUserProfileInfo: User;
+};
+
+
+export type MutationCreateCommentArgs = {
+  input: CommentCreateInput;
 };
 
 
 export type MutationSendMagicLinkArgs = {
   email: Scalars['String'];
+};
+
+
+export type MutationUpdateUserProfileInfoArgs = {
+  data: UpdateUserInput;
 };
 
 export enum OrderDirection {
@@ -212,6 +231,12 @@ export type QueryGetUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+export type UpdateUserInput = {
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   /** Identifies the date and time when the object was created. */
@@ -294,6 +319,36 @@ export type SendMagicLinkMutation = (
   ) }
 );
 
+export type UpdateUserProfileInfoMutationVariables = Exact<{
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  middleName?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateUserProfileInfoMutation = (
+  { __typename?: 'Mutation' }
+  & { updateUserProfileInfo: (
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  ) }
+);
+
+export type CreateCommentMutationVariables = Exact<{
+  postId?: Maybe<Scalars['String']>;
+  parentId?: Maybe<Scalars['String']>;
+  body: Scalars['String'];
+}>;
+
+
+export type CreateCommentMutation = (
+  { __typename?: 'Mutation' }
+  & { CreateComment: (
+    { __typename?: 'Comment' }
+    & Pick<Comment, 'id'>
+  ) }
+);
+
 export type GetPostsQueryVariables = Exact<{
   after: Scalars['String'];
   first: Scalars['Int'];
@@ -308,7 +363,7 @@ export type GetPostsQuery = (
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-  & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
@@ -325,7 +380,7 @@ export type GetMeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'firstName' | 'lastName' | 'middleName' | 'role' | 'status'>
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'middleName' | 'role' | 'email' | 'status'>
   )> }
 );
 
@@ -348,6 +403,37 @@ export type GetMePostsCountQuery = (
   & { getMePosts: (
     { __typename?: 'PostConnection' }
     & Pick<PostConnection, 'totalCount'>
+  ) }
+);
+
+export type GetCommentsQueryVariables = Exact<{
+  post?: Maybe<Scalars['String']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type GetCommentsQuery = (
+  { __typename?: 'Query' }
+  & { getComments: (
+    { __typename?: 'CommentConnection' }
+    & Pick<CommentConnection, 'totalCount'>
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+    ), edges?: Maybe<Array<(
+      { __typename?: 'CommentEdge' }
+      & { node: (
+        { __typename?: 'Comment' }
+        & Pick<Comment, 'id' | 'body' | 'createdAt' | 'updatedAt'>
+        & { user?: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'id' | 'firstName'>
+        )>, post: (
+          { __typename?: 'Post' }
+          & Pick<Post, 'id'>
+        ) }
+      ) }
+    )>> }
   ) }
 );
 
@@ -386,6 +472,78 @@ export function useSendMagicLinkMutation(baseOptions?: Apollo.MutationHookOption
 export type SendMagicLinkMutationHookResult = ReturnType<typeof useSendMagicLinkMutation>;
 export type SendMagicLinkMutationResult = Apollo.MutationResult<SendMagicLinkMutation>;
 export type SendMagicLinkMutationOptions = Apollo.BaseMutationOptions<SendMagicLinkMutation, SendMagicLinkMutationVariables>;
+export const UpdateUserProfileInfoDocument = gql`
+    mutation updateUserProfileInfo($firstName: String, $lastName: String, $middleName: String) {
+  updateUserProfileInfo(
+    data: {firstName: $firstName, lastName: $lastName, middleName: $middleName}
+  ) {
+    id
+  }
+}
+    `;
+export type UpdateUserProfileInfoMutationFn = Apollo.MutationFunction<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>;
+
+/**
+ * __useUpdateUserProfileInfoMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileInfoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileInfoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserProfileInfoMutation, { data, loading, error }] = useUpdateUserProfileInfoMutation({
+ *   variables: {
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
+ *      middleName: // value for 'middleName'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileInfoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>(UpdateUserProfileInfoDocument, options);
+      }
+export type UpdateUserProfileInfoMutationHookResult = ReturnType<typeof useUpdateUserProfileInfoMutation>;
+export type UpdateUserProfileInfoMutationResult = Apollo.MutationResult<UpdateUserProfileInfoMutation>;
+export type UpdateUserProfileInfoMutationOptions = Apollo.BaseMutationOptions<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>;
+export const CreateCommentDocument = gql`
+    mutation CreateComment($postId: String, $parentId: String, $body: String!) {
+  CreateComment(input: {postId: $postId, parentId: $parentId, body: $body}) {
+    id
+  }
+}
+    `;
+export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      parentId: // value for 'parentId'
+ *      body: // value for 'body'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
@@ -393,7 +551,6 @@ export const GetPostsDocument = gql`
       node {
         id
         body
-        url
         title
         updatedAt
         user {
@@ -444,6 +601,7 @@ export const GetMeDocument = gql`
     lastName
     middleName
     role
+    email
     status
   }
 }
@@ -543,3 +701,62 @@ export function useGetMePostsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetMePostsCountQueryHookResult = ReturnType<typeof useGetMePostsCountQuery>;
 export type GetMePostsCountLazyQueryHookResult = ReturnType<typeof useGetMePostsCountLazyQuery>;
 export type GetMePostsCountQueryResult = Apollo.QueryResult<GetMePostsCountQuery, GetMePostsCountQueryVariables>;
+export const GetCommentsDocument = gql`
+    query getComments($post: String, $first: Int!) {
+  getComments(
+    postId: $post
+    first: $first
+    orderBy: {direction: asc, field: createdAt}
+  ) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+    edges {
+      node {
+        id
+        body
+        createdAt
+        updatedAt
+        user {
+          id
+          firstName
+        }
+        post {
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentsQuery({
+ *   variables: {
+ *      post: // value for 'post'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+      }
+export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+        }
+export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
+export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
+export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;

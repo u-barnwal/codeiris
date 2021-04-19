@@ -12,6 +12,7 @@ import { AwsSdkModule } from 'nest-aws-sdk';
 import { Credentials, S3, SES } from 'aws-sdk';
 import { EmailGeneratorService } from './email-generator.service';
 import { SessionService } from './session.service';
+import { UserService } from './user.service';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { SessionService } from './session.service';
     PostService,
     EmailGeneratorService,
     SessionService,
+    UserService,
   ],
   exports: [
     PrismaService,
@@ -62,6 +64,7 @@ import { SessionService } from './session.service';
     EmailService,
     PostService,
     SessionService,
+    UserService,
   ],
 })
 export class ServicesModule {}

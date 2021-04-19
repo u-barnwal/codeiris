@@ -25,6 +25,7 @@ query getMe{
         lastName
         middleName
         role
+        email
         status
     }
 }
@@ -38,5 +39,37 @@ query getMeCommentsCount {
 query getMePostsCount {
     getMePosts {
         totalCount
+    }
+}
+
+query getComments($post: String, $first: Int!){
+    getComments(
+        postId: $post,
+        first: $first,
+        orderBy: {
+            direction:asc,
+            field:createdAt
+        }
+    ) {
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        totalCount
+        edges {
+            node {
+                id
+                body
+                createdAt
+                updatedAt
+                user {
+                    id
+                    firstName
+                }
+                post {
+                    id
+                }
+            }
+        }
     }
 }

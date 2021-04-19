@@ -1,9 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 
-export interface CardProps {
+export interface CardProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   image?: string;
-  title?: React.ReactNode;
+  title?: string;
   body?: string;
   totalUpvotes?: number;
   totalComments?: number;
@@ -31,7 +35,7 @@ function Card({
         <div className="font-bold text-xl mb-2 text-heading-dark">{title}</div>
         <p
           className="text-body-dark text-base"
-          dangerouslySetInnerHTML={body}
+          dangerouslySetInnerHTML={{ __html: body }}
         ></p>
       </div>
       <div className="px-6 pt-4 pb-2">
