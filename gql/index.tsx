@@ -14,6 +14,8 @@ export type Scalars = {
   Float: number;
   /** Date custom scalar type */
   Date: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type Auth = {
@@ -72,6 +74,23 @@ export enum CommentOrderField {
 }
 
 
+export type File = {
+  __typename?: 'File';
+  /** Identifies the date and time when the object was created. */
+  createdAt: Scalars['Date'];
+  height: Scalars['Int'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  post?: Maybe<Post>;
+  preview: Scalars['String'];
+  size: Scalars['Int'];
+  source: Scalars['String'];
+  /** Identifies the date and time when the object was last updated. */
+  updatedAt: Scalars['Date'];
+  user?: Maybe<User>;
+  width: Scalars['Int'];
+};
+
 export type MagicLinkDto = {
   __typename?: 'MagicLinkDto';
   listener: Scalars['String'];
@@ -82,6 +101,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   CreateComment: Comment;
   addPost: Post;
+  createAsset: File;
   sendMagicLink: MagicLinkDto;
   updateUserProfileInfo: User;
 };
@@ -94,6 +114,11 @@ export type MutationCreateCommentArgs = {
 
 export type MutationAddPostArgs = {
   post: PostCreateInput;
+};
+
+
+export type MutationCreateAssetArgs = {
+  file: Scalars['Upload'];
 };
 
 
@@ -265,6 +290,7 @@ export type UpdateUserInput = {
   middleName?: Maybe<Scalars['String']>;
 };
 
+
 export type User = {
   __typename?: 'User';
   /** Identifies the date and time when the object was created. */
@@ -390,6 +416,19 @@ export type AddPostMutation = (
   & { addPost: (
     { __typename?: 'Post' }
     & Pick<Post, 'id'>
+  ) }
+);
+
+export type CreateAssetMutationVariables = Exact<{
+  file: Scalars['Upload'];
+}>;
+
+
+export type CreateAssetMutation = (
+  { __typename?: 'Mutation' }
+  & { createAsset: (
+    { __typename?: 'File' }
+    & Pick<File, 'id'>
   ) }
 );
 
@@ -652,6 +691,39 @@ export function useAddPostMutation(baseOptions?: Apollo.MutationHookOptions<AddP
 export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>;
 export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
 export type AddPostMutationOptions = Apollo.BaseMutationOptions<AddPostMutation, AddPostMutationVariables>;
+export const CreateAssetDocument = gql`
+    mutation createAsset($file: Upload!) {
+  createAsset(file: $file) {
+    id
+  }
+}
+    `;
+export type CreateAssetMutationFn = Apollo.MutationFunction<CreateAssetMutation, CreateAssetMutationVariables>;
+
+/**
+ * __useCreateAssetMutation__
+ *
+ * To run a mutation, you first call `useCreateAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAssetMutation, { data, loading, error }] = useCreateAssetMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useCreateAssetMutation(baseOptions?: Apollo.MutationHookOptions<CreateAssetMutation, CreateAssetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAssetMutation, CreateAssetMutationVariables>(CreateAssetDocument, options);
+      }
+export type CreateAssetMutationHookResult = ReturnType<typeof useCreateAssetMutation>;
+export type CreateAssetMutationResult = Apollo.MutationResult<CreateAssetMutation>;
+export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetMutation, CreateAssetMutationVariables>;
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {

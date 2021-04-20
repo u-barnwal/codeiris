@@ -118,6 +118,8 @@ model File {
   name                  String?
   preview               String?
   source                String?
+  width                 Int?
+  height                Int?
   size                  Int?
   user                  User?           @relation(fields: [userId], references: [id])
   userId                String?

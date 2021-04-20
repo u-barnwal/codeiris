@@ -16,6 +16,7 @@ import { EventBusModule } from '../event-bus/event-bus.module';
 import { UserController } from './controllers/user/user.controller';
 import { CommentModule } from './resolvers/comment/comment.module';
 import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
+import { AssetsModule } from "./resolvers/assets/assets.module";
 
 @Module({
   imports: [
@@ -30,6 +31,9 @@ import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
           buildSchemaOptions: {
             numberScalarMode: 'integer',
           },
+          uploads: {
+            maxFileSize: 20971520,
+          },
           context: ({ req }) => ({ req }),
         };
       },
@@ -40,6 +44,7 @@ import { HttpExceptionFilter } from "./common/filters/http-exception.filter";
     UserModule,
     PostModule,
     CommentModule,
+    AssetsModule,
     ServicesModule,
   ],
   controllers: [AuthController, PostController, UserController],

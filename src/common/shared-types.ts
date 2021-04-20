@@ -28,3 +28,9 @@ export type DeepPartial<T> = {
         ? ReadonlyArray<DeepPartial<U>>
         : DeepPartial<T[P]>);
 };
+
+export enum AssetType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  BINARY = 'BINARY',
+}
