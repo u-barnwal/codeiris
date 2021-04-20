@@ -1,18 +1,14 @@
 import { Intent, Position } from 'lib/common';
-import Button from 'pages/components/atomic/button';
-import TextField from 'pages/components/atomic/textField';
 import Toaster from 'pages/components/atomic/toast/Toaster';
-import useForm from 'pages/hooks/useForm';
 import DefaultLayout from 'pages/layouts/defaultLayout';
 import React from 'react';
 import {
   AddPostDocument,
   AddPostMutation,
   AddPostMutationVariables,
-  PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
-// import { PostType } from '.prisma/client';
+import FormSaveLinkPost from './savePost/FormSaveLinkPost';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
@@ -23,57 +19,35 @@ const initialFields = {
 };
 
 function SavePost() {
-  const {
-    props: { title, url },
-    dispatch,
-    handleFieldChange,
-  } = useForm(initialFields);
-
   const [AddPost, { ...addPostData }] = useMutation<
     AddPostMutation,
     AddPostMutationVariables
   >(AddPostDocument);
 
-  const handleSubmit = () => {
-    let error;
-
-    if (title === '') error = 'You must enter a title!';
-    else if (url === '') error = 'You must enter a URL!';
-
-    if (error) {
-      AppToaster.show({
-        message: error,
-        intent: Intent.ERROR,
-      });
-      return;
-    }
-
+  const handleOnSave = (data, onSuccess = () => {}) => {
     // + inserting row
     AddPost({
       variables: {
-        title,
-        url,
-        type: PostType.Link,
+        ...initialFields,
+        ...data,
       },
     })
       .then((value) => {
         AppToaster.show({
-          message: 'Post Added!',
+          message: 'Post Published Successfully!',
           intent: Intent.SUCCESS,
         });
 
-        reset();
+        onSuccess();
       })
-      .catch((error) =>
-        AppToaster.show({
-          message: error.message,
-          intent: Intent.ERROR,
-        }),
-      );
+      .catch((error) => handleOnError(error.message));
   };
 
-  const reset = () => {
-    dispatch(initialFields);
+  const handleOnError = (message) => {
+    AppToaster.show({
+      message,
+      intent: Intent.WARNING,
+    });
   };
 
   return (
@@ -82,20 +56,11 @@ function SavePost() {
 
       <div className="flex">
         <div className="flex-grow p-3 bg-white mr-5 rounded-md">
-          <TextField
-            value={title}
-            placeholder="Title"
-            onChange={(e) => handleFieldChange('title', e)}
+          <FormSaveLinkPost
+            loading={addPostData.loading}
+            processError={handleOnError}
+            processSave={handleOnSave}
           />
-
-          <TextField
-            value={url}
-            placeholder="URL"
-            type="url"
-            onChange={(e) => handleFieldChange('url', e)}
-          />
-
-          <Button onClick={handleSubmit}>Add</Button>
         </div>
 
         <div style={{ minWidth: '200px' }}>
