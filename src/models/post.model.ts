@@ -17,8 +17,8 @@ export class Post extends BaseModel {
 
   @Field()
   slug: string;
-  @Field()
-  body: string;
+  @Field({nullable :  true})
+  body?: string;
   @Field()
   url?: string;
   @Field()
@@ -33,7 +33,7 @@ export class Post extends BaseModel {
   status: 'draft' | 'published' | 'hidden' | 'blocked';
   @Field(() => PostType)
   type: 'link' | 'ask' | 'job';
-  @Field(() => [Vote])
+  @Field(() => [Vote], {nullable: true})
   votes: Vote[];
   @Field(() => [Comment], { nullable: true })
   comments: Comment[];

@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 // This is not to be imported form prisma client
 // import { Post as PostData } from '.prisma/client';
 import Post from '../Post';
-import Router from 'next/router';
 
 export interface PostListProps {
   initialPosts?: PostProps[];
@@ -38,6 +37,7 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
             firstName: ele.node.user.firstName,
             lastName: ele.node.user.lastName,
           },
+          upvoteState: ele.node.upvoteState,
           upvotes: ele.node.totalVotes,
           totalComments: ele.node.totalComments,
         }));
@@ -48,12 +48,13 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
   return (
     <div className="container">
       {posts.map((ele) => (
-        <div className="my-10" onClick={() => Router.push(`/posts/${ele.id}`)}>
+        <div className="my-10">
           <Post
             id={ele.id}
             title={ele.title}
             body={ele.body}
             upvotes={ele.upvotes}
+            upvoteState={ele.upvoteState}
             user={ele.user}
             totalComments={ele.totalComments}
           />

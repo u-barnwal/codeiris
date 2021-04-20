@@ -16,6 +16,7 @@ import { MagicLinkGateway } from './gateway/magiclink.gateway';
 import { EventBusModule } from '../event-bus/event-bus.module';
 import { UserController } from './controllers/user/user.controller';
 import { CommentModule } from './resolvers/comment/comment.module';
+import { UpvoteModule } from './resolvers/upvote/upvote.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { CommentModule } from './resolvers/comment/comment.module';
     UserModule,
     PostModule,
     CommentModule,
+    UpvoteModule,
     ServicesModule,
   ],
   controllers: [AuthController, PostController, UserController],

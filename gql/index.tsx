@@ -12,8 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: any;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type Auth = {
@@ -30,13 +30,15 @@ export type Comment = {
   body: Scalars['String'];
   children?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   parent?: Maybe<Comment>;
-  post: Post;
+  post?: Maybe<Post>;
+  postId: Scalars['String'];
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   user?: Maybe<User>;
+  userId: Scalars['String'];
 };
 
 export type CommentConnection = {
@@ -81,6 +83,7 @@ export type Mutation = {
   CreateComment: Comment;
   sendMagicLink: MagicLinkDto;
   updateUserProfileInfo: User;
+  updateVote: Vote;
 };
 
 
@@ -98,6 +101,11 @@ export type MutationUpdateUserProfileInfoArgs = {
   data: UpdateUserInput;
 };
 
+
+export type MutationUpdateVoteArgs = {
+  input: UpvoteInput;
+};
+
 export enum OrderDirection {
   Asc = 'asc',
   Desc = 'desc'
@@ -113,10 +121,10 @@ export type PageInfo = {
 
 export type Post = {
   __typename?: 'Post';
-  body: Scalars['String'];
+  body?: Maybe<Scalars['String']>;
   comments?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   deleted: Scalars['Boolean'];
   id: Scalars['ID'];
   slug: Scalars['String'];
@@ -126,11 +134,12 @@ export type Post = {
   totalVotes: Scalars['Int'];
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
+  upvoteState: Scalars['String'];
   url: Scalars['String'];
   user: User;
   userId: Scalars['String'];
-  votes: Array<Vote>;
+  votes?: Maybe<Array<Vote>>;
 };
 
 export type PostConnection = {
@@ -237,10 +246,15 @@ export type UpdateUserInput = {
   middleName?: Maybe<Scalars['String']>;
 };
 
+export type UpvoteInput = {
+  postId: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
@@ -249,7 +263,7 @@ export type User = {
   role: UserRole;
   status: UserStatus;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
 };
 
 export type UserConnection = {
@@ -292,12 +306,12 @@ export enum UserStatus {
 export type Vote = {
   __typename?: 'Vote';
   /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['Date'];
   id: Scalars['ID'];
   post: Post;
   type: VoteType;
   /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['DateTime'];
+  updatedAt: Scalars['Date'];
   user: User;
 };
 
@@ -349,6 +363,20 @@ export type CreateCommentMutation = (
   ) }
 );
 
+export type UpdateVoteMutationVariables = Exact<{
+  postId: Scalars['String'];
+  type: Scalars['String'];
+}>;
+
+
+export type UpdateVoteMutation = (
+  { __typename?: 'Mutation' }
+  & { updateVote: (
+    { __typename?: 'Vote' }
+    & Pick<Vote, 'id'>
+  ) }
+);
+
 export type GetPostsQueryVariables = Exact<{
   after: Scalars['String'];
   first: Scalars['Int'];
@@ -363,7 +391,7 @@ export type GetPostsQuery = (
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'upvoteState' | 'totalVotes' | 'totalComments'>
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
@@ -428,10 +456,10 @@ export type GetCommentsQuery = (
         & { user?: Maybe<(
           { __typename?: 'User' }
           & Pick<User, 'id' | 'firstName'>
-        )>, post: (
+        )>, post?: Maybe<(
           { __typename?: 'Post' }
           & Pick<Post, 'id'>
-        ) }
+        )> }
       ) }
     )>> }
   ) }
@@ -544,6 +572,40 @@ export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
 export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const UpdateVoteDocument = gql`
+    mutation updateVote($postId: String!, $type: String!) {
+  updateVote(input: {postId: $postId, type: $type}) {
+    id
+  }
+}
+    `;
+export type UpdateVoteMutationFn = Apollo.MutationFunction<UpdateVoteMutation, UpdateVoteMutationVariables>;
+
+/**
+ * __useUpdateVoteMutation__
+ *
+ * To run a mutation, you first call `useUpdateVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVoteMutation, { data, loading, error }] = useUpdateVoteMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useUpdateVoteMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVoteMutation, UpdateVoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateVoteMutation, UpdateVoteMutationVariables>(UpdateVoteDocument, options);
+      }
+export type UpdateVoteMutationHookResult = ReturnType<typeof useUpdateVoteMutation>;
+export type UpdateVoteMutationResult = Apollo.MutationResult<UpdateVoteMutation>;
+export type UpdateVoteMutationOptions = Apollo.BaseMutationOptions<UpdateVoteMutation, UpdateVoteMutationVariables>;
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
@@ -557,6 +619,7 @@ export const GetPostsDocument = gql`
           firstName
           lastName
         }
+        upvoteState
         totalVotes
         totalComments
       }

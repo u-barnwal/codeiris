@@ -1,106 +1,101 @@
 import { PostProps } from '../../../lib/common/props/PostProps';
 import Image from 'next/image';
+import Upvote from '../Upvote';
+import Router from 'next/router';
+import Avatar from '../atomic/avatar/Avatar';
+import { useMutation } from '@apollo/client';
+
+import {
+  UpdateVoteDocument,
+  UpdateVoteMutation,
+  MutationUpdateVoteArgs,
+} from 'gql';
+import { skipper } from 'lib/accessToken';
+import { useState } from 'react';
 
 //TODO due to build error the user part is disabled
-function Post({ title, body, upvotes, totalComments, user }: PostProps) {
+function Post({
+  title,
+  body,
+  upvotes = 0,
+  totalComments = 0,
+  user,
+  id,
+  upvoteState,
+}: PostProps) {
+  const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
+  const [upvoteStateLocal, setUpvoteStateLocal] = useState(upvoteState);
+  const [updateVote, { data, error, loading }] = useMutation<
+    UpdateVoteMutation,
+    MutationUpdateVoteArgs
+  >(UpdateVoteDocument);
+  const handleVoting = (postId: string, type: 'upvotes' | 'downvotes') => {
+    console.log('clicked');
+    updateVote({ variables: { input: { postId: postId, type: type } } })
+      .then((data) => {
+        setUpvotesLocal((prev) => (type === 'upvotes' ? prev + 1 : prev - 1));
+        setUpvoteStateLocal(type);
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
-    <div className="max-w-md rounded-md shadow-lg mx-auto bg-white">
-      <Image
-        className="w-full max-h-6"
-        src={`https://images.unsplash.com/photo-1618411610011-fb3b7695a765?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80`}
-        alt="WildPhoto"
-        layout="responsive"
-        width="200"
-        height="auto"
+    <div className="flex flex-row justify-between max-w-lg rounded-md shadow-lg mx-auto bg-white ">
+      <Upvote
+        upvotes={upvotesLocal}
+        state={upvoteStateLocal}
+        onDownvote={() => handleVoting(id, 'downvotes')}
+        onUpvote={() => handleVoting(id, 'upvotes')}
       />
-      <div className="p-5 flex flex-row align-middle">
-        <div className="mr-5 self-center text-heading-light">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={4}
-                d="M5 15l7-7 7 7"
-              />
-            </svg>
-          </div>
-          <div className="text-center">{upvotes}</div>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={4}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
+
+      <div
+        className="flex-col cursor-pointer"
+        onClick={() => Router.push(`/posts/${id}`)}
+      >
+        <div className="font-bold text-xl mb-2 text-heading-dark capitalize text-center">
+          {title}
         </div>
-        <div className=" flex flex-col">
-          <div className="font-bold text-xl mb-2 text-heading-dark capitalize text-center">
-            {title}
+        <div
+          className="text-base text-body-dark"
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
+        <div className="flex flex-row my-4 justify-between">
+          <div className="flex flex-row">
+            <div className="mx-2">
+              <Avatar label={user ? user.firstName[0] : 'A'} size="small" />
+            </div>
+            <div className="text-base text-body">
+              {user ? user.firstName + ' ' + user.lastName : 'Anonymous'}
+            </div>
           </div>
-          <div
-            className="text-base text-body-dark"
-            dangerouslySetInnerHTML={{ __html: body }}
-          />
-          <div className="flex flex-row my-4 justify-between">
-            <div className="flex flex-row">
-              <div className="w-10 h-10 rounded-full text-body-dark">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="text-base text-body">
-                {user && user.firstName + ' ' + user.lastName}
-              </div>
+          <div className="flex flex-row">
+            <div className="w-10 h-10 rounded-full text-body-dark">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                />
+              </svg>
             </div>
-            <div className="flex flex-row">
-              <div className="w-10 h-10 rounded-full text-body-dark">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                  />
-                </svg>
-              </div>
-              <div className="text-base text-body">{totalComments}</div>
-            </div>
+            <div className="text-base text-body">{totalComments}</div>
           </div>
         </div>
       </div>
+      <Image
+        className="h-full w-10"
+        src={`https://images.unsplash.com/photo-1618411610011-fb3b7695a765?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80`}
+        alt="WildPhoto"
+        width="100"
+        height="auto"
+      />
     </div>
   );
 }

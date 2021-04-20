@@ -13,6 +13,7 @@ import { Credentials, S3, SES } from 'aws-sdk';
 import { EmailGeneratorService } from './email-generator.service';
 import { SessionService } from './session.service';
 import { UserService } from './user.service';
+import { UpvoteService } from './upvote.service';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { UserService } from './user.service';
     EmailGeneratorService,
     SessionService,
     UserService,
+    UpvoteService,
   ],
   exports: [
     PrismaService,
@@ -65,6 +67,7 @@ import { UserService } from './user.service';
     PostService,
     SessionService,
     UserService,
+    UpvoteService,
   ],
 })
 export class ServicesModule {}

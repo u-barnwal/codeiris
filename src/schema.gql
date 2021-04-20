@@ -68,6 +68,7 @@ type Mutation {
   CreateComment(input: CommentCreateInput!): Comment!
   sendMagicLink(email: String!): MagicLinkDto!
   updateUserProfileInfo(data: UpdateUserInput!): User!
+  updateVote(input: UpvoteInput!): Vote!
 }
 
 enum OrderDirection {
@@ -83,7 +84,7 @@ type PageInfo {
 }
 
 type Post {
-  body: String!
+  body: String
   comments: [Comment!]
 
   """Identifies the date and time when the object was created."""
@@ -99,10 +100,11 @@ type Post {
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date!
+  upvoteState: String!
   url: String!
   user: User!
   userId: String!
-  votes: [Vote!]!
+  votes: [Vote!]
 }
 
 type PostConnection {
@@ -153,6 +155,11 @@ input UpdateUserInput {
   firstName: String
   lastName: String
   middleName: String
+}
+
+input UpvoteInput {
+  postId: String!
+  type: String!
 }
 
 type User {
