@@ -11,7 +11,7 @@ const useForm = (defaultProperties) => {
     dispatch({ [key]: event.target.value });
   };
 
-  return { props, dispatch, handleFieldChange };
+  return [props, dispatch, handleFieldChange];
 };
 
 export default useForm;

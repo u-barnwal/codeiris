@@ -17,9 +17,9 @@ export class Post extends BaseModel {
 
   @Field()
   slug: string;
-  @Field()
+  @Field({ nullable: true })
   body: string;
-  @Field()
+  @Field({ nullable: true })
   url?: string;
   @Field()
   title: string;

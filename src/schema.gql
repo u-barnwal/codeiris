@@ -84,7 +84,7 @@ type PageInfo {
 }
 
 type Post {
-  body: String!
+  body: String
   comments: [Comment!]
 
   """Identifies the date and time when the object was created."""
@@ -100,7 +100,7 @@ type Post {
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date!
-  url: String!
+  url: String
   user: User!
   userId: String!
   votes: [Vote!]!
