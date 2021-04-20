@@ -4,13 +4,12 @@ import TextField from 'pages/components/atomic/textField';
 import useForm from 'pages/hooks/useForm';
 import React from 'react';
 
-const initialFields = {
-  imageURL: '',
-  title: '',
-  url: '',
-};
-
-function FormSaveLinkPost({ loading = false, processError, processSave }) {
+function FormSaveLinkPost({
+  initialFields,
+  loading = false,
+  processError,
+  processSave,
+}) {
   const {
     props: { title, url },
     dispatch,

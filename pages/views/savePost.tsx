@@ -57,6 +57,7 @@ function SavePost() {
       <div className="flex">
         <div className="flex-grow p-3 bg-white mr-5 rounded-md">
           <FormSaveLinkPost
+            initialFields={initialFields}
             loading={addPostData.loading}
             processError={handleOnError}
             processSave={handleOnSave}
