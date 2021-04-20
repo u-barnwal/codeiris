@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  CreateAssetDocument,
+  CreateAssetMutation,
+  CreateAssetMutationVariables,
   GetMeDocument,
   GetMeQuery,
   GetMeQueryVariables,
@@ -23,6 +26,7 @@ export default function ProfileSettings() {
     middleName: '',
     email: '',
   });
+  let fileInput;
 
   const { data, loading } = useQuery<GetMeQuery, GetMeQueryVariables>(
     GetMeDocument,
@@ -33,6 +37,11 @@ export default function ProfileSettings() {
     UpdateUserProfileInfoMutation,
     UpdateUserProfileInfoMutationVariables
   >(UpdateUserProfileInfoDocument);
+
+  const [UploadFile, { ...uploadFileData }] = useMutation<
+    CreateAssetMutation,
+    CreateAssetMutationVariables
+  >(CreateAssetDocument);
 
   useEffect(() => {
     if (data) {
@@ -64,8 +73,30 @@ export default function ProfileSettings() {
                     <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
                 </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={(ref) => (fileInput = ref)}
+                  className="hidden"
+                  onChange={(event) => {
+                    if (event.target.files && event.target.files.length > 0) {
+                      const file = event.target.files[0];
+                      UploadFile({ variables: { file } })
+                        .then((value) => {
+                          console.log(value);
+                        })
+                        .catch((error) => {
+                          AppToaster.show({
+                            message: error.message,
+                            intent: Intent.ERROR,
+                          });
+                        });
+                    }
+                  }}
+                />
                 <button
                   type="button"
+                  onClick={() => fileInput.click()}
                   className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Change

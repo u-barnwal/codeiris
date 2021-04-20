@@ -59,6 +59,23 @@ enum CommentOrderField {
 """Date custom scalar type"""
 scalar Date
 
+type File {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  height: Int!
+  id: ID!
+  name: String!
+  post: Post
+  preview: String!
+  size: Int!
+  source: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+  user: User
+  width: Int!
+}
+
 type MagicLinkDto {
   listener: String!
   status: Boolean!
@@ -67,6 +84,7 @@ type MagicLinkDto {
 type Mutation {
   CreateComment(input: CommentCreateInput!): Comment!
   addPost(post: PostCreateInput!): Post!
+  createAsset(file: Upload!): File!
   sendMagicLink(email: String!): MagicLinkDto!
   updateUserProfileInfo(data: UpdateUserInput!): User!
 }
@@ -164,6 +182,9 @@ input UpdateUserInput {
   lastName: String
   middleName: String
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   """Identifies the date and time when the object was created."""

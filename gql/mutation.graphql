@@ -37,3 +37,9 @@ mutation addPost(
     id
   }
 }
+
+mutation createAsset($file: Upload!){
+  createAsset(file: $file) {
+    id
+  }
+}

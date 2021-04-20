@@ -14,6 +14,10 @@ import { EmailGeneratorService } from './email-generator.service';
 import { SessionService } from './session.service';
 import { UserService } from './user.service';
 import { MeilisearchService } from './meilisearch.service';
+import { S3AssetsStorageService } from './assets/s3-assets-storage.service';
+import { SharpAssetPreviewService } from './assets/sharp-asset-preview.service';
+import { DefaultAssetsNamingService } from './assets/default-assets-naming.service';
+import { AssetsService } from './assets/assets.service';
 
 @Module({
   imports: [
@@ -59,6 +63,10 @@ import { MeilisearchService } from './meilisearch.service';
     SessionService,
     UserService,
     MeilisearchService,
+    S3AssetsStorageService,
+    SharpAssetPreviewService,
+    DefaultAssetsNamingService,
+    AssetsService,
   ],
   exports: [
     PrismaService,
@@ -67,6 +75,7 @@ import { MeilisearchService } from './meilisearch.service';
     PostService,
     SessionService,
     UserService,
+    AssetsService,
   ],
 })
 export class ServicesModule {}
