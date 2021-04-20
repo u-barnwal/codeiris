@@ -10,6 +10,7 @@ import {
 } from 'gql';
 import { useMutation } from '@apollo/client';
 import FormSaveLinkPost from './savePost/FormSaveLinkPost';
+import FormSaveJobPost from './savePost/FormSaveJobPost';
 import clsx from 'clsx';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
@@ -18,6 +19,7 @@ const initialFields = {
   imageURL: '',
   title: '',
   url: '',
+  body: '',
 };
 
 function PostTabBox({ children, onClick, active = false }) {
@@ -72,7 +74,9 @@ function SavePost() {
 
   return (
     <div className="container px-40 mt-10">
-      <div className="text-2xl mb-8">Create Post</div>
+      <div className="text-2xl mb-8">
+        Create <span className="capitalize">{activeTab}</span> Post
+      </div>
 
       <div className="flex">
         <div className="flex-grow p-3 bg-white mr-5 rounded-md">
@@ -102,6 +106,15 @@ function getForm(type, loading, handleOnError, handleOnSave) {
     case PostType.Link:
       return (
         <FormSaveLinkPost
+          initialFields={initialFields}
+          loading={loading}
+          processError={handleOnError}
+          processSave={handleOnSave}
+        />
+      );
+    case PostType.Job:
+      return (
+        <FormSaveJobPost
           initialFields={initialFields}
           loading={loading}
           processError={handleOnError}
