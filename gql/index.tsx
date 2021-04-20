@@ -1,100 +1,3 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
-export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  /** Date custom scalar type */
-  Date: any;
-};
-
-export type Auth = {
-  __typename?: 'Auth';
-  /** JWT access token */
-  accessToken: Scalars['String'];
-  /** JWT refresh token */
-  refreshToken: Scalars['String'];
-  user: User;
-};
-
-export type Comment = {
-  __typename?: 'Comment';
-  body: Scalars['String'];
-  children?: Maybe<Array<Comment>>;
-  /** Identifies the date and time when the object was created. */
-  createdAt: Scalars['Date'];
-  id: Scalars['ID'];
-  parent?: Maybe<Comment>;
-  post?: Maybe<Post>;
-  postId: Scalars['String'];
-  /** Identifies the date and time when the object was last updated. */
-  updatedAt: Scalars['Date'];
-  user?: Maybe<User>;
-  userId: Scalars['String'];
-};
-
-export type CommentConnection = {
-  __typename?: 'CommentConnection';
-  edges?: Maybe<Array<CommentEdge>>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
-};
-
-export type CommentCreateInput = {
-  body: Scalars['String'];
-  parentId?: Maybe<Scalars['String']>;
-  postId?: Maybe<Scalars['String']>;
-};
-
-export type CommentEdge = {
-  __typename?: 'CommentEdge';
-  cursor: Scalars['String'];
-  node: Comment;
-};
-
-export type CommentOrder = {
-  direction: OrderDirection;
-  field: CommentOrderField;
-};
-
-export enum CommentOrderField {
-  CreatedAt = 'createdAt',
-  UpdatedAt = 'updatedAt',
-  Votes = 'votes'
-}
-
-
-export type MagicLinkDto = {
-  __typename?: 'MagicLinkDto';
-  listener: Scalars['String'];
-  status: Scalars['Boolean'];
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  CreateComment: Comment;
-  sendMagicLink: MagicLinkDto;
-  updateUserProfileInfo: User;
-};
-
-
-export type MutationCreateCommentArgs = {
-  input: CommentCreateInput;
-};
-
-
-export type MutationSendMagicLinkArgs = {
-  email: Scalars['String'];
-};
-
 
 export type MutationUpdateUserProfileInfoArgs = {
   data: UpdateUserInput;
@@ -115,7 +18,7 @@ export type PageInfo = {
 
 export type Post = {
   __typename?: 'Post';
-  body?: Maybe<Scalars['String']>;
+  body: Scalars['String'];
   comments?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['Date'];
@@ -129,7 +32,7 @@ export type Post = {
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['Date'];
-  url?: Maybe<Scalars['String']>;
+  url: Scalars['String'];
   user: User;
   userId: Scalars['String'];
   votes: Array<Vote>;
