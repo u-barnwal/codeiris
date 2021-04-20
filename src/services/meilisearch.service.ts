@@ -23,7 +23,8 @@ export class MeilisearchService implements OnModuleInit {
     this.meiliInstance = new MeiliSearch({
       host: this.config.get<string>('MEILI'),
     });
-    this.meiliInstance.createIndex('posts');
+    // TODO remove this if index is already created
+    // this.meiliInstance.createIndex('posts');
     const postCreateEvent$ = this.eventBus.ofType(CreatePostEvents);
     const postUpdateEvent$ = this.eventBus.ofType(UpdatePostEvent);
     merge(postCreateEvent$)
