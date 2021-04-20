@@ -30,12 +30,12 @@ function Post({
     MutationUpdateVoteArgs
   >(UpdateVoteDocument);
   const handleVoting = (postId: string, type: 'upvotes' | 'downvotes') => {
-    console.log('clicked');
-    updateVote({ variables: { input: { postId: postId, type: type } } })
+    updateVote({ variables: { postId: postId, type: type } })
       .then((data) => {
-        setUpvotesLocal((prev) => (type === 'upvotes' ? prev + 1 : prev - 1));
-        setUpvoteStateLocal(type);
-        console.log(data);
+        if (type !== upvoteStateLocal) {
+          setUpvotesLocal((prev) => (type === 'upvotes' ? prev + 1 : prev - 1));
+          setUpvoteStateLocal(type);
+        }
       })
       .catch((err) => console.log(err));
   };

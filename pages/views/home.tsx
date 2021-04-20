@@ -13,8 +13,8 @@ function Home({ data }) {
           body: ele.body,
           title: ele.title,
           user: ele.user,
-          upvotes: ele._count.upvote,
-          totalComments: ele._count.comment,
+          upvotes: ele._count.votes,
+          totalComments: ele._count.comments,
         }))}
       />
     </div>
