@@ -13,6 +13,7 @@ import { Credentials, S3, SES } from 'aws-sdk';
 import { EmailGeneratorService } from './email-generator.service';
 import { SessionService } from './session.service';
 import { UserService } from './user.service';
+import { MeilisearchService } from './meilisearch.service';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { UserService } from './user.service';
     EmailGeneratorService,
     SessionService,
     UserService,
+    MeilisearchService,
   ],
   exports: [
     PrismaService,
