@@ -2,7 +2,7 @@ import { Intent, Position } from 'lib/common';
 import Button from 'pages/components/atomic/button';
 import TextField from 'pages/components/atomic/textField';
 import Toaster from 'pages/components/atomic/toast/Toaster';
-import useForm from 'pages/hooks/useForm';
+import useForm from 'lib/hooks/useForm';
 import DefaultLayout from 'pages/layouts/defaultLayout';
 import React from 'react';
 import {
@@ -23,11 +23,9 @@ const initialFields = {
 };
 
 function SavePost() {
-  const {
-    props: { imageURL, title, url },
-    dispatch,
-    handleFieldChange,
-  } = useForm(initialFields);
+  const [props, dispatch, handleFieldChange] = useForm(initialFields);
+
+  const { imageURL, title, url } = props;
 
   const [AddPost, { ...addPostData }] = useMutation<
     AddPostMutation,
