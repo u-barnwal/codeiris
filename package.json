@@ -65,6 +65,7 @@
     "clsx": "^1.1.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.0",
+    "file-type": "^16.3.0",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.4",
     "graphql-upload": "^11.0.0",
