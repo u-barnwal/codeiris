@@ -1,14 +1,16 @@
 import { Intent, Position } from 'lib/common';
 import Toaster from 'pages/components/atomic/toast/Toaster';
 import DefaultLayout from 'pages/layouts/defaultLayout';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AddPostDocument,
   AddPostMutation,
   AddPostMutationVariables,
+  PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
 import FormSaveLinkPost from './savePost/FormSaveLinkPost';
+import clsx from 'clsx';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
@@ -18,7 +20,25 @@ const initialFields = {
   url: '',
 };
 
+function PostTabBox({ children, onClick, active = false }) {
+  return (
+    <div
+      className={clsx(
+        'py-2 px-4 rounded-md mb-3 cursor-pointer transition-all capitalize',
+        active
+          ? 'bg-primary-light text-white'
+          : 'bg-white hover:bg-secondary-dark',
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+}
+
 function SavePost() {
+  const [activeTab, setActiveTab] = useState(PostType.Link);
+
   const [AddPost, { ...addPostData }] = useMutation<
     AddPostMutation,
     AddPostMutationVariables
@@ -56,27 +76,39 @@ function SavePost() {
 
       <div className="flex">
         <div className="flex-grow p-3 bg-white mr-5 rounded-md">
-          <FormSaveLinkPost
-            initialFields={initialFields}
-            loading={addPostData.loading}
-            processError={handleOnError}
-            processSave={handleOnSave}
-          />
+          {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
         </div>
 
         <div style={{ minWidth: '200px' }}>
-          {['Post', 'Job', 'Question'].map((p, index) => (
-            <div
-              key={index}
-              className="py-2 px-4 rounded-md bg-white mb-3 cursor-pointer hover:bg-secondary-dark transition-all"
-            >
-              {p}
-            </div>
-          ))}
+          {Object.values(PostType)
+            .reverse()
+            .map((pt, index) => (
+              <PostTabBox
+                key={index}
+                active={pt === activeTab}
+                onClick={() => setActiveTab(pt)}
+              >
+                {pt}
+              </PostTabBox>
+            ))}
         </div>
       </div>
     </div>
   );
+}
+
+function getForm(type, loading, handleOnError, handleOnSave) {
+  switch (type) {
+    case PostType.Link:
+      return (
+        <FormSaveLinkPost
+          initialFields={initialFields}
+          loading={loading}
+          processError={handleOnError}
+          processSave={handleOnSave}
+        />
+      );
+  }
 }
 
 SavePost.getLayout = (page) => <DefaultLayout>{page}</DefaultLayout>;
