@@ -11,6 +11,7 @@ import {
 import { useMutation } from '@apollo/client';
 import FormSaveLinkPost from './savePost/FormSaveLinkPost';
 import FormSaveJobPost from './savePost/FormSaveJobPost';
+import FormSaveAskPost from './savePost/FormSaveAskPost';
 import clsx from 'clsx';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
@@ -115,6 +116,15 @@ function getForm(type, loading, handleOnError, handleOnSave) {
     case PostType.Job:
       return (
         <FormSaveJobPost
+          initialFields={initialFields}
+          loading={loading}
+          processError={handleOnError}
+          processSave={handleOnSave}
+        />
+      );
+    case PostType.Ask:
+      return (
+        <FormSaveAskPost
           initialFields={initialFields}
           loading={loading}
           processError={handleOnError}
