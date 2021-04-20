@@ -2,7 +2,7 @@
 Three lazy programmer create tech post app for other lazy programmers. Build with NestJS.
 
 # Links
-## Production 
+## Production
 https://codeiris.dev/
 ## Developement
 https://dev.codeiris.dev/
@@ -27,4 +27,4 @@ https://dev.codeiris.dev/
 - **Flag Inappropriate users:** Users with role of Moderators can flag users when they are creating inappropriate posts.
 - **Admin can Delete and edit any posts:** User with role of admin can delete posts if they are inappropriate and edit posts if they want to. They can also delete and edit flagged posts.
 - **Admin can disable users:** User with role of admin can disable a user if they create inappropriate posts and flagged users
-
+=======

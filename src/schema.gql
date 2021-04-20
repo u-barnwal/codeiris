@@ -5,20 +5,70 @@
 type Auth {
   """JWT access token"""
   accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
   user: User!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+type Comment {
+  body: String!
+  children: [Comment!]
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  id: ID!
+  parent: Comment
+  post: Post
+  postId: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+  user: User
+  userId: String!
+}
+
+type CommentConnection {
+  edges: [CommentEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input CommentCreateInput {
+  body: String!
+  parentId: String
+  postId: String
+}
+
+type CommentEdge {
+  cursor: String!
+  node: Comment!
+}
+
+input CommentOrder {
+  direction: OrderDirection!
+  field: CommentOrderField!
+}
+
+enum CommentOrderField {
+  createdAt
+  updatedAt
+  votes
+}
+
+"""Date custom scalar type"""
+scalar Date
 
 type MagicLinkDto {
+  listener: String!
   status: Boolean!
 }
 
 type Mutation {
+  CreateComment(input: CommentCreateInput!): Comment!
+  addPost(post: PostCreateInput!): Post!
   sendMagicLink(email: String!): MagicLinkDto!
+  updateUserProfileInfo(data: UpdateUserInput!): User!
 }
 
 enum OrderDirection {
@@ -33,26 +83,101 @@ type PageInfo {
   startCursor: String
 }
 
+type Post {
+  body: String
+  comments: [Comment!]
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  deleted: Boolean!
+  id: ID!
+  slug: String!
+  status: PostStatus!
+  title: String!
+  totalComments: Int!
+  totalVotes: Int!
+  type: PostType!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+  url: String
+  user: User!
+  userId: String!
+  votes: [Vote!]!
+}
+
+type PostConnection {
+  edges: [PostEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input PostCreateInput {
+  body: String
+  image: String
+  title: String!
+  type: PostType = link
+  url: String
+}
+
+type PostEdge {
+  cursor: String!
+  node: Post!
+}
+
+input PostOrder {
+  direction: OrderDirection!
+  field: PostOrderFeild!
+}
+
+enum PostOrderFeild {
+  updatedAt
+  votes
+}
+
+enum PostStatus {
+  blocked
+  draft
+  hidden
+  published
+}
+
+enum PostType {
+  ask
+  job
+  link
+}
+
 type Query {
   getAuth: Auth!
+  getComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, postId: String, skip: Int): CommentConnection!
+  getCommentsChildren(after: String, before: String, commentId: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
+  getMeComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
+  getMePosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
+  getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
-  me: User!
+  me: User
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  middleName: String
 }
 
 type User {
   """Identifies the date and time when the object was created."""
-  createdAt: DateTime!
+  createdAt: Date!
   email: String!
   firstName: String!
-  githubToken: String!
-  googleToken: String!
   id: ID!
-  lastName: String!
-  middleName: String!
+  lastName: String
+  middleName: String
+  role: UserRole!
   status: UserStatus!
 
   """Identifies the date and time when the object was last updated."""
-  updatedAt: DateTime!
+  updatedAt: Date!
 }
 
 type UserConnection {
@@ -78,8 +203,31 @@ enum UserOrderField {
   middleName
 }
 
+enum UserRole {
+  admin
+  moderator
+  user
+}
+
 enum UserStatus {
   active
   blocked
   inactive
+}
+
+type Vote {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  id: ID!
+  post: Post!
+  type: VoteType!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+  user: User!
+}
+
+enum VoteType {
+  downvotes
+  upvotes
 }

@@ -1,16 +1,15 @@
-import { AppProps } from 'next/app';
-import { FC } from 'react';
-import './styles/main.scss';
+import './styles/app.css';
+import { withApollo } from '../lib/apollo';
+import { ApolloProvider } from '@apollo/client';
 
-const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+function MyApp({ Component, pageProps, apolloClient }) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
-    <div style={{ display: 'flex', maxWidth: 1100 }}>
-      <div style={{ flexBasis: '30%', margin: 25 }}></div>
-      <div style={{ flexBasis: '70%', margin: 25 }}>
-        <Component {...pageProps} />
-      </div>
-    </div>
+    <ApolloProvider client={apolloClient}>
+      {getLayout(<Component {...pageProps} />)}
+    </ApolloProvider>
   );
-};
+}
 
-export default MyApp;
+export default withApollo(MyApp);

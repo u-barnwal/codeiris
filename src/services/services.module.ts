@@ -7,6 +7,12 @@ import { ConfigService } from '@nestjs/config';
 import { SecurityConfig } from '../config/config.interface';
 import { EventBusModule } from '../event-bus/event-bus.module';
 import { EmailService } from './email.service';
+import { PostService } from './post.service';
+import { AwsSdkModule } from 'nest-aws-sdk';
+import { Credentials, S3, SES } from 'aws-sdk';
+import { EmailGeneratorService } from './email-generator.service';
+import { SessionService } from './session.service';
+import { UserService } from './user.service';
 
 @Module({
   imports: [
@@ -23,9 +29,42 @@ import { EmailService } from './email.service';
       },
       inject: [ConfigService],
     }),
+    AwsSdkModule.forRootAsync({
+      defaultServiceOptions: {
+        useFactory: (configService: ConfigService) => {
+          const awsKey = configService.get<string>('SES_KEY');
+          const awsSecret = configService.get<string>('SES_SECRET');
+          return {
+            region: 'ap-southeast-1',
+            credentials: new Credentials({
+              accessKeyId: awsKey,
+              secretAccessKey: awsSecret,
+            }),
+          };
+        },
+        imports: [ConfigService],
+        inject: [ConfigService],
+      },
+      services: [SES, S3],
+    }),
     EventBusModule,
   ],
-  providers: [PrismaService, AuthService, EmailService],
-  exports: [PrismaService, AuthService, EmailService],
+  providers: [
+    PrismaService,
+    AuthService,
+    EmailService,
+    PostService,
+    EmailGeneratorService,
+    SessionService,
+    UserService,
+  ],
+  exports: [
+    PrismaService,
+    AuthService,
+    EmailService,
+    PostService,
+    SessionService,
+    UserService,
+  ],
 })
 export class ServicesModule {}
