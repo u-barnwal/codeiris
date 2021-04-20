@@ -23,12 +23,13 @@ export class AssetsService {
     private readonly prisma: PrismaService,
   ) {}
 
+  async sendAsset(key) {
+    return this.s3storageService.readFileToBuffer(key);
+  }
+
   async create(input: FileUpload): Promise<File> {
-    console.log(input);
     const { createReadStream, filename, mimetype } = await input;
-    console.log(createReadStream);
     const stream = createReadStream();
-    console.log(stream);
     const asset = await this.createAssetsInternal(stream, filename, mimetype);
     // TODO asset creation event
     return asset;
@@ -39,7 +40,6 @@ export class AssetsService {
     filename: string,
     mimeType,
   ): Promise<File> {
-    console.log('stage2');
     const sourceFileName = await this.generateSourceFileName(filename);
     const previewFileName = await this.generatePreviewFileName(filename);
     const sourceFileIdentifier = await this.s3storageService.writeFileFromStream(

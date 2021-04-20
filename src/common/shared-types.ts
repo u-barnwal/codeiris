@@ -34,3 +34,11 @@ export enum AssetType {
   VIDEO = 'VIDEO',
   BINARY = 'BINARY',
 }
+export type ImageTransformMode = 'crop' | 'resize';
+
+export interface ImageTransformPreset {
+  name: string;
+  width: number;
+  height: number;
+  mode: ImageTransformMode;
+}
