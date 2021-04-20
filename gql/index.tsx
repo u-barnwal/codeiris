@@ -115,7 +115,7 @@ export type PageInfo = {
 
 export type Post = {
   __typename?: 'Post';
-  body: Scalars['String'];
+  body?: Maybe<Scalars['String']>;
   comments?: Maybe<Array<Comment>>;
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['Date'];
@@ -129,7 +129,7 @@ export type Post = {
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['Date'];
-  url: Scalars['String'];
+  url?: Maybe<Scalars['String']>;
   user: User;
   userId: Scalars['String'];
   votes: Array<Vote>;

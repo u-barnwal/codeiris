@@ -9,7 +9,7 @@ import Avatar from '../atomic/avatar/Avatar';
 import Dropdown from '../atomic/dropdown/Dropdown';
 
 function Header() {
-  const { data, loading } = useQuery<GetMeQuery, GetMeQueryVariables>(
+  const { data, loading, error } = useQuery<GetMeQuery, GetMeQueryVariables>(
     GetMeDocument,
     { skip: skipper() },
   );
@@ -40,7 +40,7 @@ function Header() {
               {loading && (
                 <Spinner color="text-primary" size={SpinnerSize.small} />
               )}
-              {!data && !loading && (
+              {(!data || data.me === null) && !loading && (
                 <a
                   href="javascript:;"
                   onClick={() => Router.push('/login')}
@@ -49,7 +49,7 @@ function Header() {
                   Sign in
                 </a>
               )}
-              {data && (
+              {data && data.me !== null && (
                 <Dropdown
                   menu={[
                     <a
