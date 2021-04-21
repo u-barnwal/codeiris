@@ -21,6 +21,7 @@ function Post({
   totalComments = 0,
   user,
   id,
+  updatedAt,
   upvoteState,
 }: PostProps) {
   const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
@@ -52,13 +53,6 @@ function Post({
         className="flex-col cursor-pointer"
         onClick={() => Router.push(`/posts/${id}`)}
       >
-        <div className="font-bold text-xl mb-2 text-heading-dark capitalize text-center">
-          {title}
-        </div>
-        <div
-          className="text-base text-body-dark"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
         <div className="flex flex-row my-4 justify-between">
           <div className="flex flex-row">
             <div className="mx-2">
@@ -68,6 +62,19 @@ function Post({
               {user ? user.firstName + ' ' + user.lastName : 'Anonymous'}
             </div>
           </div>
+          <div className="flex flex-row">
+            <div className="mx-2">Published: </div>
+            <div className="text-base text-body">{updatedAt}</div>
+          </div>
+        </div>
+        <div className="font-bold text-xl mb-2 text-heading-dark capitalize text-center">
+          {title}
+        </div>
+        <div
+          className="text-base text-body-dark"
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
+        <div className="flex flex-row my-4 justify-between">
           <div className="flex flex-row">
             <div className="w-10 h-10 rounded-full text-body-dark">
               <svg

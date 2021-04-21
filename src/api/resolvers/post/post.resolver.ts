@@ -92,14 +92,16 @@ export class PostResolver {
   }
 
   @ResolveField('upvoteState', (returns) => String)
-  async upvoteState(@Ctx() context: RequestContext,@Parent() post: Post) {
-    if(context.session.type==="AUTHENTICATED" ){
-      const {id} = post;
-      const vote  = await this.prisma.vote.findFirst({where:{ postId : id, userId:context.user.id }})
+  async upvoteState(@Ctx() context: RequestContext, @Parent() post: Post) {
+    if (context.session.type === 'AUTHENTICATED') {
+      const { id } = post;
+      const vote = await this.prisma.vote.findFirst({
+        where: { postId: id, userId: context.user.id },
+      });
       if (vote) return vote.type;
-      return "notvoted";
+      return 'notvoted';
     }
-    return "disabled";
+    return 'disabled';
   }
 
   @ResolveField('totalVotes', (returns) => Int)

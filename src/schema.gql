@@ -93,6 +93,7 @@ type Post {
   id: ID!
   slug: String!
   status: PostStatus!
+  tag: [Tag!]
   title: String!
   totalComments: Int!
   totalVotes: Int!
@@ -147,8 +148,31 @@ type Query {
   getMeComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
   getMePosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
   getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
+  getTags(after: String, before: String, contain: String, first: Int, last: Int, skip: Int): TagConnection!
   getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
   me: User
+}
+
+type Tag {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  id: ID!
+  name: String!
+  post: [Post!]
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+}
+
+type TagConnection {
+  edges: [TagEdge!]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TagEdge {
+  cursor: String!
+  node: Tag!
 }
 
 input UpdateUserInput {

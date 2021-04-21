@@ -17,6 +17,7 @@ import { EventBusModule } from '../event-bus/event-bus.module';
 import { UserController } from './controllers/user/user.controller';
 import { CommentModule } from './resolvers/comment/comment.module';
 import { UpvoteModule } from './resolvers/upvote/upvote.module';
+import { TagModule } from './resolvers/tag/tag.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { UpvoteModule } from './resolvers/upvote/upvote.module';
     PostModule,
     CommentModule,
     UpvoteModule,
+    TagModule,
     ServicesModule,
   ],
   controllers: [AuthController, PostController, UserController],

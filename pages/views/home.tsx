@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
 import PostList from '../components/PostList';
 import { NextPageContext } from 'next';
+import Filter from 'pages/components/Filter';
 
 function Home({ data }) {
   return (
     <div className="mt-10 ">
+      <Filter />
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
