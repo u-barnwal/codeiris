@@ -1,6 +1,8 @@
 import { AbstractPureComponent, Intent } from '../../../../lib/common';
 import { ToastProps } from '../../../../lib/common/props/ToastProps';
 import React from 'react';
+import styles from './toast.module.css';
+import clsx from 'clsx';
 
 interface ToastState {
   icon: React.ReactNode | null;
@@ -59,7 +61,10 @@ export default class Toast extends AbstractPureComponent<
     return (
       // TODO: add loading
       <div
-        className="flex items-center max-w-sm w-full mb-4 text-white py-3 px-4 rounded-lg"
+        className={clsx(
+          'flex items-center max-w-sm w-full mb-4 text-white py-3 px-4 rounded-lg transition-all',
+          styles['toast-item'],
+        )}
         style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
       >
         {this.getIcon()}
