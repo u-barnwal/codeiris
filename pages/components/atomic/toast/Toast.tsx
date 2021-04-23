@@ -6,6 +6,27 @@ interface ToastState {
   icon: React.ReactNode | null;
 }
 
+function CloseIcon({ onClick }) {
+  return (
+    <div className="cursor-pointer" onClick={onClick}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6 hover:text-error transition-all"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </div>
+  );
+}
+
 export default class Toast extends AbstractPureComponent<
   ToastProps,
   ToastState
@@ -34,52 +55,18 @@ export default class Toast extends AbstractPureComponent<
 
   render() {
     const { message, loading } = this.props;
+
     return (
-      <div className="flex items-center transition-opacity duration-500 ease-linear max-w-sm w-full bg-warmGray-100 shadow-xl rounded-md overflow-hidden mx-auto mt-2 mb-2 border-green-600 border-1">
-        {loading && (
-          <div className="p-10 flex flex-col space-y-3 w-full">
-            <div className="slider">
-              <div className="line"></div>
-              <div className="subline inc"></div>
-              <div className="subline dec"></div>
-            </div>
-          </div>
-        )}
-        {!loading && (
-          <div className="grid grid-cols-6 gap-4 w-full">
-            <div className="col-span-1 py-3">
-              <div className="w-10 border-r px-2 py-2">{this.getIcon()}</div>
-            </div>
-            <div className="col-span-4">
-              <div className="flex items-center py-3">
-                <div className="mx-3">
-                  <p className="text-lg text-blueGray-500 py-2">{message}</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-span-1 py-3">
-              <div
-                className="p-2 mr-2 cursor-pointer hover:bg-blueGray-100 rounded-md"
-                onClick={this.dismissToast}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 hover:text-error"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        )}
+      // TODO: add loading
+      <div
+        className="flex items-center max-w-sm w-full mb-4 text-white py-3 px-4 rounded-lg"
+        style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
+      >
+        {this.getIcon()}
+
+        <div className="flex-grow mx-3">{message}</div>
+
+        <CloseIcon onClick={this.dismissToast} />
       </div>
     );
   }
