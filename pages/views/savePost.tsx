@@ -73,6 +73,12 @@ function SavePost() {
     });
   };
 
+  // AppToaster.show({
+  //   message: 'Test',
+  //   intent: Intent.SUCCESS,
+  //   timeout: 999999999,
+  // });
+
   return (
     <div className="container px-40 mt-10">
       <div className="text-2xl mb-8">
