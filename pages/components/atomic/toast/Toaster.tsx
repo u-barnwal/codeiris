@@ -63,7 +63,7 @@ class Toaster
       <div
         className={clsx(
           this.getPosition(),
-          'flex justify-center items-center absolute w-full',
+          'flex flex-col-reverse items-center absolute w-full',
         )}
       >
         {this.state.toasts.map(this.renderToast, this)}

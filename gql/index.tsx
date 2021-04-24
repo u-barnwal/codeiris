@@ -14,6 +14,8 @@ export type Scalars = {
   Float: number;
   /** Date custom scalar type */
   Date: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type Auth = {
@@ -72,6 +74,23 @@ export enum CommentOrderField {
 }
 
 
+export type File = {
+  __typename?: 'File';
+  /** Identifies the date and time when the object was created. */
+  createdAt: Scalars['Date'];
+  height: Scalars['Int'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  post?: Maybe<Post>;
+  preview: Scalars['String'];
+  size: Scalars['Int'];
+  source: Scalars['String'];
+  /** Identifies the date and time when the object was last updated. */
+  updatedAt: Scalars['Date'];
+  user?: Maybe<User>;
+  width: Scalars['Int'];
+};
+
 export type MagicLinkDto = {
   __typename?: 'MagicLinkDto';
   listener: Scalars['String'];
@@ -82,8 +101,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   CreateComment: Comment;
   addPost: Post;
+  createAsset: File;
   sendMagicLink: MagicLinkDto;
   updateUserProfileInfo: User;
+  updateVote: Vote;
 };
 
 
@@ -97,6 +118,11 @@ export type MutationAddPostArgs = {
 };
 
 
+export type MutationCreateAssetArgs = {
+  file: Scalars['Upload'];
+};
+
+
 export type MutationSendMagicLinkArgs = {
   email: Scalars['String'];
 };
@@ -104,6 +130,11 @@ export type MutationSendMagicLinkArgs = {
 
 export type MutationUpdateUserProfileInfoArgs = {
   data: UpdateUserInput;
+};
+
+
+export type MutationUpdateVoteArgs = {
+  input: UpvoteInput;
 };
 
 export enum OrderDirection {
@@ -129,16 +160,18 @@ export type Post = {
   id: Scalars['ID'];
   slug: Scalars['String'];
   status: PostStatus;
+  tag?: Maybe<Array<Tag>>;
   title: Scalars['String'];
   totalComments: Scalars['Int'];
   totalVotes: Scalars['Int'];
   type: PostType;
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['Date'];
-  url?: Maybe<Scalars['String']>;
+  upvoteState: Scalars['String'];
+  url: Scalars['String'];
   user: User;
   userId: Scalars['String'];
-  votes: Array<Vote>;
+  votes?: Maybe<Array<Vote>>;
 };
 
 export type PostConnection = {
@@ -193,6 +226,7 @@ export type Query = {
   getMeComments: CommentConnection;
   getMePosts: PostConnection;
   getPosts: PostConnection;
+  getTags: TagConnection;
   getUsers: UserConnection;
   me?: Maybe<User>;
 };
@@ -250,6 +284,16 @@ export type QueryGetPostsArgs = {
 };
 
 
+export type QueryGetTagsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  contain?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryGetUsersArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -259,10 +303,40 @@ export type QueryGetUsersArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
+export type Tag = {
+  __typename?: 'Tag';
+  /** Identifies the date and time when the object was created. */
+  createdAt: Scalars['Date'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  post?: Maybe<Array<Post>>;
+  /** Identifies the date and time when the object was last updated. */
+  updatedAt: Scalars['Date'];
+};
+
+export type TagConnection = {
+  __typename?: 'TagConnection';
+  edges?: Maybe<Array<TagEdge>>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type TagEdge = {
+  __typename?: 'TagEdge';
+  cursor: Scalars['String'];
+  node: Tag;
+};
+
 export type UpdateUserInput = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
+};
+
+
+export type UpvoteInput = {
+  postId: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type User = {
@@ -377,6 +451,20 @@ export type CreateCommentMutation = (
   ) }
 );
 
+export type UpdateVoteMutationVariables = Exact<{
+  postId: Scalars['String'];
+  type: Scalars['String'];
+}>;
+
+
+export type UpdateVoteMutation = (
+  { __typename?: 'Mutation' }
+  & { updateVote: (
+    { __typename?: 'Vote' }
+    & Pick<Vote, 'id'>
+  ) }
+);
+
 export type AddPostMutationVariables = Exact<{
   title: Scalars['String'];
   body?: Maybe<Scalars['String']>;
@@ -390,6 +478,19 @@ export type AddPostMutation = (
   & { addPost: (
     { __typename?: 'Post' }
     & Pick<Post, 'id'>
+  ) }
+);
+
+export type CreateAssetMutationVariables = Exact<{
+  file: Scalars['Upload'];
+}>;
+
+
+export type CreateAssetMutation = (
+  { __typename?: 'Mutation' }
+  & { createAsset: (
+    { __typename?: 'File' }
+    & Pick<File, 'id'>
   ) }
 );
 
@@ -407,7 +508,7 @@ export type GetPostsQuery = (
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'totalVotes' | 'totalComments'>
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'upvoteState' | 'totalVotes' | 'totalComments'>
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
@@ -616,6 +717,40 @@ export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
 export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<CreateCommentMutation, CreateCommentMutationVariables>;
+export const UpdateVoteDocument = gql`
+    mutation updateVote($postId: String!, $type: String!) {
+  updateVote(input: {postId: $postId, type: $type}) {
+    id
+  }
+}
+    `;
+export type UpdateVoteMutationFn = Apollo.MutationFunction<UpdateVoteMutation, UpdateVoteMutationVariables>;
+
+/**
+ * __useUpdateVoteMutation__
+ *
+ * To run a mutation, you first call `useUpdateVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateVoteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateVoteMutation, { data, loading, error }] = useUpdateVoteMutation({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useUpdateVoteMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVoteMutation, UpdateVoteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateVoteMutation, UpdateVoteMutationVariables>(UpdateVoteDocument, options);
+      }
+export type UpdateVoteMutationHookResult = ReturnType<typeof useUpdateVoteMutation>;
+export type UpdateVoteMutationResult = Apollo.MutationResult<UpdateVoteMutation>;
+export type UpdateVoteMutationOptions = Apollo.BaseMutationOptions<UpdateVoteMutation, UpdateVoteMutationVariables>;
 export const AddPostDocument = gql`
     mutation addPost($title: String!, $body: String, $url: String, $type: PostType) {
   addPost(post: {title: $title, body: $body, url: $url, type: $type}) {
@@ -652,6 +787,39 @@ export function useAddPostMutation(baseOptions?: Apollo.MutationHookOptions<AddP
 export type AddPostMutationHookResult = ReturnType<typeof useAddPostMutation>;
 export type AddPostMutationResult = Apollo.MutationResult<AddPostMutation>;
 export type AddPostMutationOptions = Apollo.BaseMutationOptions<AddPostMutation, AddPostMutationVariables>;
+export const CreateAssetDocument = gql`
+    mutation createAsset($file: Upload!) {
+  createAsset(file: $file) {
+    id
+  }
+}
+    `;
+export type CreateAssetMutationFn = Apollo.MutationFunction<CreateAssetMutation, CreateAssetMutationVariables>;
+
+/**
+ * __useCreateAssetMutation__
+ *
+ * To run a mutation, you first call `useCreateAssetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateAssetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createAssetMutation, { data, loading, error }] = useCreateAssetMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *   },
+ * });
+ */
+export function useCreateAssetMutation(baseOptions?: Apollo.MutationHookOptions<CreateAssetMutation, CreateAssetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAssetMutation, CreateAssetMutationVariables>(CreateAssetDocument, options);
+      }
+export type CreateAssetMutationHookResult = ReturnType<typeof useCreateAssetMutation>;
+export type CreateAssetMutationResult = Apollo.MutationResult<CreateAssetMutation>;
+export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetMutation, CreateAssetMutationVariables>;
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
@@ -665,6 +833,7 @@ export const GetPostsDocument = gql`
           firstName
           lastName
         }
+        upvoteState
         totalVotes
         totalComments
       }
@@ -814,7 +983,7 @@ export const GetCommentsDocument = gql`
   getComments(
     postId: $post
     first: $first
-    orderBy: {direction: desc, field: createdAt}
+    orderBy: {direction: asc, field: createdAt}
   ) {
     pageInfo {
       endCursor
