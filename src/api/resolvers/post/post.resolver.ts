@@ -6,6 +6,7 @@ import {
   ResolveField,
   Parent,
   Int,
+  Mutation,
 } from '@nestjs/graphql';
 import { User } from '../../../models/user.model';
 import { PaginationArgs } from '../../../common/pagination/pagination.args';
@@ -15,10 +16,36 @@ import { Post } from '../../../models/post.model';
 import { PrismaService } from '../../../services/prisma.service';
 import { Ctx } from '../../decorators/request-context.decorator';
 import { RequestContext } from '../../common/request-context';
+import { PostCreateInput } from '../../../models/input/post-create-input';
+import slugify from 'slugify';
+import { PostService } from '../../../services/post.service';
+import { UnauthorizedException } from '@nestjs/common';
 
 @Resolver((of) => Post)
 export class PostResolver {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly post: PostService,
+  ) {}
+
+  @Mutation(() => Post)
+  async addPost(
+    @Args('post') input: PostCreateInput,
+    @Ctx() context: RequestContext,
+  ) {
+    if (context.user === undefined) {
+      throw new UnauthorizedException();
+    }
+    return this.post.createPost({
+      type: input.type,
+      title: input.title,
+      body: input.body,
+      slug: input.title,
+      url: input.url,
+      userId: context.user.id,
+    });
+  }
+
   @Query((returns) => PostConnection)
   async getPosts(
     @Args() { skip, after, before, first, last }: PaginationArgs,

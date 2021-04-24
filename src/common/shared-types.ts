@@ -28,3 +28,17 @@ export type DeepPartial<T> = {
         ? ReadonlyArray<DeepPartial<U>>
         : DeepPartial<T[P]>);
 };
+
+export enum AssetType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  BINARY = 'BINARY',
+}
+export type ImageTransformMode = 'crop' | 'resize';
+
+export interface ImageTransformPreset {
+  name: string;
+  width: number;
+  height: number;
+  mode: ImageTransformMode;
+}

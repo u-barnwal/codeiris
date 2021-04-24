@@ -30,5 +30,22 @@ mutation CreateComment($postId: String, $parentId: String, $body: String!) {
 mutation updateVote($postId: String!, $type: String!) {
   updateVote(input: { postId: $postId, type: $type }) {
     id
+}}
+  
+  
+  mutation addPost(
+  $title: String!
+  $body: String
+  $url: String
+  $type: PostType
+) {
+  addPost(post: { title: $title, body: $body, url: $url, type: $type }) {
+    id
+  }
+}
+
+mutation createAsset($file: Upload!){
+  createAsset(file: $file) {
+    id
   }
 }
