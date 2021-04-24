@@ -63,7 +63,6 @@ function Post({
             </div>
           </div>
           <div className="flex flex-row">
-            <div className="mx-2">Published: </div>
             <div className="text-base text-body">{updatedAt}</div>
           </div>
         </div>

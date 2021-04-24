@@ -70,3 +70,13 @@ query getComments($post: String, $first: Int!) {
     }
   }
 }
+query getTags($contain: String, $after: String, $first: Int!) {
+  getTags(contain: $contain, after: $after, first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
