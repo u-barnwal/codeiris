@@ -10,6 +10,7 @@ export interface ButtonProps
     IntentProps {
   icon?: React.ReactNode;
   loading?: boolean;
+  loaderClass?: string;
 }
 
 function Button({
@@ -18,6 +19,7 @@ function Button({
   icon,
   className,
   disabled,
+  loaderClass,
   ...rest
 }: ButtonProps) {
   return (
@@ -32,7 +34,12 @@ function Button({
       >
         {icon}
         {loading && (
-          <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white ml-1 mr-1" />
+          <div
+            className={clsx(
+              'animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white ml-1 mr-1',
+              loaderClass,
+            )}
+          />
         )}
         {children}
       </button>

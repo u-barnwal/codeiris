@@ -18,27 +18,32 @@ import { Ctx } from '../../decorators/request-context.decorator';
 import { RequestContext } from '../../common/request-context';
 import { PostCreateInput } from '../../../models/input/post-create-input';
 import slugify from 'slugify';
+import { PostService } from '../../../services/post.service';
+import { UnauthorizedException } from '@nestjs/common';
 
 @Resolver((of) => Post)
 export class PostResolver {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly post: PostService,
+  ) {}
 
   @Mutation(() => Post)
   async addPost(
     @Args('post') input: PostCreateInput,
     @Ctx() context: RequestContext,
   ) {
-    const result = await this.prisma.post.create({
-      data: {
-        type: input.type,
-        title: input.title,
-        body: input.body,
-        slug: slugify(input.title),
-        url: input.url,
-        userId: context.user ? context.user.id : undefined,
-      },
+    if (context.user === undefined) {
+      throw new UnauthorizedException();
+    }
+    return this.post.createPost({
+      type: input.type,
+      title: input.title,
+      body: input.body,
+      slug: input.title,
+      url: input.url,
+      userId: context.user.id,
     });
-    return result;
   }
 
   @Query((returns) => PostConnection)
@@ -112,6 +117,20 @@ export class PostResolver {
     });
     return totalComments;
   }
+
+  @ResolveField('upvoteState', (returns) => String)
+  async upvoteState(@Ctx() context: RequestContext, @Parent() post: Post) {
+    if (context.session.type === 'AUTHENTICATED') {
+      const { id } = post;
+      const vote = await this.prisma.vote.findFirst({
+        where: { postId: id, userId: context.user.id },
+      });
+      if (vote) return vote.type;
+      return 'notvoted';
+    }
+    return 'disabled';
+  }
+
   @ResolveField('totalVotes', (returns) => Int)
   async totalVotes(@Parent() post: Post) {
     const { id } = post;
