@@ -6,6 +6,12 @@ import superjson from 'superjson';
 export class PostController {
   constructor(private readonly post: PostService) {}
 
+  @Get('save')
+  @Render('savePost')
+  async SavePost() {
+    return {};
+  }
+
   @Get(':id')
   @Render('postPage')
   async getPost(@Param('id') id: string) {
