@@ -5,6 +5,7 @@ import { User } from './user.model';
 import { Vote } from './vote.model';
 import { DeepPartial } from '../common';
 import { Comment } from './comment.model';
+import { Tag } from './tag.model';
 
 registerEnumType(PostStatus, { name: 'PostStatus' });
 registerEnumType(PostType, { name: 'PostType' });
@@ -17,9 +18,9 @@ export class Post extends BaseModel {
 
   @Field()
   slug: string;
-  @Field({ nullable: true })
-  body: string;
-  @Field({ nullable: true })
+  @Field({nullable :  true})
+  body?: string;
+  @Field()
   url?: string;
   @Field()
   title: string;
@@ -33,8 +34,10 @@ export class Post extends BaseModel {
   status: 'draft' | 'published' | 'hidden' | 'blocked';
   @Field(() => PostType)
   type: 'link' | 'ask' | 'job';
-  @Field(() => [Vote])
+  @Field(() => [Vote], {nullable: true})
   votes: Vote[];
   @Field(() => [Comment], { nullable: true })
   comments: Comment[];
+  @Field(() => [Tag], { nullable: true })
+  tag: Tag[];
 }

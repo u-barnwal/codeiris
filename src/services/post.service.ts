@@ -45,8 +45,7 @@ export class PostService {
     });
     return topPosts;
   }
-
-  async createPost({ type, title, body, slug, url, userId }) {
+async createPost({ type, title, body, slug, url, userId }) {
     const slugNew = slugify(slug) + '-' + uniqid();
     const post = await this.prisma.post.create({
       data: {

@@ -13,6 +13,8 @@ import { Credentials, S3, SES } from 'aws-sdk';
 import { EmailGeneratorService } from './email-generator.service';
 import { SessionService } from './session.service';
 import { UserService } from './user.service';
+import { UpvoteService } from './upvote.service';
+
 import { MeilisearchService } from './meilisearch.service';
 import { S3AssetsStorageService } from './assets/s3-assets-storage.service';
 import { SharpAssetPreviewService } from './assets/sharp-asset-preview.service';
@@ -62,11 +64,12 @@ import { AssetsService } from './assets/assets.service';
     EmailGeneratorService,
     SessionService,
     UserService,
-    MeilisearchService,
+        MeilisearchService,
     S3AssetsStorageService,
     SharpAssetPreviewService,
     DefaultAssetsNamingService,
     AssetsService,
+    UpvoteService,
   ],
   exports: [
     PrismaService,
@@ -75,6 +78,7 @@ import { AssetsService } from './assets/assets.service';
     PostService,
     SessionService,
     UserService,
+    UpvoteService,
     AssetsService,
   ],
 })
