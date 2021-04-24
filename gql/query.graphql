@@ -70,3 +70,31 @@ query getComments($post: String, $first: Int!) {
     }
   }
 }
+
+query getCommentsChildren($comment: String, $first: Int!){
+    getCommentsChildren(
+        commentId:$comment,
+        first:$first,
+        orderBy: {
+            direction:desc,
+            field:createdAt
+        }
+    ) {
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        totalCount
+        edges {
+            node {
+                id
+                body
+                createdAt
+                user {
+                    id
+                    firstName
+                }
+            }
+        }
+    }
+}

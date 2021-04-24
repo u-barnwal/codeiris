@@ -21,7 +21,13 @@ export const setRefreshToken = (s: string) => {
 };
 
 export const isExpired = () => {
-  if (accessToken === '' || accessToken === undefined || expiry === null) {
+  if (
+    accessToken === '' ||
+    accessToken === undefined ||
+    expiry === null ||
+    refreshToken === null ||
+    refreshToken === undefined
+  ) {
     return false;
   }
   return !moment().isAfter(moment(expiry).add(1, 'minute'));

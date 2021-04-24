@@ -24,6 +24,7 @@ import fetch from 'isomorphic-unfetch';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
+import { createUploadLink } from 'apollo-upload-client';
 
 export const restrictedPath = ['/user/profile', '/user/account'];
 
@@ -70,7 +71,7 @@ function initApolloClient(initalState: any, accessToken?: string) {
 }
 
 function createApolloClient(initialState = {}, accessToken?: string) {
-  const httpLink = new HttpLink({ uri: graphQLEndpoint, fetch });
+  const httpLink = new createUploadLink({ uri: graphQLEndpoint, fetch });
   const refreshLink = new TokenRefreshLink<any>({
     accessTokenField: 'tokens',
     isTokenValidOrUndefined: () => {
@@ -95,7 +96,6 @@ function createApolloClient(initialState = {}, accessToken?: string) {
       setExpiry();
     },
     handleError: (err) => {
-      console.log(err);
       setAccessToken(null);
       setRefreshToken(null);
     },
