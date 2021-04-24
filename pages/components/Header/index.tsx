@@ -8,14 +8,24 @@ import { SpinnerSize } from '../../../lib/common/props/SpinnerProps';
 import Avatar from '../atomic/avatar/Avatar';
 import Dropdown from '../atomic/dropdown/Dropdown';
 import clsx from 'clsx';
+import { useStore } from '../../store/StoreProvider';
+import { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 
 function Header() {
+  const store = useStore();
+  const router = useRouter();
+
   const { data, loading, error } = useQuery<GetMeQuery, GetMeQueryVariables>(
     GetMeDocument,
     { skip: skipper() },
   );
 
-  const router = useRouter();
+  useEffect(() => {
+    if (data && !store.user) {
+      store.login(data.me);
+    }
+  }, [data]);
 
   const onTriggerLogout = () => {
     localStorage.clear();
@@ -136,4 +146,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default observer(Header);
