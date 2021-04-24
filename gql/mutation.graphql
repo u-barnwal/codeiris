@@ -27,7 +27,13 @@ mutation CreateComment($postId: String, $parentId: String, $body: String!) {
   }
 }
 
-mutation addPost(
+mutation updateVote($postId: String!, $type: String!) {
+  updateVote(input: { postId: $postId, type: $type }) {
+    id
+}}
+  
+  
+  mutation addPost(
   $title: String!
   $body: String
   $url: String

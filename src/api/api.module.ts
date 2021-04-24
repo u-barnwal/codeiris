@@ -15,6 +15,9 @@ import { RequestContextService } from './common/request-context.service';
 import { EventBusModule } from '../event-bus/event-bus.module';
 import { UserController } from './controllers/user/user.controller';
 import { CommentModule } from './resolvers/comment/comment.module';
+import { UpvoteModule } from './resolvers/upvote/upvote.module';
+import { TagModule } from './resolvers/tag/tag.module';
+
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { AssetsModule } from './resolvers/assets/assets.module';
 import { AssetsController } from './controllers/assets/assets.controller';
@@ -45,6 +48,8 @@ import { AssetsController } from './controllers/assets/assets.controller';
     UserModule,
     PostModule,
     CommentModule,
+    UpvoteModule,
+    TagModule,
     AssetsModule,
     ServicesModule,
   ],
