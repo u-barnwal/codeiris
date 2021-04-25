@@ -10,8 +10,16 @@ function Post() {
         0
       </Votes>
 
-      <div>
-        <PostHeader />
+      <div className="flex-1">
+        <PostHeader
+          user={{
+            image:
+              'https://i.pinimg.com/originals/10/18/55/101855f519ea89fc7e9a965a346a196f.jpg',
+            name: 'Sheldon Cooper',
+          }}
+          className="ml-10"
+        />
+
         <PostBody title="">&nbsp;</PostBody>
       </div>
     </div>
