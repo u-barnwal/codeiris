@@ -4,12 +4,12 @@ import NavItem from './NavItem';
 
 function NavBar() {
   return (
-    <div>
+    <div className="bg-white">
       <Container className="py-5">
         <div className="flex">
-          <NavItem link="">Post</NavItem>
-          <NavItem link="">Question</NavItem>
-          <NavItem link="">Job</NavItem>
+          <NavItem link="">Posts</NavItem>
+          <NavItem link="">Questions</NavItem>
+          <NavItem link="">Jobs</NavItem>
         </div>
       </Container>
     </div>
