@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import { Icon } from './hoc';
 
 export interface IconProps {
   height?: number;
@@ -7,31 +7,6 @@ export interface IconProps {
   className?: string;
   onClick?: () => void | null;
 }
-
-const Icon = ({
-  height = 6,
-  width = 6,
-  className = '',
-  onClick = null,
-  children,
-}) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className={clsx(
-        `h-${height} w-${width}`,
-        className,
-        onClick ? 'cursor-pointer' : '',
-      )}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      onClick={onClick}
-    >
-      {children}
-    </svg>
-  );
-};
 
 export const BellIcon: React.FC<IconProps> = (props) => {
   return (
