@@ -1,6 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-const Header = dynamic(import('../components/Header'), { ssr: false });
+import NavBar from 'pages/components/NavBar';
 
 interface Props {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface Props {
 function DefaultLayout({ children }: Props) {
   return (
     <React.Fragment>
-      <Header />
+      <NavBar />
       {children}
     </React.Fragment>
   );
