@@ -6,11 +6,13 @@ import Votes from './Votes';
 function Post() {
   return (
     <div className="bg-white rounded-md p-4 flex">
-      <Votes />
+      <Votes onUpVote={() => {}} onDownVote={() => {}}>
+        0
+      </Votes>
 
       <div>
         <PostHeader />
-        <PostBody title="">d</PostBody>
+        <PostBody title="">&nbsp;</PostBody>
       </div>
     </div>
   );

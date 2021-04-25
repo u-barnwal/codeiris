@@ -119,3 +119,29 @@ export const DiscussionIcon: React.FC<IconProps> = (props) => {
     </Icon>
   );
 };
+
+export const ChevronUpIcon: React.FC<IconProps> = (props) => {
+  return (
+    <Icon {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M5 15l7-7 7 7"
+      />
+    </Icon>
+  );
+};
+
+export const ChevronDownIcon: React.FC<IconProps> = (props) => {
+  return (
+    <Icon {...props}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19 9l-7 7-7-7"
+      />
+    </Icon>
+  );
+};
