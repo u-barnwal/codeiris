@@ -7,7 +7,7 @@ import Filter from 'pages/components/Filter';
 function Home({ data }) {
   return (
     <div className="mt-10 ">
-      <Filter />
+      {/* <Filter />
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
@@ -18,7 +18,7 @@ function Home({ data }) {
           upvotes: ele._count.votes,
           totalComments: ele._count.comments,
         }))}
-      />
+      /> */}
     </div>
   );
 }
