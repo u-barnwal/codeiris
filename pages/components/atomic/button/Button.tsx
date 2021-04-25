@@ -26,7 +26,7 @@ function Button({
     <React.Fragment>
       <button
         className={clsx(
-          'flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary m-1',
+          'flex items-center justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary m-1',
           className,
         )}
         disabled={disabled || loading}

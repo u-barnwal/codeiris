@@ -1,6 +1,11 @@
 import clsx from 'clsx';
 import Button from 'pages/components/atomic/button';
-import { ClockIcon, StarIcon, UserGroupIcon } from 'pages/components/Icons';
+import {
+  ClockIcon,
+  StarIcon,
+  TreadingUpIcon,
+  PencilIcon,
+} from 'pages/components/Icons';
 import React from 'react';
 import FilterDropdown from './FilterDropdown';
 
@@ -12,7 +17,7 @@ function FilterBar({ className = '' }) {
           Most Popular
         </FilterDropdown>
 
-        <FilterDropdown color="info" Icon={UserGroupIcon} className="mx-5">
+        <FilterDropdown color="info" Icon={TreadingUpIcon} className="mx-5">
           Highest Votes
         </FilterDropdown>
 
@@ -22,7 +27,12 @@ function FilterBar({ className = '' }) {
       </div>
 
       <div>
-        <Button className="ml-10">Write New Thread</Button>
+        <Button
+          icon={<PencilIcon className="mr-2" size={3} />}
+          className="ml-10"
+        >
+          Write New Thread
+        </Button>
       </div>
     </div>
   );
