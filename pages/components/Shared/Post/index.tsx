@@ -20,7 +20,10 @@ function Post() {
           className="mb-5"
         />
 
-        <PostBody title="The Thespian Catalyst">
+        <PostBody
+          title="The Thespian Catalyst"
+          tags={['tbbt', 'sheldon', 'big_bang', 'tbs', 'theory']}
+        >
           Sheldon gives a lecture making his usual condescending comments.
           Meanwhile, the gang is enjoying the tweets of the people that attended
           Sheldon's lecture; all negative towards him from Twitter. When he
