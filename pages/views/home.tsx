@@ -5,19 +5,22 @@ import Container from 'pages/containers/Container';
 import FilterBar from 'pages/components/Home/FilterBar';
 import SectionTitle from 'pages/components/Home/SectionTitle';
 import { FireIcon, DiscussionIcon } from 'pages/components/Icons';
+import PostList from 'pages/components/Home/PostList';
 
 function Home({ data }) {
   return (
     <Container className="mt-10">
-      <SectionTitle color="error" Icon={FireIcon}>
+      <SectionTitle className="my-10" color="error" Icon={FireIcon}>
         Trending
       </SectionTitle>
 
-      <FilterBar className="my-10" />
+      <FilterBar />
 
-      <SectionTitle color="primary" Icon={DiscussionIcon}>
+      <SectionTitle className="my-10" color="primary" Icon={DiscussionIcon}>
         Threads & Discussions
       </SectionTitle>
+
+      <PostList />
 
       {/* <Filter />
       <PostList
