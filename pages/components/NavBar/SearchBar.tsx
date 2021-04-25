@@ -6,7 +6,7 @@ function SearchBar({ className = '' }) {
   return (
     <div
       className={clsx(
-        'bg-gray-200 p-2 rounded-full flex items-center px-3',
+        'bg-gray-200 p-2 rounded-full flex items-center px-5',
         className,
       )}
     >
