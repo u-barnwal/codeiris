@@ -1,12 +1,16 @@
 import clsx from 'clsx';
 
 export const Icon = ({
+  size = -1,
   height = 6,
   width = 6,
   className = '',
   onClick = null,
   children,
 }) => {
+  height = size != -1 ? size : height;
+  width = size != -1 ? size : width;
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

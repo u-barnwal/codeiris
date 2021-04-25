@@ -3,6 +3,7 @@ import React from 'react';
 import Button from '../atomic/button';
 import { BellIcon } from '../Icons';
 import NavItem from './NavItem';
+import SearchBar from './SearchBar';
 
 function NavBar() {
   return (
@@ -15,7 +16,9 @@ function NavBar() {
 
           <div className="flex-1"></div>
 
-          <BellIcon className="mr-5" />
+          <SearchBar className="mr-5" />
+
+          <BellIcon className="mr-5" onClick={() => {}} />
 
           <Button className="rounded-full px-10">Login</Button>
         </div>
