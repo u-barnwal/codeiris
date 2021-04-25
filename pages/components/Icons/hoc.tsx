@@ -7,6 +7,7 @@ export const Icon = ({
   className = '',
   onClick = null,
   children,
+  color = 'currentColor',
 }) => {
   height = size != -1 ? size : height;
   width = size != -1 ? size : width;
@@ -21,7 +22,7 @@ export const Icon = ({
       )}
       fill="none"
       viewBox="0 0 24 24"
-      stroke="currentColor"
+      stroke={color}
       onClick={onClick}
     >
       {children}
