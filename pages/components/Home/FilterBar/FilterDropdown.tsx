@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-function FilterDropDown({ Icon, children, className = '' }) {
+function FilterDropdown({ Icon, children, className = '' }) {
   return (
     <div className={clsx('rounded-full border px-8 py-2', className)}>
       <div className="rounded-full">{Icon}</div>
@@ -12,4 +12,4 @@ function FilterDropDown({ Icon, children, className = '' }) {
   );
 }
 
-export default FilterDropDown;
+export default FilterDropdown;

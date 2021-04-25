@@ -1,17 +1,17 @@
 import clsx from 'clsx';
 import Button from 'pages/components/atomic/button';
 import React from 'react';
-import FilterDropDown from './FilterDropDown';
+import FilterDropdown from './FilterDropdown';
 
 function FilterBar({ className = '' }) {
   return (
     <div className={clsx('flex items-center', className)}>
       <div className="bg-white rounded-md flex flex-1 p-4 justify-center">
-        <FilterDropDown Icon={''}>Most Popular</FilterDropDown>
-        <FilterDropDown Icon={''} className="mx-5">
+        <FilterDropdown Icon={''}>Most Popular</FilterDropdown>
+        <FilterDropdown Icon={''} className="mx-5">
           Highest Votes
-        </FilterDropDown>
-        <FilterDropDown Icon={''}>Latest Thread</FilterDropDown>
+        </FilterDropdown>
+        <FilterDropdown Icon={''}>Latest Thread</FilterDropdown>
       </div>
 
       <div>
