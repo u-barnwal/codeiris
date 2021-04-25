@@ -3,11 +3,22 @@ import DefaultLayout from '../layouts/defaultLayout';
 import { NextPageContext } from 'next';
 import Container from 'pages/containers/Container';
 import FilterBar from 'pages/components/Home/FilterBar';
+import SectionTitle from 'pages/components/Home/SectionTitle';
+import { FireIcon, DiscussionIcon } from 'pages/components/Icons';
 
 function Home({ data }) {
   return (
     <Container className="mt-10">
+      <SectionTitle color="error" Icon={FireIcon}>
+        Trending
+      </SectionTitle>
+
       <FilterBar className="my-10" />
+
+      <SectionTitle color="primary" Icon={DiscussionIcon}>
+        Threads & Discussions
+      </SectionTitle>
+
       {/* <Filter />
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
