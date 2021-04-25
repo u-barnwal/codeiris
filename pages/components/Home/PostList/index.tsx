@@ -4,7 +4,8 @@ import Post from './../../Shared/Post';
 
 function PostList({ className = '' }) {
   return (
-    <div className={clsx('flex items-center', className)}>
+    // TODO: update the hardcoded margin
+    <div className={clsx('mr-60', className)}>
       <Post />
     </div>
   );
