@@ -12,6 +12,7 @@ import { useStore } from '../../store/StoreProvider';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
+// TODO: @risha Delete this
 function Header() {
   const store = useStore();
   const router = useRouter();

@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
-import PostList from '../components/PostList';
 import { NextPageContext } from 'next';
-import Filter from 'pages/components/Filter';
+import Container from 'pages/containers/Container';
+import FilterBar from 'pages/components/Home/FilterBar';
+import SectionTitle from 'pages/components/Home/SectionTitle';
+import { FireIcon, DiscussionIcon } from 'pages/components/Icons';
+import PostList from 'pages/components/Home/PostList';
 
 function Home({ data }) {
   return (
-    <div className="mt-10 ">
-      <Filter />
+    <Container className="mt-10">
+      <SectionTitle className="my-10" color="error" Icon={FireIcon}>
+        Trending
+      </SectionTitle>
+
+      <FilterBar />
+
+      <SectionTitle className="my-10" color="primary" Icon={DiscussionIcon}>
+        Threads & Discussions
+      </SectionTitle>
+
+      <PostList />
+
+      {/* <Filter />
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
@@ -18,8 +33,8 @@ function Home({ data }) {
           upvotes: ele._count.votes,
           totalComments: ele._count.comments,
         }))}
-      />
-    </div>
+      /> */}
+    </Container>
   );
 }
 

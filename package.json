@@ -55,6 +55,7 @@
     "@prisma/client": "^2.21.2",
     "@sentry/hub": "^6.2.5",
     "@sentry/node": "^6.2.5",
+    "@tailwindcss/line-clamp": "^0.2.0",
     "@types/react-dom": "^17.0.3",
     "apollo-link-token-refresh": "^0.3.2",
     "apollo-server-express": "^2.22.1",
