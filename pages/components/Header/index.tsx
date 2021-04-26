@@ -9,6 +9,7 @@ import Avatar from '../atomic/avatar/Avatar';
 import Dropdown from '../atomic/dropdown/Dropdown';
 import clsx from 'clsx';
 
+// TODO: @risha Delete this
 function Header() {
   const { data, loading, error } = useQuery<GetMeQuery, GetMeQueryVariables>(
     GetMeDocument,
