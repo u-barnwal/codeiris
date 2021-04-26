@@ -44,7 +44,7 @@ function Header() {
 
   return (
     <div>
-      <div className="relative bg-white shadow-lg">
+      <div className="relative bg-white shadow-2xl">
         <div className="px-10 px-4 sm:px-6">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
             <div className="flex justify-start">
