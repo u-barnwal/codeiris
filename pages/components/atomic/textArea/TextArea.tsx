@@ -8,12 +8,14 @@ export interface TextAreaProps
   > {
   label: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 function TextArea({
   className,
   label,
   placeholder = label,
+  required = false,
   ...rest
 }: TextAreaProps) {
   const [focus, setFocus] = useState(false);
@@ -26,7 +28,7 @@ function TextArea({
           focus ? 'text-primary' : 'text-gray-800',
         )}
       >
-        {label}
+        {label} {required && <span className="text-red-600">*</span>}
       </span>
 
       <textarea

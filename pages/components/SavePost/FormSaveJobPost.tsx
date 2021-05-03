@@ -36,6 +36,7 @@ function FormSaveJobPost({
         className="mb-4"
         label="Title"
         onChange={(e) => handleFieldChange('title', e)}
+        required
       />
 
       <TextField
@@ -45,6 +46,7 @@ function FormSaveJobPost({
         placeholder="https://"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
+        required
       />
 
       <Button

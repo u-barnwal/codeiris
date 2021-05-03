@@ -39,6 +39,7 @@ function FormSaveAskPost({
         label="Question"
         onChange={(e) => handleFieldChange('title', e)}
         className="mb-4"
+        required
       />
 
       <TextArea
@@ -46,6 +47,7 @@ function FormSaveAskPost({
         label="Body"
         onChange={(e) => handleFieldChange('body', e)}
         className="w-full"
+        required
       />
 
       <Button

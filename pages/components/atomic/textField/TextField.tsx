@@ -10,7 +10,7 @@ export interface TextFieldProps
     IntentProps {
   label: string;
   placeholder?: string;
-  floating?: boolean;
+  required?: boolean;
 }
 
 function TextField({
@@ -19,7 +19,7 @@ function TextField({
   label,
   placeholder = label,
   className,
-  floating,
+  required = false,
   ...rest
 }: TextFieldProps) {
   const [focus, setFocus] = useState(false);
@@ -33,7 +33,7 @@ function TextField({
             focus ? 'text-primary' : 'text-gray-800',
           )}
         >
-          {label}
+          {label} {required && <span className="text-red-600">*</span>}
         </span>
 
         <input

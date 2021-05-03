@@ -37,6 +37,7 @@ function FormSaveLinkPost({
         label="Title"
         onChange={(e) => handleFieldChange('title', e)}
         className="mb-4"
+        required
       />
 
       <TextField
@@ -46,6 +47,7 @@ function FormSaveLinkPost({
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
         className="mb-4"
+        required
       />
 
       <Button
