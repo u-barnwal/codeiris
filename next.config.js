@@ -1,4 +1,6 @@
-module.exports = {
+const withTM = require('next-transpile-modules')(['mobx-react-lite']);
+
+module.exports = withTM({
   future: {
     webpack5: false,
   },
@@ -6,4 +8,4 @@ module.exports = {
   images: {
     domains: ['images.unsplash.com'],
   },
-};
+})

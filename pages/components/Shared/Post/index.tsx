@@ -6,7 +6,7 @@ import Votes from './Votes';
 
 function Post() {
   return (
-    <div className="bg-white rounded-md p-4 ">
+    <div className="bg-white rounded-lg p-4 ">
       <ImageBar
         image="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
         className="mb-5"

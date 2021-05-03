@@ -6,11 +6,11 @@ function SearchBar({ className = '' }) {
   return (
     <div
       className={clsx(
-        'bg-gray-200 p-2 rounded-full flex items-center px-5',
+        'bg-gray-200 p-2 rounded-full flex items-center px-5 shadow-inner',
         className,
       )}
     >
-      <SearchIcon size={3} />
+      <SearchIcon size={4} className="text-gray-700" />
 
       <input
         type="text"

@@ -1,8 +1,8 @@
 import { PostType } from 'gql';
 import Button from 'pages/components/atomic/button';
 import TextField from 'pages/components/atomic/textField';
-import useForm from 'pages/hooks/useForm';
 import React from 'react';
+import useForm from '../../../lib/hooks/useForm';
 
 function FormSaveLinkPost({
   initialFields,
@@ -10,11 +10,9 @@ function FormSaveLinkPost({
   processError,
   processSave,
 }) {
-  const {
-    props: { title, url },
-    dispatch,
-    handleFieldChange,
-  } = useForm(initialFields);
+  const [props, dispatch, handleFieldChange] = useForm(initialFields);
+
+  const { title, url } = props;
 
   const handleSubmit = () => {
     let error;
