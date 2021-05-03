@@ -42,6 +42,7 @@ function FormSaveJobPost({
         value={url}
         className="mb-4"
         label="URL"
+        placeholder="https://"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
       />

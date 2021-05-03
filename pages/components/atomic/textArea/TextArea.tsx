@@ -26,7 +26,7 @@ function TextArea({
           focus ? 'text-primary' : 'text-gray-800',
         )}
       >
-        {placeholder}
+        {label}
       </span>
 
       <textarea

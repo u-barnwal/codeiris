@@ -42,6 +42,7 @@ function FormSaveLinkPost({
       <TextField
         value={url}
         label="URL"
+        placeholder="https://"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
         className="mb-4"

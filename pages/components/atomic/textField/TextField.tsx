@@ -35,7 +35,7 @@ function TextField({
             focus ? 'text-primary' : 'text-gray-800',
           )}
         >
-          {placeholder}
+          {label}
         </span>
 
         <input
