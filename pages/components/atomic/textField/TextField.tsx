@@ -25,6 +25,7 @@ function TextField({
   ...rest
 }: TextFieldProps) {
   const [focus, setFocus] = useState(false);
+
   return (
     <React.Fragment>
       <div className={clsx('flex flex-col', className)}>
@@ -43,7 +44,7 @@ function TextField({
           placeholder={focus ? '' : placeholder}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className="border-b-2 border-gray-400 placeholder-gray-400 text-gray-700 outline-none focus:border-primary text-lg transition-all"
+          className="border-b-2 border-gray-400 placeholder-gray-400 text-gray-700 outline-none focus:border-primary text-lg transition-all pb-1"
           {...rest}
         />
 

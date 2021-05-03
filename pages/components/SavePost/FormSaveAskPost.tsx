@@ -43,9 +43,9 @@ function FormSaveAskPost({
 
       <TextArea
         value={props.body}
-        placeholder="Body"
+        label="Body"
         onChange={(e) => handleFieldChange('body', e)}
-        className="w-full mb-4"
+        className="w-full"
       />
 
       <Button
