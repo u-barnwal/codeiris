@@ -16,7 +16,7 @@ function FormSaveAskPost({
   const handleSubmit = () => {
     let error;
 
-    if (props.title === '') error = 'You must enter a title!';
+    if (props.title === '') error = 'You must enter the question!';
     else if (props.body === '') error = 'You must enter the body!';
 
     if (error) {
@@ -48,8 +48,12 @@ function FormSaveAskPost({
         className="w-full mb-4"
       />
 
-      <Button loading={loading} onClick={handleSubmit}>
-        Add
+      <Button
+        loading={loading}
+        onClick={handleSubmit}
+        className="bg-success mt-6"
+      >
+        Publish Post
       </Button>
     </>
   );

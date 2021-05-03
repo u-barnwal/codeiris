@@ -17,8 +17,8 @@ function FormSaveLinkPost({
   const handleSubmit = () => {
     let error;
 
-    if (title === '') error = 'You must enter a title!';
-    else if (url === '') error = 'You must enter a URL!';
+    if (title === '') error = 'You must enter the title!';
+    else if (url === '') error = 'You must enter the URL!';
 
     if (error) {
       processError(error);
@@ -47,8 +47,12 @@ function FormSaveLinkPost({
         className="mb-4"
       />
 
-      <Button loading={loading} onClick={handleSubmit}>
-        Add
+      <Button
+        loading={loading}
+        onClick={handleSubmit}
+        className="bg-success mt-6"
+      >
+        Publish Post
       </Button>
     </>
   );
