@@ -1,13 +1,15 @@
 import React from 'react';
 import { Icon } from './hoc';
 
-export interface IconProps {
+export interface IconProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
   size?: number;
   height?: number;
   width?: number;
-  className?: string;
   color?: string;
-  onClick?: () => void | null;
 }
 
 export const BellIcon: React.FC<IconProps> = (props) => {

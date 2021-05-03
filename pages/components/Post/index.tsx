@@ -12,6 +12,8 @@ import {
 } from 'gql';
 import { skipper } from 'lib/accessToken';
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite/src/observer';
+import { useStore } from '../../store/StoreProvider';
 
 //TODO due to build error the user part is disabled
 function Post({
@@ -24,6 +26,7 @@ function Post({
   updatedAt,
   upvoteState,
 }: PostProps) {
+  const store = useStore();
   const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
   const [upvoteStateLocal, setUpvoteStateLocal] = useState(upvoteState);
   const [updateVote, { data, error, loading }] = useMutation<
@@ -40,6 +43,8 @@ function Post({
       })
       .catch((err) => console.log(err));
   };
+
+  console.log(store);
   return (
     <div className="flex flex-row justify-between max-w-lg rounded-md shadow-lg mx-auto bg-white ">
       <Upvote
@@ -107,4 +112,4 @@ function Post({
   );
 }
 
-export default Post;
+export default observer(Post);

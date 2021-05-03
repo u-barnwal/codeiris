@@ -9,10 +9,15 @@ import {
 import React from 'react';
 import FilterDropdown from './FilterDropdown';
 
-function FilterBar({ className = '' }) {
+export type FilterProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
+
+function FilterBar({ className }: FilterProps) {
   return (
     <div className={clsx('flex items-center', className)}>
-      <div className="bg-white rounded-md flex flex-1 p-4">
+      <div className="bg-white rounded-lg shadow-lg flex flex-1 p-4">
         <FilterDropdown color="success" Icon={StarIcon}>
           Most Popular
         </FilterDropdown>
@@ -29,7 +34,7 @@ function FilterBar({ className = '' }) {
       <div>
         <Button
           icon={<PencilIcon className="mr-2" size={3} />}
-          className="ml-10"
+          className="ml-10 shadow-2xl"
         >
           Write New Thread
         </Button>
