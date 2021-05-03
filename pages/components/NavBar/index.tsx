@@ -13,6 +13,7 @@ import Spinner from '../atomic/spinner';
 import { SpinnerSize } from '../../../lib/common/props/SpinnerProps';
 import Dropdown from '../atomic/dropdown/Dropdown';
 import Avatar from '../atomic/avatar/Avatar';
+import LinkButton from '../Shared/LinkButton';
 
 function NavBar() {
   const store = useStore();
