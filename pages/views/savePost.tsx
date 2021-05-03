@@ -9,9 +9,9 @@ import {
   PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
-import FormSaveLinkPost from './savePost/FormSaveLinkPost';
-import FormSaveJobPost from './savePost/FormSaveJobPost';
-import FormSaveAskPost from './savePost/FormSaveAskPost';
+import FormSaveLinkPost from '../components/SavePost/FormSaveLinkPost';
+import FormSaveJobPost from '../components/SavePost/FormSaveJobPost';
+import FormSaveAskPost from '../components/SavePost/FormSaveAskPost';
 import clsx from 'clsx';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
