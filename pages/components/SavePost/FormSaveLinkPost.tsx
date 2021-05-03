@@ -34,15 +34,17 @@ function FormSaveLinkPost({
     <>
       <TextField
         value={title}
-        placeholder="Title"
+        label="Title"
         onChange={(e) => handleFieldChange('title', e)}
+        className="mb-4"
       />
 
       <TextField
         value={url}
-        placeholder="URL"
+        label="URL"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
+        className="mb-4"
       />
 
       <Button loading={loading} onClick={handleSubmit}>

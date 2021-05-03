@@ -33,13 +33,15 @@ function FormSaveJobPost({
     <>
       <TextField
         value={title}
-        placeholder="Title"
+        className="mb-4"
+        label="Title"
         onChange={(e) => handleFieldChange('title', e)}
       />
 
       <TextField
         value={url}
-        placeholder="URL"
+        className="mb-4"
+        label="URL"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
       />

@@ -113,36 +113,12 @@ function SavePost() {
         <Animation loop={true} data={getAnimation(activeTab)}></Animation>
 
         <div
-          className="flex-grow p-3 bg-white mr-5 rounded-md shadow-lg"
+          className="flex-grow p-5 bg-white mr-5 rounded-md shadow-lg"
           style={{ minHeight: '400px' }}
         >
           {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
         </div>
       </div>
-
-      {/* <div className="text-2xl mb-8">
-        Create <span className="capitalize">{activeTab}</span> Post
-      </div>
-
-      <div className="flex">
-        <div className="flex-grow p-3 bg-white mr-5 rounded-md">
-          {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
-        </div>
-
-        <div style={{ minWidth: '200px' }}>
-          {Object.values(PostType)
-            .reverse()
-            .map((pt, index) => (
-              <PostTabBox
-                key={index}
-                active={pt === activeTab}
-                onClick={() => setActiveTab(pt)}
-              >
-                {pt}
-              </PostTabBox>
-            ))}
-        </div>
-      </div> */}
     </div>
   );
 }

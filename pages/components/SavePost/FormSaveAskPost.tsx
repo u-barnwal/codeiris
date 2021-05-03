@@ -36,15 +36,16 @@ function FormSaveAskPost({
     <>
       <TextField
         value={props.title}
-        placeholder="Question"
+        label="Question"
         onChange={(e) => handleFieldChange('title', e)}
+        className="mb-4"
       />
 
       <TextArea
         value={props.body}
         placeholder="Body"
         onChange={(e) => handleFieldChange('body', e)}
-        className="w-full"
+        className="w-full mb-4"
       />
 
       <Button loading={loading} onClick={handleSubmit}>

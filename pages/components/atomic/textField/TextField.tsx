@@ -9,16 +9,17 @@ export interface TextFieldProps
     >,
     IntentProps {
   error?: string;
+  label: string;
   placeholder?: string;
   floating?: boolean;
 }
 
-// TODO as better sliding animation
 function TextField({
   value,
   onChange,
   error,
-  placeholder,
+  label,
+  placeholder = label,
   className,
   floating,
   ...rest
@@ -26,25 +27,26 @@ function TextField({
   const [focus, setFocus] = useState(false);
   return (
     <React.Fragment>
-      <div className="flex flex-col m-1">
-        {((focus && !!placeholder) || floating) && (
-          <span className="text-primary transition ease-in-out transform text-lg">
-            {placeholder}
-          </span>
-        )}
+      <div className={clsx('flex flex-col', className)}>
+        <span
+          className={clsx(
+            'transition-all text-xs mb-1',
+            focus ? 'text-primary' : 'text-gray-800',
+          )}
+        >
+          {placeholder}
+        </span>
+
         <input
           value={value}
           onChange={onChange}
           placeholder={focus ? '' : placeholder}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={clsx(
-            'border-2 border-gray-300 rounded placeholder-gray-300 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 focus:shadow-md py-1 px-1.5',
-            className,
-          )}
-          style={{ fontSize: 22 }}
+          className="border-b-2 border-gray-400 placeholder-gray-400 text-gray-700 outline-none focus:border-primary text-lg transition-all"
           {...rest}
         />
+
         {error && (
           <span className="text-red-400 transition duration-500 ease-in-out text-sm">
             {error}
