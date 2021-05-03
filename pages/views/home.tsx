@@ -29,19 +29,6 @@ function Home({ data }) {
       </SectionTitle>
 
       <PostList className="shadow-lg rounded-lg" />
-
-      {/* <Filter />
-      <PostList
-        initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
-          ...ele,
-          id: ele.id,
-          body: ele.body,
-          title: ele.title,
-          user: ele.user,
-          upvotes: ele._count.votes,
-          totalComments: ele._count.comments,
-        }))}
-      /> */}
     </Container>
   );
 }
