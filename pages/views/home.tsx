@@ -1,11 +1,12 @@
 import React from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
 import { NextPageContext } from 'next';
-import Container from 'pages/components/atomic/containers/Container';
-import FilterBar from 'pages/components/Home/FilterBar';
-import SectionTitle from 'pages/components/Home/SectionTitle';
-import { FireIcon, DiscussionIcon } from 'pages/components/Icons';
-import PostList from 'pages/components/Home/PostList';
+import Container from 'lib/components/atomic/containers/Container';
+import FilterBar from 'lib/components/Home/FilterBar';
+import SectionTitle from 'lib/components/Home/SectionTitle';
+import { FireIcon, DiscussionIcon } from 'lib/components/Icons';
+import PostList from 'lib/components/PostList';
+import Filter from 'lib/components/Filter';
 
 function Home({ data }) {
   return (
@@ -28,7 +29,19 @@ function Home({ data }) {
         Threads & Discussions
       </SectionTitle>
 
-      <PostList className="shadow-lg rounded-lg" />
+      <Filter />
+      <PostList
+        initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
+          ...ele,
+          id: ele.id,
+          body: ele.body,
+          title: ele.title,
+          user: ele.user,
+          upvotes: ele._count.votes,
+          totalComments: ele._count.comments,
+        }))}
+      />
+
     </Container>
   );
 }

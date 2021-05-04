@@ -1,6 +1,6 @@
 import DefaultLayout from '../layouts/defaultLayout';
 import React, { useState } from 'react';
-import ProfileSettings from '../components/Account/ProfileSettings';
+import ProfileSettings from '../../lib/components/Account/ProfileSettings';
 import clsx from 'clsx';
 
 const tabList = [

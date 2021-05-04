@@ -43,6 +43,12 @@ export class AppController {
           image: true,
         },
       },
+      tags: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
       _count: {
         select: {
           votes: true,
