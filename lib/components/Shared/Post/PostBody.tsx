@@ -1,14 +1,7 @@
 import React from 'react';
+import Tag from '../Tag';
 
 const MAX_VISIBLE_TAGS = 5;
-
-function Tag({ children }) {
-  return (
-    <div className="inline-block mr-3 border rounded-md py-1 px-4 text-xs text-gray-500">
-      {children}
-    </div>
-  );
-}
 
 function PostBody({ title, children, tags = [] }) {
   return (

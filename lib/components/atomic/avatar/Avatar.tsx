@@ -15,11 +15,20 @@ export interface AvatarProps
   size?: AvatarSize;
   image?: string;
   color?: string;
+  className?: string;
+  style?: {};
 }
 
-export default function Avatar({ label, size, image, color }: AvatarProps) {
+export default function Avatar({
+  label,
+  size,
+  image,
+  color,
+  className = '',
+  style = {},
+}: AvatarProps) {
   return (
-    <div>
+    <div className={clsx('rounded-full', className)} style={style}>
       {image && (
         <div className="flex justify-center items-center">
           {label && (
