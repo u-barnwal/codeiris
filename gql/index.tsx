@@ -161,6 +161,7 @@ export type Post = {
   slug: Scalars['String'];
   status: PostStatus;
   tag?: Maybe<Array<Tag>>;
+  tags: Array<Tag>;
   title: Scalars['String'];
   totalComments: Scalars['Int'];
   totalVotes: Scalars['Int'];
@@ -346,6 +347,7 @@ export type User = {
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
+  image: File;
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
   role: UserRole;
@@ -504,7 +506,10 @@ export type GetPostsQuery = (
   { __typename?: 'Query' }
   & { getPosts: (
     { __typename?: 'PostConnection' }
-    & { edges?: Maybe<Array<(
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+    ), edges?: Maybe<Array<(
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
@@ -512,7 +517,14 @@ export type GetPostsQuery = (
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
-        ) }
+          & { image: (
+            { __typename?: 'File' }
+            & Pick<File, 'preview'>
+          ) }
+        ), tags: Array<(
+          { __typename?: 'Tag' }
+          & Pick<Tag, 'id' | 'name'>
+        )> }
       ) }
     )>> }
   ) }
@@ -577,6 +589,27 @@ export type GetCommentsQuery = (
           { __typename?: 'Post' }
           & Pick<Post, 'id'>
         )> }
+      ) }
+    )>> }
+  ) }
+);
+
+export type GetTagsQueryVariables = Exact<{
+  contain?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type GetTagsQuery = (
+  { __typename?: 'Query' }
+  & { getTags: (
+    { __typename?: 'TagConnection' }
+    & { edges?: Maybe<Array<(
+      { __typename?: 'TagEdge' }
+      & { node: (
+        { __typename?: 'Tag' }
+        & Pick<Tag, 'id' | 'name'>
       ) }
     )>> }
   ) }
@@ -823,6 +856,10 @@ export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetM
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
     edges {
       node {
         id
@@ -832,10 +869,17 @@ export const GetPostsDocument = gql`
         user {
           firstName
           lastName
+          image {
+            preview
+          }
         }
         upvoteState
         totalVotes
         totalComments
+        tags {
+          id
+          name
+        }
       }
     }
   }
@@ -1037,6 +1081,48 @@ export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
 export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
+export const GetTagsDocument = gql`
+    query getTags($contain: String, $after: String, $first: Int!) {
+  getTags(contain: $contain, after: $after, first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTagsQuery__
+ *
+ * To run a query within a React component, call `useGetTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTagsQuery({
+ *   variables: {
+ *      contain: // value for 'contain'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetTagsQuery(baseOptions: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
+      }
+export function useGetTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
+        }
+export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
+export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
+export type GetTagsQueryResult = Apollo.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
 export const GetCommentsChildrenDocument = gql`
     query getCommentsChildren($comment: String, $first: Int!) {
   getCommentsChildren(

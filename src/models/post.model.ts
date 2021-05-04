@@ -6,6 +6,7 @@ import { Vote } from './vote.model';
 import { DeepPartial } from '../common';
 import { Comment } from './comment.model';
 import { Tag } from './tag.model';
+import { File } from './file.model';
 
 registerEnumType(PostStatus, { name: 'PostStatus' });
 registerEnumType(PostType, { name: 'PostType' });
@@ -18,7 +19,7 @@ export class Post extends BaseModel {
 
   @Field()
   slug: string;
-  @Field({nullable :  true})
+  @Field({ nullable: true })
   body?: string;
   @Field()
   url?: string;
@@ -28,13 +29,15 @@ export class Post extends BaseModel {
   user: User;
   @Field()
   userId: string;
+  @Field(() => File, { nullable: true })
+  image?: File;
   @Field()
   deleted: boolean;
   @Field(() => PostStatus)
   status: 'draft' | 'published' | 'hidden' | 'blocked';
   @Field(() => PostType)
   type: 'link' | 'ask' | 'job';
-  @Field(() => [Vote], {nullable: true})
+  @Field(() => [Vote], { nullable: true })
   votes: Vote[];
   @Field(() => [Comment], { nullable: true })
   comments: Comment[];
