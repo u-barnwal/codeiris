@@ -74,8 +74,8 @@ const PostList: React.FC<PostListProps> = ({
   }, [loading, data, error]);
   return (
     <div className="container">
-      {posts.map((ele) => (
-        <div className={clsx('mr-60', className)}>
+      {posts.map((ele, index) => (
+        <div className={clsx('mr-60', className)} key={index}>
           <Post
             id={ele.id}
             title={ele.title}
