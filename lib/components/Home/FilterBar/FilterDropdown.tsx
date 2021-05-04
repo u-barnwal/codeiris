@@ -16,6 +16,7 @@ function FilterDropdown({
   children,
   className,
 }: FilterDropdownProps) {
+  console.log(Icon);
   return (
     <div
       className={clsx(
