@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from './hoc';
+import Icon from './hoc';
 
 export interface IconProps
   extends React.DetailedHTMLProps<
@@ -147,3 +147,5 @@ export const ChevronDownIcon: React.FC<IconProps> = (props) => {
     </Icon>
   );
 };
+
+export default Icon;
