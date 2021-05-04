@@ -57,16 +57,7 @@ function Post({
         </Votes>
 
         <div className="ml-10 flex-1">
-          <PostHeader
-            /*
-            cannot user user here
-            user={{
-              image: !!user && !!user.image ? user.image : null,
-              name: !!user ? user.firstName + ' ' + user.lastName : 'Anonymous',
-            }}*/
-            className="mb-5"
-            updatedAt={updatedAt}
-          />
+          <PostHeader user={user} className="mb-5" updatedAt={updatedAt} />
 
           <PostBody title={title} tags={tags.map((ele) => ele.name)}>
             {body}
