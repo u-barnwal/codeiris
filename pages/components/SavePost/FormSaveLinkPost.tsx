@@ -4,27 +4,28 @@ import TextField from 'pages/components/atomic/textField';
 import React from 'react';
 import useForm from '../../../lib/hooks/useForm';
 
-function FormSaveJobPost({
+function FormSaveLinkPost({
   initialFields,
   loading = false,
   processError,
   processSave,
 }) {
   const [props, dispatch, handleFieldChange] = useForm(initialFields);
+
   const { title, url } = props;
 
   const handleSubmit = () => {
     let error;
 
-    if (title === '') error = 'You must enter a title!';
-    else if (url === '') error = 'You must enter a URL!';
+    if (title === '') error = 'You must enter the title!';
+    else if (url === '') error = 'You must enter the URL!';
 
     if (error) {
       processError(error);
       return;
     }
 
-    processSave({ title, url, type: PostType.Job }, reset);
+    processSave({ title, url, type: PostType.Link }, reset);
   };
 
   const reset = () => dispatch(initialFields);
@@ -33,22 +34,31 @@ function FormSaveJobPost({
     <>
       <TextField
         value={title}
-        placeholder="Title"
+        label="Title"
         onChange={(e) => handleFieldChange('title', e)}
+        className="mb-4"
+        required
       />
 
       <TextField
         value={url}
-        placeholder="URL"
+        label="URL"
+        placeholder="https://"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
+        className="mb-4"
+        required
       />
 
-      <Button loading={loading} onClick={handleSubmit}>
-        Add
+      <Button
+        loading={loading}
+        onClick={handleSubmit}
+        className="bg-success mt-6"
+      >
+        Publish Post
       </Button>
     </>
   );
 }
 
-export default FormSaveJobPost;
+export default FormSaveLinkPost;

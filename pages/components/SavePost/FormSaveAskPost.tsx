@@ -16,7 +16,7 @@ function FormSaveAskPost({
   const handleSubmit = () => {
     let error;
 
-    if (props.title === '') error = 'You must enter a title!';
+    if (props.title === '') error = 'You must enter the question!';
     else if (props.body === '') error = 'You must enter the body!';
 
     if (error) {
@@ -36,19 +36,26 @@ function FormSaveAskPost({
     <>
       <TextField
         value={props.title}
-        placeholder="Question"
+        label="Question"
         onChange={(e) => handleFieldChange('title', e)}
+        className="mb-4"
+        required
       />
 
       <TextArea
         value={props.body}
-        placeholder="Body"
+        label="Body"
         onChange={(e) => handleFieldChange('body', e)}
         className="w-full"
+        required
       />
 
-      <Button loading={loading} onClick={handleSubmit}>
-        Add
+      <Button
+        loading={loading}
+        onClick={handleSubmit}
+        className="bg-success mt-6"
+      >
+        Publish Post
       </Button>
     </>
   );

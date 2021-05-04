@@ -6,6 +6,7 @@ import {
   TreadingUpIcon,
   PencilIcon,
 } from 'pages/components/Icons';
+import LinkButton from 'pages/components/Shared/LinkButton';
 import React from 'react';
 import FilterDropdown from './FilterDropdown';
 
@@ -32,12 +33,13 @@ function FilterBar({ className }: FilterProps) {
       </div>
 
       <div>
-        <Button
+        <LinkButton
           icon={<PencilIcon className="mr-2" size={3} />}
           className="ml-10 shadow-2xl"
+          link="/posts/save"
         >
           Write New Thread
-        </Button>
+        </LinkButton>
       </div>
     </div>
   );
