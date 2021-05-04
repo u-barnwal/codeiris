@@ -17,6 +17,7 @@ import Spinner from '../../lib/components/atomic/spinner';
 import { SpinnerSize } from '../../lib/common/props/SpinnerProps';
 import Avatar from 'lib/components/atomic/avatar/Avatar';
 import Container from 'lib/components/atomic/containers/Container';
+import Tag from 'lib/components/Shared/Tag';
 
 function Profile() {
   const { data, loading } = useQuery<GetMeQuery, GetMeQueryVariables>(
@@ -54,6 +55,32 @@ function Profile() {
 
             <div className="ml-28 text-xl font-semibold">
               {data.me.firstName} {data.me.lastName}
+            </div>
+
+            <div className="mt-10 flex">
+              <div className="flex-1 inline-block">
+                <div className="mb-3 text-xs">FAVORITE TAGS</div>
+
+                <Tag>Tech</Tag>
+                <Tag>IT</Tag>
+                <Tag>Code</Tag>
+              </div>
+
+              <div className="flex-1 inline-block pl-5">
+                <div className="mb-3 text-xs text-right">STATS</div>
+
+                <div className="bg-gray-100 p-3 rounded-lg flex">
+                  {[
+                    ['Posts', postCount.data.getMePosts.totalCount],
+                    ['Comments', commentCount.data.getMeComments.totalCount],
+                  ].map((t, index) => (
+                    <div className="flex-1 text-right">
+                      <div className="text-2xl font-semibold">{t[1]}</div>
+                      <div className="text-sm">{t[0]}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </Container>
