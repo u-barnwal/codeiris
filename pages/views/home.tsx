@@ -30,6 +30,7 @@ function Home({ data }) {
       </SectionTitle>
 
       <Filter />
+
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
@@ -41,7 +42,6 @@ function Home({ data }) {
           totalComments: ele._count.comments,
         }))}
       />
-
     </Container>
   );
 }

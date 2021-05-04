@@ -12,8 +12,9 @@ function Filter() {
     GetTagsDocument,
     { variables: { after: current, first: 10, contain: tag.name } },
   );
+
   return (
-    <div className="flex flex-row container mx-auto">
+    <div className="flex flex-row container mx-auto mb-5">
       <Dropdown
         className="origin-top-left"
         menu={
@@ -63,7 +64,7 @@ function Filter() {
         </div>
       </Dropdown>
 
-      <div className="self-center">
+      <div className="self-center ml-4">
         <Button onClick={() => {}}>Filter</Button>
       </div>
     </div>
