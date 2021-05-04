@@ -15,19 +15,25 @@ export type FilterProps = React.DetailedHTMLProps<
   HTMLDivElement
 >;
 
+const getIconComponent = (Icon) => <Icon color="white" size={4} />;
+
 function FilterBar({ className }: FilterProps) {
   return (
     <div className={clsx('flex items-center', className)}>
       <div className="bg-white rounded-lg shadow-lg flex flex-1 p-4">
-        <FilterDropdown color="success" Icon={StarIcon}>
+        <FilterDropdown color="success" Icon={getIconComponent(StarIcon)}>
           Most Popular
         </FilterDropdown>
 
-        <FilterDropdown color="info" Icon={TreadingUpIcon} className="mx-5">
+        <FilterDropdown
+          color="info"
+          Icon={getIconComponent(TreadingUpIcon)}
+          className="mx-5"
+        >
           Highest Votes
         </FilterDropdown>
 
-        <FilterDropdown color="warning" Icon={ClockIcon}>
+        <FilterDropdown color="warning" Icon={getIconComponent(ClockIcon)}>
           Latest Thread
         </FilterDropdown>
       </div>

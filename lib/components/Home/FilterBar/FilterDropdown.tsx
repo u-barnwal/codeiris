@@ -23,9 +23,7 @@ function FilterDropdown({
         className,
       )}
     >
-      <div className={`rounded-full mr-2 bg-${color} p-2`}>
-        <Icon color="white" size={4} />
-      </div>
+      <div className={`rounded-full mr-2 bg-${color} p-2`}>{Icon}</div>
 
       <select className="bg-white text-sm outline-none">
         <option>{children}</option>
