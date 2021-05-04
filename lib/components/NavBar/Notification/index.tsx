@@ -1,10 +1,16 @@
 import Dropdown from 'lib/components/atomic/dropdown/Dropdown';
 import { BellIcon } from 'lib/components/Icons';
 import React from 'react';
+import NotificationItem from './NotificationItem';
 
-function Notification({ className }) {
+function Notification({ className, notifications = [] }) {
   return (
-    <Dropdown menu={[]} className={className}>
+    <Dropdown
+      menu={notifications.map(({ title, text }, index) => (
+        <NotificationItem title={title} text={text} key={index} />
+      ))}
+      className={className}
+    >
       <BellIcon />
     </Dropdown>
   );

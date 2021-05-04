@@ -55,7 +55,8 @@ export default function Dropdown({
       ref={wrapperRef}
     >
       <div style={{ cursor: 'pointer' }}>{children}</div>
-      {open && (
+
+      {open && menu.length > 0 && (
         <div
           className="origin-top-right transition ease-out duration-100 transform opacity-100 scale-100 absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
           role="menu"

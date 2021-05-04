@@ -47,7 +47,27 @@ function NavBar() {
 
           <SearchBar className="mr-5" />
 
-          <Notification className="mr-5" />
+          <Notification
+            className="mr-5"
+            notifications={[
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+            ]}
+          />
 
           <div>
             {loading && (
