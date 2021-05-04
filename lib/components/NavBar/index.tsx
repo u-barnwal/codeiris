@@ -1,7 +1,6 @@
 import Container from 'lib/components/atomic/containers/Container';
 import React, { useEffect } from 'react';
 import Button from '../atomic/button';
-import { BellIcon } from '../Icons';
 import NavItem from './NavItem';
 import SearchBar from './SearchBar';
 import { useQuery } from '@apollo/client';
@@ -14,6 +13,7 @@ import { SpinnerSize } from '../../common/props/SpinnerProps';
 import Dropdown from '../atomic/dropdown/Dropdown';
 import Avatar from '../atomic/avatar/Avatar';
 import LinkButton from '../Shared/LinkButton';
+import Notification from './Notification';
 
 function NavBar() {
   const store = useStore();
@@ -47,7 +47,7 @@ function NavBar() {
 
           <SearchBar className="mr-5" />
 
-          <BellIcon className="mr-5" />
+          <Notification className="mr-5" />
 
           <div>
             {loading && (
