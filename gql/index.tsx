@@ -14,11 +14,8 @@ export type Scalars = {
   Float: number;
   /** Date custom scalar type */
   Date: any;
-<<<<<<< HEAD
-=======
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 };
 
 export type Auth = {
@@ -73,11 +70,6 @@ export type CommentOrder = {
 export enum CommentOrderField {
   CreatedAt = 'createdAt',
   UpdatedAt = 'updatedAt',
-<<<<<<< HEAD
-  Votes = 'votes',
-}
-
-=======
   Votes = 'votes'
 }
 
@@ -99,7 +91,6 @@ export type File = {
   width: Scalars['Int'];
 };
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type MagicLinkDto = {
   __typename?: 'MagicLinkDto';
   listener: Scalars['String'];
@@ -109,26 +100,18 @@ export type MagicLinkDto = {
 export type Mutation = {
   __typename?: 'Mutation';
   CreateComment: Comment;
-<<<<<<< HEAD
-=======
   addPost: Post;
   createAsset: File;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
   sendMagicLink: MagicLinkDto;
   updateUserProfileInfo: User;
   updateVote: Vote;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type MutationCreateCommentArgs = {
   input: CommentCreateInput;
 };
 
-<<<<<<< HEAD
-=======
 
 export type MutationAddPostArgs = {
   post: PostCreateInput;
@@ -140,34 +123,23 @@ export type MutationCreateAssetArgs = {
 };
 
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type MutationSendMagicLinkArgs = {
   email: Scalars['String'];
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type MutationUpdateUserProfileInfoArgs = {
   data: UpdateUserInput;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type MutationUpdateVoteArgs = {
   input: UpvoteInput;
 };
 
 export enum OrderDirection {
   Asc = 'asc',
-<<<<<<< HEAD
-  Desc = 'desc',
-=======
   Desc = 'desc'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export type PageInfo = {
@@ -189,6 +161,7 @@ export type Post = {
   slug: Scalars['String'];
   status: PostStatus;
   tag?: Maybe<Array<Tag>>;
+  tags: Array<Tag>;
   title: Scalars['String'];
   totalComments: Scalars['Int'];
   totalVotes: Scalars['Int'];
@@ -209,8 +182,6 @@ export type PostConnection = {
   totalCount: Scalars['Int'];
 };
 
-<<<<<<< HEAD
-=======
 export type PostCreateInput = {
   body?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -219,7 +190,6 @@ export type PostCreateInput = {
   url?: Maybe<Scalars['String']>;
 };
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type PostEdge = {
   __typename?: 'PostEdge';
   cursor: Scalars['String'];
@@ -233,42 +203,27 @@ export type PostOrder = {
 
 export enum PostOrderFeild {
   UpdatedAt = 'updatedAt',
-<<<<<<< HEAD
-  Votes = 'votes',
-=======
   Votes = 'votes'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export enum PostStatus {
   Blocked = 'blocked',
   Draft = 'draft',
   Hidden = 'hidden',
-<<<<<<< HEAD
-  Published = 'published',
-=======
   Published = 'published'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export enum PostType {
   Ask = 'ask',
   Job = 'job',
-<<<<<<< HEAD
-  Link = 'link',
-=======
   Link = 'link'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export type Query = {
   __typename?: 'Query';
   getAuth: Auth;
   getComments: CommentConnection;
-<<<<<<< HEAD
-=======
   getCommentsChildren: CommentConnection;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
   getMeComments: CommentConnection;
   getMePosts: PostConnection;
   getPosts: PostConnection;
@@ -277,10 +232,7 @@ export type Query = {
   me?: Maybe<User>;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type QueryGetCommentsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -291,8 +243,6 @@ export type QueryGetCommentsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-<<<<<<< HEAD
-=======
 
 export type QueryGetCommentsChildrenArgs = {
   after?: Maybe<Scalars['String']>;
@@ -305,7 +255,6 @@ export type QueryGetCommentsChildrenArgs = {
 };
 
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type QueryGetMeCommentsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -315,10 +264,7 @@ export type QueryGetMeCommentsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type QueryGetMePostsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -328,10 +274,7 @@ export type QueryGetMePostsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type QueryGetPostsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -341,10 +284,7 @@ export type QueryGetPostsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type QueryGetTagsArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -354,10 +294,7 @@ export type QueryGetTagsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type QueryGetUsersArgs = {
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -397,10 +334,7 @@ export type UpdateUserInput = {
   middleName?: Maybe<Scalars['String']>;
 };
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 export type UpvoteInput = {
   postId: Scalars['String'];
   type: Scalars['String'];
@@ -413,6 +347,7 @@ export type User = {
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
+  image: File;
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
   role: UserRole;
@@ -443,31 +378,19 @@ export enum UserOrderField {
   Email = 'email',
   FirstName = 'firstName',
   LastName = 'lastName',
-<<<<<<< HEAD
-  MiddleName = 'middleName',
-=======
   MiddleName = 'middleName'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export enum UserRole {
   Admin = 'admin',
   Moderator = 'moderator',
-<<<<<<< HEAD
-  User = 'user',
-=======
   User = 'user'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export enum UserStatus {
   Active = 'active',
   Blocked = 'blocked',
-<<<<<<< HEAD
-  Inactive = 'inactive',
-=======
   Inactive = 'inactive'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export type Vote = {
@@ -484,25 +407,13 @@ export type Vote = {
 
 export enum VoteType {
   Downvotes = 'downvotes',
-<<<<<<< HEAD
-  Upvotes = 'upvotes',
-=======
   Upvotes = 'upvotes'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 }
 
 export type SendMagicLinkMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-<<<<<<< HEAD
-export type SendMagicLinkMutation = { __typename?: 'Mutation' } & {
-  sendMagicLink: { __typename?: 'MagicLinkDto' } & Pick<
-    MagicLinkDto,
-    'status' | 'listener'
-  >;
-};
-=======
 
 export type SendMagicLinkMutation = (
   { __typename?: 'Mutation' }
@@ -511,7 +422,6 @@ export type SendMagicLinkMutation = (
     & Pick<MagicLinkDto, 'status' | 'listener'>
   ) }
 );
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 export type UpdateUserProfileInfoMutationVariables = Exact<{
   firstName?: Maybe<Scalars['String']>;
@@ -519,11 +429,6 @@ export type UpdateUserProfileInfoMutationVariables = Exact<{
   middleName?: Maybe<Scalars['String']>;
 }>;
 
-<<<<<<< HEAD
-export type UpdateUserProfileInfoMutation = { __typename?: 'Mutation' } & {
-  updateUserProfileInfo: { __typename?: 'User' } & Pick<User, 'id'>;
-};
-=======
 
 export type UpdateUserProfileInfoMutation = (
   { __typename?: 'Mutation' }
@@ -532,7 +437,6 @@ export type UpdateUserProfileInfoMutation = (
     & Pick<User, 'id'>
   ) }
 );
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 export type CreateCommentMutationVariables = Exact<{
   postId?: Maybe<Scalars['String']>;
@@ -540,11 +444,6 @@ export type CreateCommentMutationVariables = Exact<{
   body: Scalars['String'];
 }>;
 
-<<<<<<< HEAD
-export type CreateCommentMutation = { __typename?: 'Mutation' } & {
-  CreateComment: { __typename?: 'Comment' } & Pick<Comment, 'id'>;
-};
-=======
 
 export type CreateCommentMutation = (
   { __typename?: 'Mutation' }
@@ -553,84 +452,12 @@ export type CreateCommentMutation = (
     & Pick<Comment, 'id'>
   ) }
 );
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 export type UpdateVoteMutationVariables = Exact<{
   postId: Scalars['String'];
   type: Scalars['String'];
 }>;
 
-<<<<<<< HEAD
-export type UpdateVoteMutation = { __typename?: 'Mutation' } & {
-  updateVote: { __typename?: 'Vote' } & Pick<Vote, 'id'>;
-};
-
-export type GetPostsQueryVariables = Exact<{
-  after: Scalars['String'];
-  first: Scalars['Int'];
-}>;
-
-export type GetPostsQuery = { __typename?: 'Query' } & {
-  getPosts: { __typename?: 'PostConnection' } & {
-    edges?: Maybe<
-      Array<
-        { __typename?: 'PostEdge' } & {
-          node: { __typename?: 'Post' } & Pick<
-            Post,
-            | 'id'
-            | 'body'
-            | 'title'
-            | 'updatedAt'
-            | 'upvoteState'
-            | 'totalVotes'
-            | 'totalComments'
-          > & {
-              user: { __typename?: 'User' } & Pick<
-                User,
-                'firstName' | 'lastName'
-              >;
-            };
-        }
-      >
-    >;
-  };
-};
-
-export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetMeQuery = { __typename?: 'Query' } & {
-  me?: Maybe<
-    { __typename?: 'User' } & Pick<
-      User,
-      | 'id'
-      | 'firstName'
-      | 'lastName'
-      | 'middleName'
-      | 'role'
-      | 'email'
-      | 'status'
-    >
-  >;
-};
-
-export type GetMeCommentsCountQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetMeCommentsCountQuery = { __typename?: 'Query' } & {
-  getMeComments: { __typename?: 'CommentConnection' } & Pick<
-    CommentConnection,
-    'totalCount'
-  >;
-};
-
-export type GetMePostsCountQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetMePostsCountQuery = { __typename?: 'Query' } & {
-  getMePosts: { __typename?: 'PostConnection' } & Pick<
-    PostConnection,
-    'totalCount'
-  >;
-};
-=======
 
 export type UpdateVoteMutation = (
   { __typename?: 'Mutation' }
@@ -679,7 +506,10 @@ export type GetPostsQuery = (
   { __typename?: 'Query' }
   & { getPosts: (
     { __typename?: 'PostConnection' }
-    & { edges?: Maybe<Array<(
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+    ), edges?: Maybe<Array<(
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
@@ -687,7 +517,14 @@ export type GetPostsQuery = (
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
-        ) }
+          & { image: (
+            { __typename?: 'File' }
+            & Pick<File, 'preview'>
+          ) }
+        ), tags: Array<(
+          { __typename?: 'Tag' }
+          & Pick<Tag, 'id' | 'name'>
+        )> }
       ) }
     )>> }
   ) }
@@ -725,72 +562,12 @@ export type GetMePostsCountQuery = (
     & Pick<PostConnection, 'totalCount'>
   ) }
 );
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 export type GetCommentsQueryVariables = Exact<{
   post?: Maybe<Scalars['String']>;
   first: Scalars['Int'];
 }>;
 
-<<<<<<< HEAD
-export type GetCommentsQuery = { __typename?: 'Query' } & {
-  getComments: { __typename?: 'CommentConnection' } & Pick<
-    CommentConnection,
-    'totalCount'
-  > & {
-      pageInfo: { __typename?: 'PageInfo' } & Pick<
-        PageInfo,
-        'endCursor' | 'hasNextPage'
-      >;
-      edges?: Maybe<
-        Array<
-          { __typename?: 'CommentEdge' } & {
-            node: { __typename?: 'Comment' } & Pick<
-              Comment,
-              'id' | 'body' | 'createdAt' | 'updatedAt'
-            > & {
-                user?: Maybe<
-                  { __typename?: 'User' } & Pick<User, 'id' | 'firstName'>
-                >;
-                post?: Maybe<{ __typename?: 'Post' } & Pick<Post, 'id'>>;
-              };
-          }
-        >
-      >;
-    };
-};
-
-export type GetTagsQueryVariables = Exact<{
-  contain?: Maybe<Scalars['String']>;
-  after?: Maybe<Scalars['String']>;
-  first: Scalars['Int'];
-}>;
-
-export type GetTagsQuery = { __typename?: 'Query' } & {
-  getTags: { __typename?: 'TagConnection' } & {
-    edges?: Maybe<
-      Array<
-        { __typename?: 'TagEdge' } & {
-          node: { __typename?: 'Tag' } & Pick<Tag, 'id' | 'name'>;
-        }
-      >
-    >;
-  };
-};
-
-export const SendMagicLinkDocument = gql`
-  mutation sendMagicLink($email: String!) {
-    sendMagicLink(email: $email) {
-      status
-      listener
-    }
-  }
-`;
-export type SendMagicLinkMutationFn = Apollo.MutationFunction<
-  SendMagicLinkMutation,
-  SendMagicLinkMutationVariables
->;
-=======
 
 export type GetCommentsQuery = (
   { __typename?: 'Query' }
@@ -812,6 +589,27 @@ export type GetCommentsQuery = (
           { __typename?: 'Post' }
           & Pick<Post, 'id'>
         )> }
+      ) }
+    )>> }
+  ) }
+);
+
+export type GetTagsQueryVariables = Exact<{
+  contain?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type GetTagsQuery = (
+  { __typename?: 'Query' }
+  & { getTags: (
+    { __typename?: 'TagConnection' }
+    & { edges?: Maybe<Array<(
+      { __typename?: 'TagEdge' }
+      & { node: (
+        { __typename?: 'Tag' }
+        & Pick<Tag, 'id' | 'name'>
       ) }
     )>> }
   ) }
@@ -855,7 +653,6 @@ export const SendMagicLinkDocument = gql`
 }
     `;
 export type SendMagicLinkMutationFn = Apollo.MutationFunction<SendMagicLinkMutation, SendMagicLinkMutationVariables>;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useSendMagicLinkMutation__
@@ -874,49 +671,6 @@ export type SendMagicLinkMutationFn = Apollo.MutationFunction<SendMagicLinkMutat
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useSendMagicLinkMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    SendMagicLinkMutation,
-    SendMagicLinkMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    SendMagicLinkMutation,
-    SendMagicLinkMutationVariables
-  >(SendMagicLinkDocument, options);
-}
-export type SendMagicLinkMutationHookResult = ReturnType<
-  typeof useSendMagicLinkMutation
->;
-export type SendMagicLinkMutationResult = Apollo.MutationResult<SendMagicLinkMutation>;
-export type SendMagicLinkMutationOptions = Apollo.BaseMutationOptions<
-  SendMagicLinkMutation,
-  SendMagicLinkMutationVariables
->;
-export const UpdateUserProfileInfoDocument = gql`
-  mutation updateUserProfileInfo(
-    $firstName: String
-    $lastName: String
-    $middleName: String
-  ) {
-    updateUserProfileInfo(
-      data: {
-        firstName: $firstName
-        lastName: $lastName
-        middleName: $middleName
-      }
-    ) {
-      id
-    }
-  }
-`;
-export type UpdateUserProfileInfoMutationFn = Apollo.MutationFunction<
-  UpdateUserProfileInfoMutation,
-  UpdateUserProfileInfoMutationVariables
->;
-=======
 export function useSendMagicLinkMutation(baseOptions?: Apollo.MutationHookOptions<SendMagicLinkMutation, SendMagicLinkMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<SendMagicLinkMutation, SendMagicLinkMutationVariables>(SendMagicLinkDocument, options);
@@ -934,7 +688,6 @@ export const UpdateUserProfileInfoDocument = gql`
 }
     `;
 export type UpdateUserProfileInfoMutationFn = Apollo.MutationFunction<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useUpdateUserProfileInfoMutation__
@@ -955,41 +708,6 @@ export type UpdateUserProfileInfoMutationFn = Apollo.MutationFunction<UpdateUser
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useUpdateUserProfileInfoMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateUserProfileInfoMutation,
-    UpdateUserProfileInfoMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    UpdateUserProfileInfoMutation,
-    UpdateUserProfileInfoMutationVariables
-  >(UpdateUserProfileInfoDocument, options);
-}
-export type UpdateUserProfileInfoMutationHookResult = ReturnType<
-  typeof useUpdateUserProfileInfoMutation
->;
-export type UpdateUserProfileInfoMutationResult = Apollo.MutationResult<UpdateUserProfileInfoMutation>;
-export type UpdateUserProfileInfoMutationOptions = Apollo.BaseMutationOptions<
-  UpdateUserProfileInfoMutation,
-  UpdateUserProfileInfoMutationVariables
->;
-export const CreateCommentDocument = gql`
-  mutation CreateComment($postId: String, $parentId: String, $body: String!) {
-    CreateComment(
-      input: { postId: $postId, parentId: $parentId, body: $body }
-    ) {
-      id
-    }
-  }
-`;
-export type CreateCommentMutationFn = Apollo.MutationFunction<
-  CreateCommentMutation,
-  CreateCommentMutationVariables
->;
-=======
 export function useUpdateUserProfileInfoMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<UpdateUserProfileInfoMutation, UpdateUserProfileInfoMutationVariables>(UpdateUserProfileInfoDocument, options);
@@ -1005,7 +723,6 @@ export const CreateCommentDocument = gql`
 }
     `;
 export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutation, CreateCommentMutationVariables>;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useCreateCommentMutation__
@@ -1026,39 +743,6 @@ export type CreateCommentMutationFn = Apollo.MutationFunction<CreateCommentMutat
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useCreateCommentMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateCommentMutation,
-    CreateCommentMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateCommentMutation,
-    CreateCommentMutationVariables
-  >(CreateCommentDocument, options);
-}
-export type CreateCommentMutationHookResult = ReturnType<
-  typeof useCreateCommentMutation
->;
-export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>;
-export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<
-  CreateCommentMutation,
-  CreateCommentMutationVariables
->;
-export const UpdateVoteDocument = gql`
-  mutation updateVote($postId: String!, $type: String!) {
-    updateVote(input: { postId: $postId, type: $type }) {
-      id
-    }
-  }
-`;
-export type UpdateVoteMutationFn = Apollo.MutationFunction<
-  UpdateVoteMutation,
-  UpdateVoteMutationVariables
->;
-=======
 export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateCommentMutation, CreateCommentMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<CreateCommentMutation, CreateCommentMutationVariables>(CreateCommentDocument, options);
@@ -1074,7 +758,6 @@ export const UpdateVoteDocument = gql`
 }
     `;
 export type UpdateVoteMutationFn = Apollo.MutationFunction<UpdateVoteMutation, UpdateVoteMutationVariables>;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useUpdateVoteMutation__
@@ -1094,49 +777,6 @@ export type UpdateVoteMutationFn = Apollo.MutationFunction<UpdateVoteMutation, U
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useUpdateVoteMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateVoteMutation,
-    UpdateVoteMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<UpdateVoteMutation, UpdateVoteMutationVariables>(
-    UpdateVoteDocument,
-    options,
-  );
-}
-export type UpdateVoteMutationHookResult = ReturnType<
-  typeof useUpdateVoteMutation
->;
-export type UpdateVoteMutationResult = Apollo.MutationResult<UpdateVoteMutation>;
-export type UpdateVoteMutationOptions = Apollo.BaseMutationOptions<
-  UpdateVoteMutation,
-  UpdateVoteMutationVariables
->;
-export const GetPostsDocument = gql`
-  query getPosts($after: String!, $first: Int!) {
-    getPosts(after: $after, first: $first) {
-      edges {
-        node {
-          id
-          body
-          title
-          updatedAt
-          user {
-            firstName
-            lastName
-          }
-          upvoteState
-          totalVotes
-          totalComments
-        }
-      }
-    }
-  }
-`;
-=======
 export function useUpdateVoteMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVoteMutation, UpdateVoteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useMutation<UpdateVoteMutation, UpdateVoteMutationVariables>(UpdateVoteDocument, options);
@@ -1216,6 +856,10 @@ export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetM
 export const GetPostsDocument = gql`
     query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
     edges {
       node {
         id
@@ -1225,16 +869,22 @@ export const GetPostsDocument = gql`
         user {
           firstName
           lastName
+          image {
+            preview
+          }
         }
         upvoteState
         totalVotes
         totalComments
+        tags {
+          id
+          name
+        }
       }
     }
   }
 }
     `;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useGetPostsQuery__
@@ -1253,50 +903,6 @@ export const GetPostsDocument = gql`
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useGetPostsQuery(
-  baseOptions: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options,
-  );
-}
-export function useGetPostsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPostsQuery,
-    GetPostsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GetPostsDocument,
-    options,
-  );
-}
-export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
-export type GetPostsLazyQueryHookResult = ReturnType<
-  typeof useGetPostsLazyQuery
->;
-export type GetPostsQueryResult = Apollo.QueryResult<
-  GetPostsQuery,
-  GetPostsQueryVariables
->;
-export const GetMeDocument = gql`
-  query getMe {
-    me {
-      id
-      firstName
-      lastName
-      middleName
-      role
-      email
-      status
-    }
-  }
-`;
-=======
 export function useGetPostsQuery(baseOptions: Apollo.QueryHookOptions<GetPostsQuery, GetPostsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetPostsQuery, GetPostsQueryVariables>(GetPostsDocument, options);
@@ -1321,7 +927,6 @@ export const GetMeDocument = gql`
   }
 }
     `;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useGetMeQuery__
@@ -1338,39 +943,6 @@ export const GetMeDocument = gql`
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useGetMeQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetMeQuery, GetMeQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(
-    GetMeDocument,
-    options,
-  );
-}
-export function useGetMeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetMeQuery, GetMeQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetMeQuery, GetMeQueryVariables>(
-    GetMeDocument,
-    options,
-  );
-}
-export type GetMeQueryHookResult = ReturnType<typeof useGetMeQuery>;
-export type GetMeLazyQueryHookResult = ReturnType<typeof useGetMeLazyQuery>;
-export type GetMeQueryResult = Apollo.QueryResult<
-  GetMeQuery,
-  GetMeQueryVariables
->;
-export const GetMeCommentsCountDocument = gql`
-  query getMeCommentsCount {
-    getMeComments {
-      totalCount
-    }
-  }
-`;
-=======
 export function useGetMeQuery(baseOptions?: Apollo.QueryHookOptions<GetMeQuery, GetMeQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetMeQuery, GetMeQueryVariables>(GetMeDocument, options);
@@ -1389,7 +961,6 @@ export const GetMeCommentsCountDocument = gql`
   }
 }
     `;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useGetMeCommentsCountQuery__
@@ -1406,49 +977,6 @@ export const GetMeCommentsCountDocument = gql`
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useGetMeCommentsCountQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetMeCommentsCountQuery,
-    GetMeCommentsCountQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetMeCommentsCountQuery,
-    GetMeCommentsCountQueryVariables
-  >(GetMeCommentsCountDocument, options);
-}
-export function useGetMeCommentsCountLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetMeCommentsCountQuery,
-    GetMeCommentsCountQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetMeCommentsCountQuery,
-    GetMeCommentsCountQueryVariables
-  >(GetMeCommentsCountDocument, options);
-}
-export type GetMeCommentsCountQueryHookResult = ReturnType<
-  typeof useGetMeCommentsCountQuery
->;
-export type GetMeCommentsCountLazyQueryHookResult = ReturnType<
-  typeof useGetMeCommentsCountLazyQuery
->;
-export type GetMeCommentsCountQueryResult = Apollo.QueryResult<
-  GetMeCommentsCountQuery,
-  GetMeCommentsCountQueryVariables
->;
-export const GetMePostsCountDocument = gql`
-  query getMePostsCount {
-    getMePosts {
-      totalCount
-    }
-  }
-`;
-=======
 export function useGetMeCommentsCountQuery(baseOptions?: Apollo.QueryHookOptions<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetMeCommentsCountQuery, GetMeCommentsCountQueryVariables>(GetMeCommentsCountDocument, options);
@@ -1467,7 +995,6 @@ export const GetMePostsCountDocument = gql`
   }
 }
     `;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useGetMePostsCountQuery__
@@ -1484,67 +1011,6 @@ export const GetMePostsCountDocument = gql`
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useGetMePostsCountQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetMePostsCountQuery,
-    GetMePostsCountQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetMePostsCountQuery, GetMePostsCountQueryVariables>(
-    GetMePostsCountDocument,
-    options,
-  );
-}
-export function useGetMePostsCountLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetMePostsCountQuery,
-    GetMePostsCountQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetMePostsCountQuery,
-    GetMePostsCountQueryVariables
-  >(GetMePostsCountDocument, options);
-}
-export type GetMePostsCountQueryHookResult = ReturnType<
-  typeof useGetMePostsCountQuery
->;
-export type GetMePostsCountLazyQueryHookResult = ReturnType<
-  typeof useGetMePostsCountLazyQuery
->;
-export type GetMePostsCountQueryResult = Apollo.QueryResult<
-  GetMePostsCountQuery,
-  GetMePostsCountQueryVariables
->;
-export const GetCommentsDocument = gql`
-  query getComments($post: String, $first: Int!) {
-    getComments(
-      postId: $post
-      first: $first
-      orderBy: { direction: asc, field: createdAt }
-    ) {
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      totalCount
-      edges {
-        node {
-          id
-          body
-          createdAt
-          updatedAt
-          user {
-            id
-            firstName
-          }
-          post {
-            id
-          }
-=======
 export function useGetMePostsCountQuery(baseOptions?: Apollo.QueryHookOptions<GetMePostsCountQuery, GetMePostsCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetMePostsCountQuery, GetMePostsCountQueryVariables>(GetMePostsCountDocument, options);
@@ -1580,17 +1046,12 @@ export const GetCommentsDocument = gql`
         }
         post {
           id
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
         }
       }
     }
   }
-<<<<<<< HEAD
-`;
-=======
 }
     `;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
 
 /**
  * __useGetCommentsQuery__
@@ -1609,47 +1070,6 @@ export const GetCommentsDocument = gql`
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useGetCommentsQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetCommentsQuery,
-    GetCommentsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(
-    GetCommentsDocument,
-    options,
-  );
-}
-export function useGetCommentsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetCommentsQuery,
-    GetCommentsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(
-    GetCommentsDocument,
-    options,
-  );
-}
-export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
-export type GetCommentsLazyQueryHookResult = ReturnType<
-  typeof useGetCommentsLazyQuery
->;
-export type GetCommentsQueryResult = Apollo.QueryResult<
-  GetCommentsQuery,
-  GetCommentsQueryVariables
->;
-export const GetTagsDocument = gql`
-  query getTags($contain: String, $after: String, $first: Int!) {
-    getTags(contain: $contain, after: $after, first: $first) {
-      edges {
-        node {
-          id
-          name
-=======
 export function useGetCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
@@ -1661,6 +1081,48 @@ export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
 export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
+export const GetTagsDocument = gql`
+    query getTags($contain: String, $after: String, $first: Int!) {
+  getTags(contain: $contain, after: $after, first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTagsQuery__
+ *
+ * To run a query within a React component, call `useGetTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTagsQuery({
+ *   variables: {
+ *      contain: // value for 'contain'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetTagsQuery(baseOptions: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
+      }
+export function useGetTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
+        }
+export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
+export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
+export type GetTagsQueryResult = Apollo.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
 export const GetCommentsChildrenDocument = gql`
     query getCommentsChildren($comment: String, $first: Int!) {
   getCommentsChildren(
@@ -1681,20 +1143,10 @@ export const GetCommentsChildrenDocument = gql`
         user {
           id
           firstName
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
         }
       }
     }
   }
-<<<<<<< HEAD
-`;
-
-/**
- * __useGetTagsQuery__
- *
- * To run a query within a React component, call `useGetTagsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
-=======
 }
     `;
 
@@ -1703,55 +1155,18 @@ export const GetCommentsChildrenDocument = gql`
  *
  * To run a query within a React component, call `useGetCommentsChildrenQuery` and pass it any options that fit your needs.
  * When your component renders, `useGetCommentsChildrenQuery` returns an object from Apollo Client that contains loading, error, and data properties
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
-<<<<<<< HEAD
- * const { data, loading, error } = useGetTagsQuery({
- *   variables: {
- *      contain: // value for 'contain'
- *      after: // value for 'after'
-=======
  * const { data, loading, error } = useGetCommentsChildrenQuery({
  *   variables: {
  *      comment: // value for 'comment'
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed
  *      first: // value for 'first'
  *   },
  * });
  */
-<<<<<<< HEAD
-export function useGetTagsQuery(
-  baseOptions: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(
-    GetTagsDocument,
-    options,
-  );
-}
-export function useGetTagsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetTagsQuery,
-    GetTagsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(
-    GetTagsDocument,
-    options,
-  );
-}
-export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
-export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
-export type GetTagsQueryResult = Apollo.QueryResult<
-  GetTagsQuery,
-  GetTagsQueryVariables
->;
-=======
 export function useGetCommentsChildrenQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>(GetCommentsChildrenDocument, options);
@@ -1763,4 +1178,3 @@ export function useGetCommentsChildrenLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetCommentsChildrenQueryHookResult = ReturnType<typeof useGetCommentsChildrenQuery>;
 export type GetCommentsChildrenLazyQueryHookResult = ReturnType<typeof useGetCommentsChildrenLazyQuery>;
 export type GetCommentsChildrenQueryResult = Apollo.QueryResult<GetCommentsChildrenQuery, GetCommentsChildrenQueryVariables>;
->>>>>>> 3d77f8f9aabda7d994f3de50072be50aa38d26ed

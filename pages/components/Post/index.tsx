@@ -23,6 +23,7 @@ function Post({
   id,
   updatedAt,
   upvoteState,
+  className,
 }: PostProps) {
   const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
   const [upvoteStateLocal, setUpvoteStateLocal] = useState(upvoteState);

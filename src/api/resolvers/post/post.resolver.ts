@@ -20,6 +20,8 @@ import { PostCreateInput } from '../../../models/input/post-create-input';
 import slugify from 'slugify';
 import { PostService } from '../../../services/post.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { Tag } from '../../../models/tag.model';
+import { File } from '../../../models/file.model';
 
 @Resolver((of) => Post)
 export class PostResolver {
@@ -103,10 +105,24 @@ export class PostResolver {
     return postCursors;
   }
 
+  @ResolveField('image', (returns) => File)
+  async postImage(@Parent() post: Post) {
+    const { image } = post;
+    return image;
+  }
+
   @ResolveField('user', (returns) => User)
   async user(@Parent() post: Post) {
     const { userId } = post;
-    return this.prisma.user.findUnique({ where: { id: userId } });
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+  }
+
+  @ResolveField('image', (returns) => File)
+  async userImage(@Parent() user: User) {
+    const { image } = user;
+    return image;
   }
 
   @ResolveField('totalComments', (returns) => Int)
@@ -139,5 +155,14 @@ export class PostResolver {
       if ((current.type = 'upvotes')) return (prev += 1);
       return (prev -= 1);
     }, 0);
+  }
+
+  @ResolveField('tags', (returns) => [Tag])
+  async getTags(@Parent() post: Post) {
+    const { id } = post;
+    const tags = await this.prisma.tag.findMany({
+      where: { post: { some: { id: id } } },
+    });
+    return tags;
   }
 }

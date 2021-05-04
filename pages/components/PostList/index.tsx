@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import clsx from 'clsx';
 import e from 'express';
 import { GetPostsDocument, GetPostsQuery, QueryGetPostsArgs } from 'gql';
 import { skipper } from 'lib/accessToken';
@@ -7,12 +8,16 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 // This is not to be imported form prisma client
 // import { Post as PostData } from '.prisma/client';
-import Post from '../Post';
+import Post from '../Shared/Post';
 
 export interface PostListProps {
   initialPosts?: PostProps[];
+  className?: string;
 }
-const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
+const PostList: React.FC<PostListProps> = ({
+  initialPosts = [],
+  className,
+}) => {
   const [posts, setPosts] = useState<PostProps[]>(initialPosts);
   const [cursor, setCursor] = useState('');
   const { loading, data, error } = useQuery<GetPostsQuery, QueryGetPostsArgs>(
@@ -69,7 +74,7 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
   return (
     <div className="container">
       {posts.map((ele) => (
-        <div className="my-10">
+        <div className={clsx('mr-60', className)}>
           <Post
             id={ele.id}
             title={ele.title}
@@ -79,6 +84,7 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
             user={ele.user}
             totalComments={ele.totalComments}
             updatedAt={moment(ele.updatedAt).fromNow()}
+            tags={ele.tags ? ele.tags : []}
           />
         </div>
       ))}
