@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-export const Icon = ({
+export default function Icon({
   size = -1,
   height = 6,
   width = 6,
@@ -8,7 +8,7 @@ export const Icon = ({
   onClick = null,
   children,
   color = 'currentColor',
-}) => {
+}) {
   height = size != -1 ? size : height;
   width = size != -1 ? size : width;
 
@@ -28,4 +28,4 @@ export const Icon = ({
       {children}
     </svg>
   );
-};
+}
