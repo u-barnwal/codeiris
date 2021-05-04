@@ -36,7 +36,7 @@ function NavBar() {
   };
 
   return (
-    <div className="bg-white shadow-lg">
+    <div className="bg-white shadow-lg sticky top-0 z-50">
       <Container className="py-5">
         <div className="flex items-center">
           <NavItem href="/posts">Posts</NavItem>
