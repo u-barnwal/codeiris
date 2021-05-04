@@ -1,25 +1,72 @@
-import Heading, { HeadingSize } from '../atomic/typography';
-import Router from 'next/router';
 import { useQuery } from '@apollo/client';
-import { GetMeDocument, GetMeQuery, GetMeQueryVariables } from '../../../gql';
-import { getAccessToken, logout, skipper } from '../../../lib/accessToken';
-import Spinner from '../atomic/spinner';
-import { SpinnerSize } from '../../../lib/common/props/SpinnerProps';
-import Avatar from '../atomic/avatar/Avatar';
+import { GetTagsDocument, GetTagsQuery, QueryGetTagsArgs } from '../../../gql';
 import Dropdown from '../atomic/dropdown/Dropdown';
-import TextField from '../atomic/textField';
 import { useState } from 'react';
+import Button from '../atomic/button';
+import { Icon } from '../Icons/hoc';
 
 function Filter() {
-  const [tag, setTag] = useState('');
-
+  const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState({ name: '', id: '' });
+  const [current, setCurrent] = useState('');
+  const { data, error, loading } = useQuery<GetTagsQuery, QueryGetTagsArgs>(
+    GetTagsDocument,
+    { variables: { after: current, first: 10, contain: tag.name } },
+  );
   return (
     <div className="flex flex-row container mx-auto">
-      <TextField
-        value={tag}
-        onChange={(event) => setTag(event.target.value)}
-        placeholder="Tags"
-      />
+      <Dropdown
+        className="origin-top-left"
+        menu={
+          data
+            ? data.getTags.edges.map((ele) => (
+                <div
+                  className="cursor-pointer h-6 px-2 "
+                  onClick={() => {
+                    setTags((prev) => [
+                      ...prev,
+                      { name: ele.node.name, id: ele.node.id },
+                    ]);
+                    setTag({ name: '', id: null });
+                  }}
+                >
+                  {ele.node.name}
+                </div>
+              ))
+            : []
+        }
+      >
+        <div className="flex flex-row content-center flex-wrap bg-white  max-w-md">
+          {tags.map((ele) => (
+            <span className="rounded-full px-3 mx-1 my-1 bg-primary self-center text-white">
+              {ele.name}
+              <span
+                onClick={() =>
+                  setTags((prev) => prev.filter((ele2) => ele2 !== ele))
+                }
+                className="ml-2"
+              >
+                x
+              </span>
+            </span>
+          ))}
+          <input
+            className="h-12 px-2 max-w-md"
+            value={tag.name}
+            onChange={(event) =>
+              setTag((prev) => ({ ...prev, name: event.target.value }))
+            }
+            placeholder="Enter Tags to filter"
+            onKeyDown={(event) => {
+              if (event.key == 'Enter') setTags((prev) => [...prev, tag]);
+            }}
+          />
+        </div>
+      </Dropdown>
+
+      <div className="self-center">
+        <Button onClick={() => {}}>Filter</Button>
+      </div>
     </div>
   );
 }

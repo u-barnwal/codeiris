@@ -1,3 +1,4 @@
+import React from 'react';
 import { UserProps } from './UserProps';
 
 export interface PostProps {
@@ -9,4 +10,6 @@ export interface PostProps {
   totalComments?: number;
   updatedAt: string;
   upvoteState?: 'upvotes' | 'downvotes' | 'notvoted' | 'disabled';
+  className?: string;
+  tags?: string[];
 }

@@ -1,5 +1,9 @@
 query getPosts($after: String!, $first: Int!) {
   getPosts(after: $after, first: $first) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
     edges {
       node {
         id
@@ -9,10 +13,17 @@ query getPosts($after: String!, $first: Int!) {
         user {
           firstName
           lastName
+          image {
+            preview
+          }
         }
         upvoteState
         totalVotes
         totalComments
+        tags {
+          id
+          name
+        }
       }
     }
   }
@@ -71,30 +82,38 @@ query getComments($post: String, $first: Int!) {
   }
 }
 
-query getCommentsChildren($comment: String, $first: Int!){
-    getCommentsChildren(
-        commentId:$comment,
-        first:$first,
-        orderBy: {
-            direction:desc,
-            field:createdAt
-        }
-    ) {
-        pageInfo {
-            endCursor
-            hasNextPage
-        }
-        totalCount
-        edges {
-            node {
-                id
-                body
-                createdAt
-                user {
-                    id
-                    firstName
-                }
-            }
-        }
+query getTags($contain: String, $after: String, $first: Int!) {
+  getTags(contain: $contain, after: $after, first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
     }
+  }
+}
+
+query getCommentsChildren($comment: String, $first: Int!) {
+  getCommentsChildren(
+    commentId: $comment
+    first: $first
+    orderBy: { direction: desc, field: createdAt }
+  ) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+    totalCount
+    edges {
+      node {
+        id
+        body
+        createdAt
+        user {
+          id
+          firstName
+        }
+      }
+    }
+  }
 }

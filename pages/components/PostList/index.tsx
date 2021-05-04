@@ -1,19 +1,25 @@
 import { useQuery } from '@apollo/client';
+import clsx from 'clsx';
+import e from 'express';
 import { GetPostsDocument, GetPostsQuery, QueryGetPostsArgs } from 'gql';
+import { skipper } from 'lib/accessToken';
 import { PostProps } from 'lib/common/props/PostProps';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 // This is not to be imported form prisma client
 // import { Post as PostData } from '.prisma/client';
-import Post from '../Post';
+import Post from '../Shared/Post';
 
 export interface PostListProps {
   initialPosts?: PostProps[];
+  className?: string;
 }
-const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
+const PostList: React.FC<PostListProps> = ({
+  initialPosts = [],
+  className,
+}) => {
   const [posts, setPosts] = useState<PostProps[]>(initialPosts);
-  const [cursor, setCursor] = useState(
-    initialPosts.length > 0 ? initialPosts[initialPosts.length - 1].id : '',
-  );
+  const [cursor, setCursor] = useState('');
   const { loading, data, error } = useQuery<GetPostsQuery, QueryGetPostsArgs>(
     GetPostsDocument,
     {
@@ -21,8 +27,24 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
         after: cursor,
         first: 10,
       },
+      skip: skipper(),
     },
   );
+  useEffect(() => {
+    window.addEventListener('scroll', function () {
+      var scrollHeight = document.documentElement.scrollHeight;
+      var scrollTop = document.documentElement.scrollTop;
+      var clientHeight = document.documentElement.clientHeight;
+
+      if (scrollTop + clientHeight > scrollHeight - 20) {
+        console.log('Adding to page');
+        setTimeout(
+          () => setCursor(posts.length > 0 ? posts[posts.length - 1].id : ''),
+          1000,
+        );
+      }
+    });
+  }, []);
   useEffect(() => {
     if (!loading) {
       if (!!data) {
@@ -41,14 +63,18 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
           upvotes: ele.node.totalVotes,
           totalComments: ele.node.totalComments,
         }));
-        // setPosts((prev) => [...prev, ...newPosts]);
+        console.log('New List ', newPosts);
+        setPosts((prev) => [...prev, ...newPosts]);
+      }
+      if (!!error) {
+        console.log(error);
       }
     }
   }, [loading, data, error]);
   return (
     <div className="container">
       {posts.map((ele) => (
-        <div className="my-10">
+        <div className={clsx('mr-60', className)}>
           <Post
             id={ele.id}
             title={ele.title}
@@ -57,6 +83,8 @@ const PostList: React.FC<PostListProps> = ({ initialPosts = [] }) => {
             upvoteState={ele.upvoteState}
             user={ele.user}
             totalComments={ele.totalComments}
+            updatedAt={moment(ele.updatedAt).fromNow()}
+            tags={ele.tags ? ele.tags : []}
           />
         </div>
       ))}
