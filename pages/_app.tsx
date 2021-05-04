@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps, apolloClient }) {
     <>
       <Head>
         {/*<meta name="viewport" content="viewport-fit=cover" />*/}
+        <title>CodeIris</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

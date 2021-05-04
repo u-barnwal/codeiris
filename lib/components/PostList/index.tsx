@@ -86,6 +86,7 @@ const PostList: React.FC<PostListProps> = ({
             totalComments={ele.totalComments}
             updatedAt={moment(ele.updatedAt).fromNow()}
             tags={ele.tags ? ele.tags : []}
+            className="mb-5"
           />
         </div>
       ))}
