@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import Spinner from '../components/atomic/spinner';
+import Spinner from '../../lib/components/atomic/spinner';
 import { Intent } from '../../lib/common';
-import Heading, { HeadingSize } from '../components/atomic/typography';
+import Heading, { HeadingSize } from '../../lib/components/atomic/typography';
 import { NextPageContext } from 'next';
 import { Auth } from 'src/models/auth.model';
 import {

@@ -2,18 +2,18 @@ import DefaultLayout from '../layouts/defaultLayout';
 import React, { useState } from 'react';
 import { NextPageContext } from 'next';
 import superjson from 'superjson';
-import Heading, { HeadingSize } from '../components/atomic/typography';
+import Heading, { HeadingSize } from '../../lib/components/atomic/typography';
 import moment from 'moment';
-import CommentsInput from '../components/Comments/CommentsInput';
+import CommentsInput from '../../lib/components/Comments/CommentsInput';
 import { useQuery } from '@apollo/client';
 import {
   GetCommentsDocument,
   GetCommentsQuery,
   GetCommentsQueryVariables,
 } from '../../gql';
-import CommentListItem from '../components/Comments/CommentListItem';
-import Button from "../components/atomic/button";
-import Spinner from "../components/atomic/spinner";
+import CommentListItem from '../../lib/components/Comments/CommentListItem';
+import Button from "../../lib/components/atomic/button";
+import Spinner from "../../lib/components/atomic/spinner";
 import { SpinnerSize } from "../../lib/common/props/SpinnerProps";
 
 interface Props {

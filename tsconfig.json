@@ -20,20 +20,22 @@
     "skipDefaultLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "noEmit": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "downlevelIteration": true
   },
+  "exclude": [
+    "node_modules",
+    "node_modules/mobx-react",
+    "node_modules/mobx-react-lite",
+  ],
   "include": [
     "next-env.d.ts",
-    "./src/**/*",
     "**/*.ts",
     "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }
