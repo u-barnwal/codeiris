@@ -1,5 +1,5 @@
 import { Intent, Position } from 'lib/common';
-import Toaster from 'pages/components/atomic/toast/Toaster';
+import Toaster from 'lib/components/atomic/toast/Toaster';
 import DefaultLayout from 'pages/layouts/defaultLayout';
 import React, { useState } from 'react';
 import {
@@ -9,11 +9,11 @@ import {
   PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
-import FormSaveLinkPost from '../components/SavePost/FormSaveLinkPost';
-import FormSaveJobPost from '../components/SavePost/FormSaveJobPost';
-import FormSaveAskPost from '../components/SavePost/FormSaveAskPost';
+import FormSaveLinkPost from '../../lib/components/SavePost/FormSaveLinkPost';
+import FormSaveJobPost from '../../lib/components/SavePost/FormSaveJobPost';
+import FormSaveAskPost from '../../lib/components/SavePost/FormSaveAskPost';
 import clsx from 'clsx';
-import Animation from 'pages/components/Shared/Animation';
+import Animation from 'lib/components/Shared/Animation';
 import animationLink from './../static/animations/link.json';
 import animationJob from './../static/animations/job.json';
 import animationAsk from './../static/animations/ask.json';

@@ -2,14 +2,14 @@ import React from 'react';
 import { UserProps } from './UserProps';
 
 export interface PostProps {
-  id: string;
+  id?: string;
   title?: string;
   body?: string;
   upvotes?: number;
-  user?: UserProps;
+  user?: any;
   totalComments?: number;
-  updatedAt: string;
+  updatedAt?: string;
   upvoteState?: 'upvotes' | 'downvotes' | 'notvoted' | 'disabled';
   className?: string;
-  tags?: string[];
+  tags?: any[];
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
 import { NextPageContext } from 'next';
-import Container from 'pages/components/atomic/containers/Container';
-import FilterBar from 'pages/components/Home/FilterBar';
-import SectionTitle from 'pages/components/Home/SectionTitle';
-import { FireIcon, DiscussionIcon } from 'pages/components/Icons';
-import PostList from 'pages/components/PostList';
-import Filter from 'pages/components/Filter';
+import Container from 'lib/components/atomic/containers/Container';
+import FilterBar from 'lib/components/Home/FilterBar';
+import SectionTitle from 'lib/components/Home/SectionTitle';
+import { FireIcon, DiscussionIcon } from 'lib/components/Icons';
+import PostList from 'lib/components/PostList';
+import Filter from 'lib/components/Filter';
 
 function Home({ data }) {
   return (

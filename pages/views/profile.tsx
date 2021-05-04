@@ -13,7 +13,7 @@ import {
   GetMeQueryVariables,
 } from '../../gql';
 import { skipper } from '../../lib/accessToken';
-import Spinner from '../components/atomic/spinner';
+import Spinner from '../../lib/components/atomic/spinner';
 import { SpinnerSize } from '../../lib/common/props/SpinnerProps';
 
 function Profile() {

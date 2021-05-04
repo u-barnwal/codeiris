@@ -1,6 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import NavBar from 'pages/components/NavBar';
+import NavBar from 'lib/components/NavBar';
 
 interface Props {
   children: React.ReactNode;

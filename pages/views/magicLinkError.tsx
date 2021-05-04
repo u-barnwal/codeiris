@@ -1,6 +1,6 @@
 import React from 'react';
-import Heading, { HeadingSize } from '../components/atomic/typography';
-import Button from '../components/atomic/button';
+import Heading, { HeadingSize } from '../../lib/components/atomic/typography';
+import Button from '../../lib/components/atomic/button';
 import Router from 'next/router';
 
 function MagicLinkError() {

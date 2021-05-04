@@ -10,7 +10,9 @@
     "emitDecoratorMetadata": true,
     "isolatedModules": false,
     "noEmit": false,
-    "allowJs": false
+    "allowJs": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]
