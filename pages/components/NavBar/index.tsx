@@ -13,6 +13,7 @@ import Spinner from '../atomic/spinner';
 import { SpinnerSize } from '../../../lib/common/props/SpinnerProps';
 import Dropdown from '../atomic/dropdown/Dropdown';
 import Avatar from '../atomic/avatar/Avatar';
+import LinkButton from '../Shared/LinkButton';
 
 function NavBar() {
   const store = useStore();
@@ -38,9 +39,9 @@ function NavBar() {
     <div className="bg-white shadow-lg">
       <Container className="py-5">
         <div className="flex items-center">
-          <NavItem>Posts</NavItem>
-          <NavItem>Questions</NavItem>
-          <NavItem>Jobs</NavItem>
+          <NavItem href="/posts">Posts</NavItem>
+          <NavItem href="/questions">Questions</NavItem>
+          <NavItem href="/jobs">Jobs</NavItem>
 
           <div className="flex-1"></div>
 
