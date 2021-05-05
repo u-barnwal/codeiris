@@ -39,9 +39,21 @@ function NavBar() {
     <div className="bg-white shadow-lg sticky top-0 z-50">
       <Container className="py-5">
         <div className="flex items-center">
-          <NavItem href="/">Posts</NavItem>
-          <NavItem href="/">Questions</NavItem>
-          <NavItem href="/">Jobs</NavItem>
+          <NavItem href="javascript:;" onClick={() => Router.push('/')}>
+            Posts
+          </NavItem>
+          <NavItem
+            href="javascript:;"
+            onClick={() => Router.push('/?type=ask')}
+          >
+            Questions
+          </NavItem>
+          <NavItem
+            href="javascript:;"
+            onClick={() => Router.push('/?type=job')}
+          >
+            Jobs
+          </NavItem>
 
           <div className="flex-1"></div>
 

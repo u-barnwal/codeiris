@@ -15,6 +15,7 @@ export interface PostProps {
   image: {
     preview: string;
     source: string;
+  };
   type?: string;
   pageMode?: boolean;
 }
