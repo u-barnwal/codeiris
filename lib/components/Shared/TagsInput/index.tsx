@@ -45,12 +45,12 @@ function TagsInput({ onFilter, tags, setTags, className = '' }) {
             : []
         }
       >
-        <div className="bg-white max-w-md rounded-md overflow-hidden">
+        <div className="bg-white rounded-md overflow-hidden">
           {tags.length > 0 && (
-            <div className="p-1">
+            <div className="p-1 pl-0">
               {tags.map((ele) => (
                 <Tag
-                  className="bg-question pl-2 pr-2 my-1 ml-1"
+                  className="bg-question pl-2 pr-2 my-1"
                   color="text-white"
                   closable={true}
                   onClose={() =>
@@ -64,7 +64,7 @@ function TagsInput({ onFilter, tags, setTags, className = '' }) {
           )}
 
           <input
-            className="p-2 pb-0 max-w-md outline-none"
+            className="p-2 pl-0 pb-0 max-w-md outline-none"
             value={tag.name}
             onChange={(event) =>
               setTag((prev) => ({ ...prev, name: event.target.value }))
@@ -77,8 +77,10 @@ function TagsInput({ onFilter, tags, setTags, className = '' }) {
         </div>
       </Dropdown>
 
+      <div className="flex-1 sm:mr-4"></div>
+
       <Button
-        className="sm:ml-4 mt-4 bg-warning"
+        className="mt-4 bg-warning"
         colorClass="text-black"
         onClick={() => {
           if (tag.name !== '') {
