@@ -1,12 +1,18 @@
 import { useQuery } from '@apollo/client';
-import { GetTagsDocument, GetTagsQuery, QueryGetTagsArgs } from '../../../gql';
-import Dropdown from '../atomic/dropdown/Dropdown';
+import {
+  GetTagsDocument,
+  GetTagsQuery,
+  QueryGetTagsArgs,
+} from '../../../../gql';
+import Dropdown from '../../atomic/dropdown/Dropdown';
 import { useState } from 'react';
-import Button from '../atomic/button';
+import Button from '../../atomic/button';
 
-function Filter({ onFilter, tags, setTags }) {
+function TagsInput({ onFilter, tags, setTags }) {
   const [tag, setTag] = useState({ name: '', id: '' });
+
   const [current, setCurrent] = useState('');
+
   const { data, error, loading } = useQuery<GetTagsQuery, QueryGetTagsArgs>(
     GetTagsDocument,
     { variables: { after: current, first: 10, contain: tag.name } },
@@ -35,7 +41,7 @@ function Filter({ onFilter, tags, setTags }) {
             : []
         }
       >
-        <div className="flex flex-row content-center flex-wrap bg-white  max-w-md">
+        <div className="bg-white max-w-md rounded-lg overflow-hidden">
           {tags.map((ele) => (
             <span className="rounded-full px-3 mx-1 my-1 bg-primary self-center text-white">
               {ele.name}
@@ -49,8 +55,9 @@ function Filter({ onFilter, tags, setTags }) {
               </span>
             </span>
           ))}
+          <br />
           <input
-            className="h-12 px-2 max-w-md"
+            className="h-12 px-2 max-w-md outline-none"
             value={tag.name}
             onChange={(event) =>
               setTag((prev) => ({ ...prev, name: event.target.value }))
@@ -80,4 +87,4 @@ function Filter({ onFilter, tags, setTags }) {
   );
 }
 
-export default Filter;
+export default TagsInput;

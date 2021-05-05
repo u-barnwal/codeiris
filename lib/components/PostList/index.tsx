@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Spinner from '../atomic/spinner';
-import Filter from '../Filter';
+import TagsInput from '../Shared/TagsInput';
 import Post from '../Shared/Post';
 import FilterBar from 'lib/components/Home/FilterBar';
 import SectionTitle from '../Home/SectionTitle';
@@ -123,7 +123,11 @@ const PostList: React.FC<PostListProps> = ({
       >
         Threads & Discussions
       </SectionTitle>
-      <Filter onFilter={handleTagFilter} tags={tags} setTags={setTags}></Filter>
+      <TagsInput
+        onFilter={handleTagFilter}
+        tags={tags}
+        setTags={setTags}
+      ></TagsInput>
       <div className="container">
         {posts.map((ele) => (
           <div className={clsx('mr-60', className)}>
