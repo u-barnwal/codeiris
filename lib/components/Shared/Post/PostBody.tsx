@@ -5,6 +5,7 @@ import Tag from '../Tag';
 const MAX_VISIBLE_TAGS = 5;
 
 function PostBody({
+  id,
   title,
   children,
   tags = [],
@@ -14,7 +15,7 @@ function PostBody({
   return (
     <>
       <div className="text-2xl mb-3 font-semibold flex items-start">
-        {title}
+        {!showFullBody ? <a href={`/posts/${id}`}>{title}</a> : title}
       </div>
 
       <div

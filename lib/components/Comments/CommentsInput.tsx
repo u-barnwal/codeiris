@@ -26,11 +26,14 @@ function CommentsInput({ postId, parentId }: CommentProps) {
   >(CreateCommentDocument);
 
   return (
-    <React.Fragment>
+    <>
       <div className="flex">
         <TextArea
           value={comment}
           onChange={(event) => setComment(event.target.value)}
+          className="w-full"
+          label="New Comment"
+          placeholder="Type your comment here..."
         />
       </div>
       <div className="flex">
@@ -70,7 +73,7 @@ function CommentsInput({ postId, parentId }: CommentProps) {
           </Button>
         )}
       </div>
-    </React.Fragment>
+    </>
   );
 }
 export default CommentsInput;
