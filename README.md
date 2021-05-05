@@ -35,6 +35,17 @@ Following images are linked to their full size
   <img align="center" src="./samples/desktop/post.png" width="45%" />
 </a>
 
+<br/>
+<br/>
+
+<a href="./samples/desktop/login.png">
+  <img align="center" src="./samples/desktop/login.png" width="45%" />
+</a>
+
+<a href="./samples/desktop/email.png">
+  <img align="center" src="./samples/desktop/email.png" width="45%" />
+</a>
+
 ## Technologies Used
 | Front-end | Back-end | Hosting | Others
 | - | - | - | - |
