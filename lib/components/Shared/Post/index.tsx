@@ -5,12 +5,16 @@ import PostBody from './PostBody';
 import PostHeader from './PostHeader';
 import Votes from './Votes';
 import { useMutation } from '@apollo/client';
+import { observer } from 'mobx-react-lite';
+import useStore from '../../../store/StoreProvider';
 
 import {
   UpdateVoteDocument,
   UpdateVoteMutation,
   UpdateVoteMutationVariables,
 } from 'gql';
+import image from 'next/image';
+import Router from 'next/router';
 import clsx from 'clsx';
 
 function Post({
@@ -20,11 +24,12 @@ function Post({
   totalComments = 0,
   user,
   id,
-  updatedAt,
+  createdAt,
   upvoteState,
   tags,
   type = '',
   className,
+  image,
   pageMode = false,
 }: PostProps) {
   const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
@@ -44,10 +49,15 @@ function Post({
       .catch((err) => console.log(err));
   };
   return (
+
     <div className={clsx(`bg-white rounded-lg p-6 shadow-lg`, className)}>
       {!pageMode && (
         <ImageBar
-          image="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+          image={
+            image
+              ? image.source
+              : 'https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+          }
           className="mb-5"
         />
       )}
@@ -61,22 +71,36 @@ function Post({
           {upvotesLocal}
         </Votes>
 
-        <div className="ml-10 flex-1">
-          <PostHeader user={user} className="mb-5" updatedAt={updatedAt} />
+        <div className="ml-10 flex-1 ">
+          <PostHeader
+            user={{
+              image: !!user && !!user.image ? user.image : null,
+              name: !!user ? user.firstName + ' ' + user.lastName : 'Anonymous',
+              id: !!user ? user.id : null,
+            }}
+            className="mb-5"
+            updatedAt={createdAt}
+          />
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              Router.push(`/posts/${id}`);
+            }}
 
-          <PostBody
-            id={id}
-            title={title}
-            tags={tags.map((ele) => ele.name)}
-            postType={type}
-            showFullBody={pageMode}
           >
-            {body}
-          </PostBody>
+            <PostBody
+              title={title}
+              tags={tags.map((ele) => ele.name)}
+              postType={type}
+              showFullBody={pageMode}
+            >
+              {body}
+            </PostBody>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Post;
+export default observer(Post);

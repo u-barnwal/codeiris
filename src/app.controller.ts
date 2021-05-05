@@ -64,6 +64,8 @@ export class AppController {
     );
     return {
       initialPosts: JSON.stringify(initialPosts),
+      type: postType ? postType : null,
+      orderBy: orderBy,
     };
   }
 

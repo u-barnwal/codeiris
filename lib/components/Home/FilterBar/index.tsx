@@ -14,27 +14,80 @@ export type FilterProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >;
-
 const getIconComponent = (Icon) => <Icon color="white" size={4} />;
 
-function FilterBar({ className }: FilterProps) {
+function FilterBar({ className, handleSort }) {
   return (
     <div className={clsx('flex items-center', className)}>
       <div className="bg-white rounded-lg shadow-lg flex flex-1 p-4">
-        <FilterDropdown color="success" Icon={getIconComponent(StarIcon)}>
-          Most Popular
+        <FilterDropdown
+          color="success"
+          Icon={getIconComponent(StarIcon)}
+          handleSort={handleSort}
+        >
+          {[
+            {
+              name: 'Most Popular',
+              order: {
+                field: 'createdAt',
+                direction: 'desc',
+              },
+            },
+            {
+              name: 'Least Popular',
+              order: {
+                field: 'createdAt',
+                direction: 'desc',
+              },
+            },
+          ]}
         </FilterDropdown>
 
         <FilterDropdown
           color="info"
           Icon={getIconComponent(TreadingUpIcon)}
           className="mx-5"
+          handleSort={handleSort}
         >
-          Highest Votes
+          {[
+            {
+              name: 'Most Votes',
+              order: {
+                field: 'createdAt',
+                direction: 'desc',
+              },
+            },
+            {
+              name: 'Least Votes',
+              order: {
+                field: 'createdAt',
+                direction: 'desc',
+              },
+            },
+          ]}
         </FilterDropdown>
 
-        <FilterDropdown color="warning" Icon={getIconComponent(ClockIcon)}>
-          Latest Thread
+        <FilterDropdown
+          color="warning"
+          Icon={getIconComponent(ClockIcon)}
+          handleSort={handleSort}
+        >
+          {[
+            {
+              name: 'New Post',
+              order: {
+                field: 'createdAt',
+                direction: 'desc',
+              },
+            },
+            {
+              name: 'Old Post',
+              order: {
+                field: 'createdAt',
+                direction: 'asc',
+              },
+            },
+          ]}
         </FilterDropdown>
       </div>
 

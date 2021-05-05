@@ -4,8 +4,7 @@ import Dropdown from '../atomic/dropdown/Dropdown';
 import { useState } from 'react';
 import Button from '../atomic/button';
 
-function Filter() {
-  const [tags, setTags] = useState([]);
+function Filter({ onFilter, tags, setTags }) {
   const [tag, setTag] = useState({ name: '', id: '' });
   const [current, setCurrent] = useState('');
   const { data, error, loading } = useQuery<GetTagsQuery, QueryGetTagsArgs>(
@@ -65,7 +64,17 @@ function Filter() {
       </Dropdown>
 
       <div className="self-center ml-4">
-        <Button onClick={() => {}}>Filter</Button>
+        <Button
+          onClick={() => {
+            if (tag.name !== '') {
+              setTags((prev) => [...prev, tag.name]);
+              setTag({ id: null, name: '' });
+            }
+            onFilter();
+          }}
+        >
+          Filter
+        </Button>
       </div>
     </div>
   );
