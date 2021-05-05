@@ -16,17 +16,24 @@ This project was built as the deep-dive project from [Pesto Tech](https://pesto.
 ## Samples
 Following images are linked to their full size
 
-<!-- <a href="./samples/home.png">
-  <img align="center" src="./samples/home.png" width="45%" />
+<a href="./samples/desktop/home.png">
+  <img align="center" src="./samples/desktop/home.png" width="45%" />
 </a>
 
-<a href="./samples/modal.png">
-  <img align="center" src="./samples/modal.png" width="45%" />
+<a href="./samples/desktop/create-post.png">
+  <img align="center" src="./samples/desktop/create-post.png" width="45%" />
 </a>
 
-<a href="./samples/compare.png">
-  <img align="center" src="./samples/compare.png" width="45%" />
-</a> -->
+<br/>
+<br/>
+
+<a href="./samples/desktop/profile.png">
+  <img align="center" src="./samples/desktop/profile.png" width="45%" />
+</a>
+
+<a href="./samples/desktop/post.png">
+  <img align="center" src="./samples/desktop/post.png" width="45%" />
+</a>
 
 ## Technologies Used
 | Front-end | Back-end | Hosting | Others
