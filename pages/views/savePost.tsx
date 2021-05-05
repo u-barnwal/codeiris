@@ -9,10 +9,14 @@ import {
   PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
-import FormSaveLinkPost from './savePost/FormSaveLinkPost';
-import FormSaveJobPost from './savePost/FormSaveJobPost';
-import FormSaveAskPost from './savePost/FormSaveAskPost';
+import FormSaveLinkPost from '../components/SavePost/FormSaveLinkPost';
+import FormSaveJobPost from '../components/SavePost/FormSaveJobPost';
+import FormSaveAskPost from '../components/SavePost/FormSaveAskPost';
 import clsx from 'clsx';
+import Animation from 'pages/components/Shared/Animation';
+import animationLink from './../static/animations/link.json';
+import animationJob from './../static/animations/job.json';
+import animationAsk from './../static/animations/ask.json';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
@@ -23,11 +27,22 @@ const initialFields = {
   body: '',
 };
 
+const getAnimation = (postType: string) => {
+  switch (postType) {
+    case 'link':
+      return animationLink;
+    case 'job':
+      return animationJob;
+    case 'ask':
+      return animationAsk;
+  }
+};
+
 function PostTabBox({ children, onClick, active = false }) {
   return (
     <div
       className={clsx(
-        'py-2 px-4 rounded-md mb-3 cursor-pointer transition-all capitalize',
+        'py-2 px-4 rounded-md cursor-pointer transition-all capitalize mr-3 text-sm shadow-md font-semibold',
         active
           ? 'bg-primary-light text-white'
           : 'bg-white hover:bg-secondary-dark',
@@ -55,7 +70,7 @@ function SavePost() {
         ...data,
       },
     })
-      .then((value) => {
+      .then(() => {
         AppToaster.show({
           message: 'Post Published Successfully!',
           intent: Intent.SUCCESS,
@@ -73,35 +88,35 @@ function SavePost() {
     });
   };
 
-  // AppToaster.show({
-  //   message: 'Test',
-  //   intent: Intent.SUCCESS,
-  //   timeout: 999999999,
-  // });
-
   return (
     <div className="container px-40 mt-10">
-      <div className="text-2xl mb-8">
-        Create <span className="capitalize">{activeTab}</span> Post
+      <div className="flex w-full">
+        {Object.values(PostType)
+          .reverse()
+          .map((pt, index) => (
+            <PostTabBox
+              key={index}
+              active={pt === activeTab}
+              onClick={() => setActiveTab(pt)}
+            >
+              {pt}
+            </PostTabBox>
+          ))}
       </div>
 
-      <div className="flex">
-        <div className="flex-grow p-3 bg-white mr-5 rounded-md">
-          {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
-        </div>
+      <div className="mt-8 mb-3">
+        Your new <span className="capitalize">{activeTab}</span> post will be
+        published instantly!
+      </div>
 
-        <div style={{ minWidth: '200px' }}>
-          {Object.values(PostType)
-            .reverse()
-            .map((pt, index) => (
-              <PostTabBox
-                key={index}
-                active={pt === activeTab}
-                onClick={() => setActiveTab(pt)}
-              >
-                {pt}
-              </PostTabBox>
-            ))}
+      <div className="flex items-start">
+        <Animation loop={true} data={getAnimation(activeTab)}></Animation>
+
+        <div
+          className="flex-grow p-5 bg-white mr-5 rounded-md shadow-lg"
+          style={{ minHeight: '400px' }}
+        >
+          {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
         </div>
       </div>
     </div>

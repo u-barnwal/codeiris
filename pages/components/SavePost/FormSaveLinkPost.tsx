@@ -1,8 +1,8 @@
 import { PostType } from 'gql';
 import Button from 'pages/components/atomic/button';
 import TextField from 'pages/components/atomic/textField';
-import useForm from 'pages/hooks/useForm';
 import React from 'react';
+import useForm from '../../../lib/hooks/useForm';
 
 function FormSaveLinkPost({
   initialFields,
@@ -10,17 +10,15 @@ function FormSaveLinkPost({
   processError,
   processSave,
 }) {
-  const {
-    props: { title, url },
-    dispatch,
-    handleFieldChange,
-  } = useForm(initialFields);
+  const [props, dispatch, handleFieldChange] = useForm(initialFields);
+
+  const { title, url } = props;
 
   const handleSubmit = () => {
     let error;
 
-    if (title === '') error = 'You must enter a title!';
-    else if (url === '') error = 'You must enter a URL!';
+    if (title === '') error = 'You must enter the title!';
+    else if (url === '') error = 'You must enter the URL!';
 
     if (error) {
       processError(error);
@@ -36,19 +34,28 @@ function FormSaveLinkPost({
     <>
       <TextField
         value={title}
-        placeholder="Title"
+        label="Title"
         onChange={(e) => handleFieldChange('title', e)}
+        className="mb-4"
+        required
       />
 
       <TextField
         value={url}
-        placeholder="URL"
+        label="URL"
+        placeholder="https://"
         type="url"
         onChange={(e) => handleFieldChange('url', e)}
+        className="mb-4"
+        required
       />
 
-      <Button loading={loading} onClick={handleSubmit}>
-        Add
+      <Button
+        loading={loading}
+        onClick={handleSubmit}
+        className="bg-success mt-6"
+      >
+        Publish Post
       </Button>
     </>
   );

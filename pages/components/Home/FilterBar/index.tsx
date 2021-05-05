@@ -6,13 +6,19 @@ import {
   TreadingUpIcon,
   PencilIcon,
 } from 'pages/components/Icons';
+import LinkButton from 'pages/components/Shared/LinkButton';
 import React from 'react';
 import FilterDropdown from './FilterDropdown';
 
-function FilterBar({ className = '' }) {
+export type FilterProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
+
+function FilterBar({ className }: FilterProps) {
   return (
     <div className={clsx('flex items-center', className)}>
-      <div className="bg-white rounded-md flex flex-1 p-4">
+      <div className="bg-white rounded-lg shadow-lg flex flex-1 p-4">
         <FilterDropdown color="success" Icon={StarIcon}>
           Most Popular
         </FilterDropdown>
@@ -27,12 +33,13 @@ function FilterBar({ className = '' }) {
       </div>
 
       <div>
-        <Button
+        <LinkButton
           icon={<PencilIcon className="mr-2" size={3} />}
-          className="ml-10"
+          className="ml-10 shadow-2xl"
+          link="/posts/save"
         >
           Write New Thread
-        </Button>
+        </LinkButton>
       </div>
     </div>
   );

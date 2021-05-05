@@ -107,7 +107,7 @@ export default function ProfileSettings() {
               <div className="grid grid-cols-6 gap-4">
                 <div className="col-span-6 sm:col-span-3">
                   <TextField
-                    floating={true}
+                    required={true}
                     value={profile.firstName}
                     onChange={(event) =>
                       setProfile({ ...profile, firstName: event.target.value })
@@ -121,14 +121,14 @@ export default function ProfileSettings() {
                     onChange={(event) =>
                       setProfile({ ...profile, middleName: event.target.value })
                     }
-                    floating={true}
+                    required={true}
                     placeholder="Middle Name"
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
                   <TextField
-                    floating={true}
+                    required={true}
                     value={profile.lastName}
                     onChange={(event) =>
                       setProfile({ ...profile, lastName: event.target.value })
@@ -139,7 +139,7 @@ export default function ProfileSettings() {
 
                 <div className="col-span-6 sm:col-span-4">
                   <TextField
-                    floating={true}
+                    required={true}
                     value={profile.email}
                     onChange={(event) =>
                       setProfile({ ...profile, email: event.target.value })

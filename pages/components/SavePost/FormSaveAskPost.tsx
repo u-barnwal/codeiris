@@ -2,8 +2,8 @@ import { PostType } from 'gql';
 import Button from 'pages/components/atomic/button';
 import TextArea from 'pages/components/atomic/textArea';
 import TextField from 'pages/components/atomic/textField';
-import useForm from 'pages/hooks/useForm';
 import React from 'react';
+import useForm from '../../../lib/hooks/useForm';
 
 function FormSaveAskPost({
   initialFields,
@@ -11,24 +11,23 @@ function FormSaveAskPost({
   processError,
   processSave,
 }) {
-  const {
-    props: { title, body },
-    dispatch,
-    handleFieldChange,
-  } = useForm(initialFields);
+  const [props, dispatch, handleFieldChange] = useForm(initialFields);
 
   const handleSubmit = () => {
     let error;
 
-    if (title === '') error = 'You must enter a title!';
-    else if (body === '') error = 'You must enter the body!';
+    if (props.title === '') error = 'You must enter the question!';
+    else if (props.body === '') error = 'You must enter the body!';
 
     if (error) {
       processError(error);
       return;
     }
 
-    processSave({ title, body, type: PostType.Ask }, reset);
+    processSave(
+      { title: props.title, body: props.body, type: PostType.Ask },
+      reset,
+    );
   };
 
   const reset = () => dispatch(initialFields);
@@ -36,20 +35,27 @@ function FormSaveAskPost({
   return (
     <>
       <TextField
-        value={title}
-        placeholder="Question"
+        value={props.title}
+        label="Question"
         onChange={(e) => handleFieldChange('title', e)}
+        className="mb-4"
+        required
       />
 
       <TextArea
-        value={body}
-        placeholder="Body"
+        value={props.body}
+        label="Body"
         onChange={(e) => handleFieldChange('body', e)}
         className="w-full"
+        required
       />
 
-      <Button loading={loading} onClick={handleSubmit}>
-        Add
+      <Button
+        loading={loading}
+        onClick={handleSubmit}
+        className="bg-success mt-6"
+      >
+        Publish Post
       </Button>
     </>
   );
