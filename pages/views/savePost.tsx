@@ -1,5 +1,5 @@
 import { Intent, Position } from 'lib/common';
-import Toaster from 'pages/components/atomic/toast/Toaster';
+import Toaster from 'lib/components/atomic/toast/Toaster';
 import DefaultLayout from 'pages/layouts/defaultLayout';
 import React, { useState } from 'react';
 import {
@@ -9,14 +9,15 @@ import {
   PostType,
 } from 'gql';
 import { useMutation } from '@apollo/client';
-import FormSaveLinkPost from '../components/SavePost/FormSaveLinkPost';
-import FormSaveJobPost from '../components/SavePost/FormSaveJobPost';
-import FormSaveAskPost from '../components/SavePost/FormSaveAskPost';
+import FormSaveLinkPost from '../../lib/components/SavePost/FormSaveLinkPost';
+import FormSaveJobPost from '../../lib/components/SavePost/FormSaveJobPost';
+import FormSaveAskPost from '../../lib/components/SavePost/FormSaveAskPost';
 import clsx from 'clsx';
-import Animation from 'pages/components/Shared/Animation';
+import Animation from 'lib/components/Shared/Animation';
 import animationLink from './../static/animations/link.json';
 import animationJob from './../static/animations/job.json';
 import animationAsk from './../static/animations/ask.json';
+import Container from 'lib/components/atomic/containers/Container';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
@@ -89,7 +90,7 @@ function SavePost() {
   };
 
   return (
-    <div className="container px-40 mt-10">
+    <Container className="mt-10">
       <div className="flex w-full">
         {Object.values(PostType)
           .reverse()
@@ -119,7 +120,7 @@ function SavePost() {
           {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

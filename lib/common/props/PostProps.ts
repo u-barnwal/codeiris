@@ -2,11 +2,11 @@ import React from 'react';
 import { UserProps } from './UserProps';
 
 export interface PostProps {
-  id: string;
+  id?: string;
   title?: string;
   body?: string;
   upvotes?: number;
-  user?: UserProps;
+  user?: any;
   totalComments?: number;
   createdAt: string;
   upvoteState?: 'upvotes' | 'downvotes' | 'notvoted' | 'disabled';
@@ -15,5 +15,6 @@ export interface PostProps {
   image: {
     preview: string;
     source: string;
-  }
+  type?: string;
+  pageMode?: boolean;
 }

@@ -2,19 +2,21 @@ import DefaultLayout from '../layouts/defaultLayout';
 import React, { useState } from 'react';
 import { NextPageContext } from 'next';
 import superjson from 'superjson';
-import Heading, { HeadingSize } from '../components/atomic/typography';
+import Heading, { HeadingSize } from '../../lib/components/atomic/typography';
 import moment from 'moment';
-import CommentsInput from '../components/Comments/CommentsInput';
+import CommentsInput from '../../lib/components/Comments/CommentsInput';
 import { useQuery } from '@apollo/client';
 import {
   GetCommentsDocument,
   GetCommentsQuery,
   GetCommentsQueryVariables,
 } from '../../gql';
-import CommentListItem from '../components/Comments/CommentListItem';
-import Button from "../components/atomic/button";
-import Spinner from "../components/atomic/spinner";
-import { SpinnerSize } from "../../lib/common/props/SpinnerProps";
+import CommentListItem from '../../lib/components/Comments/CommentListItem';
+import Button from '../../lib/components/atomic/button';
+import Spinner from '../../lib/components/atomic/spinner';
+import { SpinnerSize } from '../../lib/common/props/SpinnerProps';
+import Container from 'lib/components/atomic/containers/Container';
+import Post from './../../lib/components/Shared/Post/';
 
 interface Props {
   postData: string;
@@ -32,7 +34,35 @@ function PostPage({ postData }: Props) {
   });
   console.log(data);
   return (
-    <div className="container mx-auto px-4 mt-10 mb-10">
+    <div className="relative">
+      <img
+        src="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+        className="w-full mb-5 h-60 object-cover"
+      />
+
+      <div className="absolute top-0 mt-40 w-full">
+        <Container>
+          <Post
+            id={post.id}
+            title={post.title}
+            type={post.type}
+            body={post.body}
+            upvotes={post.upvotes}
+            upvoteState={post.upvoteState}
+            user={post.user}
+            totalComments={post.totalComments}
+            updatedAt={moment(post.updatedAt).fromNow()}
+            tags={post.tags ? post.tags : []}
+            className="mb-5 py-6 px-6"
+            pageMode={true}
+          />
+        </Container>
+      </div>
+    </div>
+  );
+
+  return (
+    <Container className="mt-10">
       <div>
         <Heading
           size={HeadingSize.H600}
@@ -109,7 +139,7 @@ function PostPage({ postData }: Props) {
           </div>
         )}
       </div>
-    </div>
+    </Container>
   );
 }
 
