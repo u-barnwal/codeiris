@@ -158,6 +158,7 @@ export type Post = {
   createdAt: Scalars['Date'];
   deleted: Scalars['Boolean'];
   id: Scalars['ID'];
+  image: File;
   slug: Scalars['String'];
   status: PostStatus;
   tag?: Maybe<Array<Tag>>;
@@ -202,7 +203,7 @@ export type PostOrder = {
 };
 
 export enum PostOrderFeild {
-  UpdatedAt = 'updatedAt',
+  CreatedAt = 'createdAt',
   Votes = 'votes'
 }
 
@@ -282,6 +283,8 @@ export type QueryGetPostsArgs = {
   last?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<PostOrder>;
   skip?: Maybe<Scalars['Int']>;
+  tags?: Maybe<Array<Scalars['String']>>;
+  type?: Maybe<PostType>;
 };
 
 
@@ -347,7 +350,7 @@ export type User = {
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
-  image: File;
+  image?: Maybe<File>;
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
   role: UserRole;
@@ -499,6 +502,8 @@ export type CreateAssetMutation = (
 export type GetPostsQueryVariables = Exact<{
   after: Scalars['String'];
   first: Scalars['Int'];
+  tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  type?: Maybe<PostType>;
 }>;
 
 
@@ -517,10 +522,10 @@ export type GetPostsQuery = (
         & { user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
-          & { image: (
+          & { image?: Maybe<(
             { __typename?: 'File' }
             & Pick<File, 'preview'>
-          ) }
+          )> }
         ), tags: Array<(
           { __typename?: 'Tag' }
           & Pick<Tag, 'id' | 'name'>
@@ -854,8 +859,8 @@ export type CreateAssetMutationHookResult = ReturnType<typeof useCreateAssetMuta
 export type CreateAssetMutationResult = Apollo.MutationResult<CreateAssetMutation>;
 export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetMutation, CreateAssetMutationVariables>;
 export const GetPostsDocument = gql`
-    query getPosts($after: String!, $first: Int!) {
-  getPosts(after: $after, first: $first) {
+    query getPosts($after: String!, $first: Int!, $tags: [String!], $type: PostType) {
+  getPosts(after: $after, first: $first, tags: $tags, type: $type) {
     pageInfo {
       endCursor
       hasNextPage
@@ -900,6 +905,8 @@ export const GetPostsDocument = gql`
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
+ *      tags: // value for 'tags'
+ *      type: // value for 'type'
  *   },
  * });
  */

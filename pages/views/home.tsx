@@ -20,8 +20,6 @@ function Home({ data }) {
       <SectionTitle className="my-10" color="primary" Icon={DiscussionIcon}>
         Threads & Discussions
       </SectionTitle>
-
-      <Filter />
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
@@ -32,6 +30,7 @@ function Home({ data }) {
           upvotes: ele._count.votes,
           totalComments: ele._count.comments,
         }))}
+        intialType={data.type}
       />
     </Container>
   );

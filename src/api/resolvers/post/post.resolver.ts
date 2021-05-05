@@ -22,6 +22,7 @@ import { PostService } from '../../../services/post.service';
 import { UnauthorizedException } from '@nestjs/common';
 import { Tag } from '../../../models/tag.model';
 import { File } from '../../../models/file.model';
+import { PostType } from '.prisma/client';
 
 @Resolver((of) => Post)
 export class PostResolver {
@@ -57,11 +58,43 @@ export class PostResolver {
       nullable: true,
     })
     orderBy: PostOrder,
+    @Args({
+      name: 'tags',
+      type: () => [String],
+      nullable: true,
+    })
+    tags: string[],
+    @Args({
+      name: 'type',
+      type: () => PostType,
+      nullable: true,
+    })
+    type: 'job' | 'link' | 'ask',
   ) {
+    const tagsQuery =
+      tags && tags.length !== 0
+        ? {
+            tags: {
+              some: {
+                OR: tags.map((ele) => ({
+                  name: {
+                    contains: ele,
+                  },
+                })),
+              },
+            },
+          }
+        : {};
     const postCursors = findManyCursorConnection(
       (args) =>
         this.prisma.post.findMany({
           orderBy: orderBy && { [orderBy.field]: orderBy.direction },
+          where: {
+            ...tagsQuery,
+            type: {
+              equals: type ? type : 'ask',
+            },
+          },
           ...args,
         }),
       () => this.prisma.post.count(),

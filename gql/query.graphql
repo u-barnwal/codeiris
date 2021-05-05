@@ -1,5 +1,10 @@
-query getPosts($after: String!, $first: Int!) {
-  getPosts(after: $after, first: $first) {
+query getPosts(
+  $after: String!
+  $first: Int!
+  $tags: [String!]
+  $type: PostType
+) {
+  getPosts(after: $after, first: $first, tags: $tags, type: $type) {
     pageInfo {
       endCursor
       hasNextPage

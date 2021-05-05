@@ -8,7 +8,7 @@ export interface PostProps {
   upvotes?: number;
   user?: UserProps;
   totalComments?: number;
-  updatedAt: string;
+  createdAt: string;
   upvoteState?: 'upvotes' | 'downvotes' | 'notvoted' | 'disabled';
   className?: string;
   tags?: string[];

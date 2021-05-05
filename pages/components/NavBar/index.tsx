@@ -11,8 +11,8 @@ function NavBar() {
       <Container className="py-5">
         <div className="flex items-center">
           <NavItem link="">Posts</NavItem>
-          <NavItem link="">Questions</NavItem>
-          <NavItem link="">Jobs</NavItem>
+          <NavItem link="ask">Questions</NavItem>
+          <NavItem link="job">Jobs</NavItem>
 
           <div className="flex-1"></div>
 

@@ -19,7 +19,7 @@ function Post({
   totalComments = 0,
   user,
   id,
-  updatedAt,
+  createdAt,
   upvoteState,
   tags,
   className,
@@ -63,7 +63,7 @@ function Post({
               name: !!user ? user.firstName + ' ' + user.lastName : 'Anonymous',
             }}
             className="mb-5"
-            updatedAt={updatedAt}
+            updatedAt={createdAt}
           />
 
           <PostBody title={title} tags={tags.map((ele) => ele.name)}>
