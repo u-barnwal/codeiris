@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import PostList, { PostListProps } from '../../pages/components/PostList';
+import PostList, { PostListProps } from '../../lib/components/PostList';
 
 export default {
   title: 'Post/PostList',

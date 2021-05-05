@@ -16,10 +16,15 @@ import { RequestContext } from '../../common/request-context';
 import { CommentOrder } from '../../../models/input/comment-order.input';
 import { CommentCreateInput } from '../../../models/input/comment-create.input';
 import { BadRequestException } from '@nestjs/common';
+import { EventBus } from '../../../event-bus/event-bus';
+import { CreateCommentsEvents } from '../../../event-bus/events/comment-events';
 
 @Resolver(() => Comment)
 export class CommentResolver {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly eventBus: EventBus,
+  ) {}
 
   @Query(() => CommentConnection)
   async getMeComments(
@@ -153,7 +158,7 @@ export class CommentResolver {
     if (input.parentId === undefined && input.postId === undefined) {
       throw new BadRequestException();
     }
-    return this.prisma.comment.create({
+    const comment = await this.prisma.comment.create({
       data: {
         parentId: input.parentId,
         postId: input.postId,
@@ -164,8 +169,11 @@ export class CommentResolver {
         post: true,
         parent: true,
         children: true,
+        user: true,
       },
     });
+    this.eventBus.publish(new CreateCommentsEvents(comment as any));
+    return comment;
   }
 
   @ResolveField('children', (returns) => [Comment])

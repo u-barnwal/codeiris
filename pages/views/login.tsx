@@ -1,8 +1,8 @@
 import DefaultLayout from '../layouts/defaultLayout';
-import Heading from '../components/atomic/typography/Heading';
-import { HeadingSize } from '../components/atomic/typography';
-import TextField from '../components/atomic/textField';
-import Button from '../components/atomic/button';
+import Heading from '../../lib/components/atomic/typography/Heading';
+import { HeadingSize } from '../../lib/components/atomic/typography';
+import TextField from '../../lib/components/atomic/textField';
+import Button from '../../lib/components/atomic/button';
 import { useMutation } from '@apollo/client';
 import {
   MutationSendMagicLinkArgs,
@@ -10,7 +10,7 @@ import {
   SendMagicLinkMutation,
 } from '../../gql';
 import { useEffect, useState } from 'react';
-import MagicLinkSendingSuccess from '../components/MagicLink/MagicLinkSendingSuccess';
+import MagicLinkSendingSuccess from '../../lib/components/MagicLink/MagicLinkSendingSuccess';
 import io from 'socket.io-client';
 
 function Login() {
@@ -44,7 +44,7 @@ function Login() {
                   </div>
                   <div>
                     <TextField
-                      placeholder="Email"
+                      label="Email"
                       className="2xl:w-80"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}

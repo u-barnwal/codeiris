@@ -1,7 +1,7 @@
 import './styles/app.css';
 import { withApollo } from '../lib/apollo';
 import { ApolloProvider } from '@apollo/client';
-import { StoreProvider } from './store/StoreProvider';
+import { StoreProvider } from '../store/StoreProvider';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps, apolloClient }) {
@@ -10,11 +10,12 @@ function MyApp({ Component, pageProps, apolloClient }) {
   return (
     <>
       <Head>
-        {/*<meta name="viewport" content="viewport-fit=cover" />*/}
+        <title>CodeIris</title>
+
         <meta
-          name='viewport'
-          content='minimum-scale=1, initial-scale=1, width=device-width'
-          key='viewport-meta'
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+          key="viewport-meta"
         />
       </Head>
       <StoreProvider {...pageProps}>
