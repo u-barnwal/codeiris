@@ -5,12 +5,16 @@ import PostBody from './PostBody';
 import PostHeader from './PostHeader';
 import Votes from './Votes';
 import { useMutation } from '@apollo/client';
+import { observer } from 'mobx-react-lite';
+import useStore from '../../../store/StoreProvider';
 
 import {
   UpdateVoteDocument,
   UpdateVoteMutation,
   MutationUpdateVoteArgs,
 } from 'gql';
+import image from 'next/image';
+import Router from 'next/router';
 
 function Post({
   title,
@@ -23,6 +27,7 @@ function Post({
   upvoteState,
   tags,
   className,
+  image,
 }: PostProps) {
   const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
   const [upvoteStateLocal, setUpvoteStateLocal] = useState(upvoteState);
@@ -43,7 +48,11 @@ function Post({
   return (
     <div className="bg-white rounded-lg p-4 ">
       <ImageBar
-        image="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+        image={
+          image
+            ? image.source
+            : 'https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+        }
         className="mb-5"
       />
 
@@ -56,23 +65,30 @@ function Post({
           {upvotesLocal}
         </Votes>
 
-        <div className="ml-10 flex-1">
+        <div className="ml-10 flex-1 ">
           <PostHeader
             user={{
               image: !!user && !!user.image ? user.image : null,
               name: !!user ? user.firstName + ' ' + user.lastName : 'Anonymous',
+              id: !!user ? user.id : null,
             }}
             className="mb-5"
             updatedAt={createdAt}
           />
-
-          <PostBody title={title} tags={tags.map((ele) => ele.name)}>
-            {body}
-          </PostBody>
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              Router.push(`/posts/${id}`);
+            }}
+          >
+            <PostBody title={title} tags={tags.map((ele) => ele.name)}>
+              {body}
+            </PostBody>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Post;
+export default observer(Post);

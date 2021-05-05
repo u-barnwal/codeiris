@@ -138,7 +138,7 @@ export class PostResolver {
     return postCursors;
   }
 
-  @ResolveField('image', (returns) => File)
+  @ResolveField('image', (returns) => File, { nullable: true })
   async postImage(@Parent() post: Post) {
     const { image } = post;
     return image;
@@ -152,7 +152,7 @@ export class PostResolver {
     });
   }
 
-  @ResolveField('image', (returns) => File)
+  @ResolveField('image', (returns) => File, { nullable: true })
   async userImage(@Parent() user: User) {
     const { image } = user;
     return image;

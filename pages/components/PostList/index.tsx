@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
-import e from 'express';
 import { GetPostsDocument, GetPostsQuery, QueryGetPostsArgs } from 'gql';
 import { skipper } from 'lib/accessToken';
 import { PostProps } from 'lib/common/props/PostProps';
@@ -49,25 +48,20 @@ const PostList: React.FC<PostListProps> = ({
   );
   const handleTagFilter = () => {
     setPosts([]);
-    setVariables({
+    setVariables((prev) => ({
+      ...prev,
       after: '',
-      first: 10,
       tags: tags.map((ele) => ele.name),
-      type: intialType,
-      field: 'createdAt',
-      direction: 'asc',
-    });
+    }));
   };
   const handleSort = ({ field, direction }: PostOrder) => {
     setPosts([]);
-    setVariables({
+    setVariables((prev) => ({
+      ...prev,
       after: '',
-      first: 10,
-      tags: tags.map((ele) => ele.name),
-      type: intialType,
       field: field,
       direction: direction,
-    });
+    }));
   };
   useEffect(() => {
     if (hasNextPage)
@@ -79,14 +73,10 @@ const PostList: React.FC<PostListProps> = ({
         if (scrollTop + clientHeight > scrollHeight - 20 && !loading) {
           console.log('Adding to page');
           const cursor = posts.length > 0 ? posts[posts.length - 1].id : '';
-          setVariables({
+          setVariables((prev) => ({
+            ...prev,
             after: cursor,
-            first: 10,
-            tags: tags.map((ele) => ele.name),
-            type: intialType,
-            field: 'createdAt',
-            direction: 'asc',
-          });
+          }));
         }
       });
   }, []);
@@ -136,6 +126,7 @@ const PostList: React.FC<PostListProps> = ({
           <div className={clsx('mr-60', className)}>
             <Post
               key={ele.id}
+              className="my-5"
               id={ele.id}
               title={ele.title}
               body={ele.body}
@@ -145,6 +136,7 @@ const PostList: React.FC<PostListProps> = ({
               totalComments={ele.totalComments}
               createdAt={moment(ele.createdAt).fromNow()}
               tags={ele.tags ? ele.tags : []}
+              image={ele.image}
             />
           </div>
         ))}

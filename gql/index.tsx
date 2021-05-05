@@ -158,7 +158,7 @@ export type Post = {
   createdAt: Scalars['Date'];
   deleted: Scalars['Boolean'];
   id: Scalars['ID'];
-  image: File;
+  image?: Maybe<File>;
   slug: Scalars['String'];
   status: PostStatus;
   tag?: Maybe<Array<Tag>>;
@@ -521,7 +521,10 @@ export type GetPostsQuery = (
       & { node: (
         { __typename?: 'Post' }
         & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'upvoteState' | 'totalVotes' | 'totalComments'>
-        & { user: (
+        & { image?: Maybe<(
+          { __typename?: 'File' }
+          & Pick<File, 'preview' | 'source'>
+        )>, user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
           & { image?: Maybe<(
@@ -879,6 +882,10 @@ export const GetPostsDocument = gql`
         body
         title
         updatedAt
+        image {
+          preview
+          source
+        }
         user {
           firstName
           lastName

@@ -23,6 +23,10 @@ query getPosts(
         body
         title
         updatedAt
+        image {
+          preview
+          source
+        }
         user {
           firstName
           lastName
