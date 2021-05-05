@@ -23,6 +23,7 @@ query getPosts(
         body
         title
         updatedAt
+        type
         image {
           preview
           source

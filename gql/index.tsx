@@ -520,7 +520,7 @@ export type GetPostsQuery = (
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'upvoteState' | 'totalVotes' | 'totalComments'>
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'type' | 'upvoteState' | 'totalVotes' | 'totalComments'>
         & { image?: Maybe<(
           { __typename?: 'File' }
           & Pick<File, 'preview' | 'source'>
@@ -882,6 +882,7 @@ export const GetPostsDocument = gql`
         body
         title
         updatedAt
+        type
         image {
           preview
           source
