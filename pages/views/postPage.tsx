@@ -17,6 +17,7 @@ import Spinner from '../../lib/components/atomic/spinner';
 import { SpinnerSize } from '../../lib/common/props/SpinnerProps';
 import Container from 'lib/components/atomic/containers/Container';
 import Post from './../../lib/components/Shared/Post/';
+import { CommentIcon } from 'lib/components/Icons';
 
 interface Props {
   postData: string;
@@ -40,7 +41,7 @@ function PostPage({ postData }: Props) {
         className="w-full mb-5 h-60 object-cover"
       />
 
-      <div className="absolute top-0 mt-40 w-full">
+      <div className="absolute top-0 mt-40 pb-10 w-full">
         <Container>
           <Post
             id={post.id}
@@ -56,6 +57,55 @@ function PostPage({ postData }: Props) {
             className="mb-5 py-6 px-6"
             pageMode={true}
           />
+
+          <div className="flex items-center text-lg text-primary mb-2 mt-12">
+            <CommentIcon className="mr-3" />
+            All Comments
+            <div className="flex-1" />
+            <>[{post._count.comments}]</>
+          </div>
+
+          <div className="w-full rounded rounded-lg overflow-hidden shadow-lg p-7 bg-white mt-5">
+            <CommentsInput postId={post.id} />
+
+            {loading && (
+              <div className="flex justify-center items-center">
+                <Spinner size={SpinnerSize.small} />
+              </div>
+            )}
+
+            <div className="mt-5">
+              {!loading && !error && data && (
+                <div>
+                  {data.getComments.edges.map((comments) => (
+                    <CommentListItem comment={comments.node} child={true} />
+                  ))}
+                </div>
+              )}
+            </div>
+            {data && data.getComments.totalCount > first && (
+              <div className="flex justify-center items-center">
+                <Button
+                  loading={loading}
+                  disabled={loading}
+                  className="bg-white text-blueGray-500"
+                  loaderClass="bg-primary"
+                  onClick={() => {
+                    if (
+                      data.getComments.totalCount + 10 >
+                      data.getComments.totalCount
+                    ) {
+                      setFirst(first + 10);
+                    } else {
+                      setFirst(data.getComments.totalCount);
+                    }
+                  }}
+                >
+                  Load More
+                </Button>
+              </div>
+            )}
+          </div>
         </Container>
       </div>
     </div>
