@@ -131,7 +131,7 @@ const PostList: React.FC<PostListProps> = ({
 
       <div className="container">
         {posts.map((ele) => (
-          <div className={clsx('mr-60', className)}>
+          <div className={clsx('lg:mr-60', className)}>
             <Post
               key={ele.id}
               id={ele.id}

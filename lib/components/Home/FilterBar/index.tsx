@@ -98,7 +98,6 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
         />
       </div>
 
-      {/* <div> */}
       <LinkButton
         icon={<PencilIcon className="mr-2" size={3} />}
         className="lg:ml-10 mt-5 shadow-2xl"
@@ -106,7 +105,6 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
       >
         Write New Thread
       </LinkButton>
-      {/* </div> */}
     </div>
   );
 }
