@@ -1,21 +1,36 @@
+import clsx from 'clsx';
 import React from 'react';
+import Tag from '../Tag';
 
 const MAX_VISIBLE_TAGS = 5;
 
-function Tag({ children }) {
-  return (
-    <div className="inline-block mr-3 border rounded-md py-1 px-4 text-xs text-gray-500">
-      {children}
-    </div>
-  );
-}
-
-function PostBody({ title, children, tags = [] }) {
+function PostBody({
+  id,
+  title,
+  children,
+  tags = [],
+  postType = '',
+  showFullBody = false,
+}) {
   return (
     <>
-      <div className="text-2xl mb-3 font-semibold">{title}</div>
+      <div className="text-2xl mb-3 font-semibold flex items-start">
+        {!showFullBody ? <a href={`/posts/${id}`}>{title}</a> : title}
+      </div>
 
-      <div className="line-clamp-3 mb-3 overflow-hidden">{children}</div>
+      <div
+        className={clsx('mb-3', {
+          'line-clamp-3 overflow-hidden': !showFullBody,
+        })}
+      >
+        {children}
+      </div>
+
+      {postType && (
+        <Tag className="bg-error capitalize" color="text-white">
+          {postType}
+        </Tag>
+      )}
 
       {tags.slice(-1 * MAX_VISIBLE_TAGS).map((tag, index) => (
         <Tag key={index}>{tag}</Tag>

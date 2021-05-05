@@ -1,7 +1,6 @@
 import Container from 'lib/components/atomic/containers/Container';
 import React, { useEffect } from 'react';
 import Button from '../atomic/button';
-import { BellIcon } from '../Icons';
 import NavItem from './NavItem';
 import SearchBar from './SearchBar';
 import { useQuery } from '@apollo/client';
@@ -14,6 +13,7 @@ import { SpinnerSize } from '../../common/props/SpinnerProps';
 import Dropdown from '../atomic/dropdown/Dropdown';
 import Avatar from '../atomic/avatar/Avatar';
 import LinkButton from '../Shared/LinkButton';
+import Notification from './Notification';
 
 function NavBar() {
   const store = useStore();
@@ -36,18 +36,38 @@ function NavBar() {
   };
 
   return (
-    <div className="bg-white shadow-lg">
+    <div className="bg-white shadow-lg sticky top-0 z-50">
       <Container className="py-5">
         <div className="flex items-center">
-          <NavItem href="/posts">Posts</NavItem>
-          <NavItem href="/questions">Questions</NavItem>
-          <NavItem href="/jobs">Jobs</NavItem>
+          <NavItem href="/">Posts</NavItem>
+          <NavItem href="/">Questions</NavItem>
+          <NavItem href="/">Jobs</NavItem>
 
           <div className="flex-1"></div>
 
           <SearchBar className="mr-5" />
 
-          <BellIcon className="mr-5" />
+          <Notification
+            className="mr-5"
+            notifications={[
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+              {
+                title: '1 new message',
+                text: 'George said "hi"',
+              },
+            ]}
+          />
 
           <div>
             {loading && (

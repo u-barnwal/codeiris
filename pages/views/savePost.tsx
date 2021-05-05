@@ -17,6 +17,7 @@ import Animation from 'lib/components/Shared/Animation';
 import animationLink from './../static/animations/link.json';
 import animationJob from './../static/animations/job.json';
 import animationAsk from './../static/animations/ask.json';
+import Container from 'lib/components/atomic/containers/Container';
 
 const AppToaster = Toaster.create({ position: Position.BOTTOM });
 
@@ -89,7 +90,7 @@ function SavePost() {
   };
 
   return (
-    <div className="container px-40 mt-10">
+    <Container className="mt-10">
       <div className="flex w-full">
         {Object.values(PostType)
           .reverse()
@@ -119,7 +120,7 @@ function SavePost() {
           {getForm(activeTab, addPostData.loading, handleOnError, handleOnSave)}
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

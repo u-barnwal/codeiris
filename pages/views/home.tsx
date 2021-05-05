@@ -2,11 +2,9 @@ import React from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
 import { NextPageContext } from 'next';
 import Container from 'lib/components/atomic/containers/Container';
-import FilterBar from 'lib/components/Home/FilterBar';
 import SectionTitle from 'lib/components/Home/SectionTitle';
 import { FireIcon, DiscussionIcon } from 'lib/components/Icons';
 import PostList from 'lib/components/PostList';
-import Filter from 'lib/components/Filter';
 
 function Home({ data }) {
   return (
@@ -19,17 +17,6 @@ function Home({ data }) {
         Trending
       </SectionTitle>
 
-      <FilterBar />
-
-      <SectionTitle
-        className="my-10"
-        color="primary"
-        icon={<DiscussionIcon color="white" size={4} />}
-      >
-        Threads & Discussions
-      </SectionTitle>
-
-      <Filter />
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
@@ -40,8 +27,8 @@ function Home({ data }) {
           upvotes: ele._count.votes,
           totalComments: ele._count.comments,
         }))}
+        intialType={data.type}
       />
-
     </Container>
   );
 }

@@ -7,7 +7,14 @@ export type ContainerProps = React.DetailedHTMLProps<
 >;
 
 function Container({ children, className, ...rest }: ContainerProps) {
-  return <div className={clsx('container px-40', className)} {...rest}>{children}</div>;
+  return (
+    <div
+      className={clsx('container mx-auto lg:px-40 px-4', className)}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default Container;
