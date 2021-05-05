@@ -26,8 +26,7 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
             color="success"
             Icon={getIconComponent(StarIcon)}
             handleSort={handleSort}
-          >
-            {[
+            options={[
               {
                 name: 'Most Popular',
                 order: {
@@ -43,15 +42,14 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
                 },
               },
             ]}
-          </FilterDropdown>
+          />
 
           <FilterDropdown
             color="info"
             Icon={getIconComponent(TreadingUpIcon)}
             className="mx-5"
             handleSort={handleSort}
-          >
-            {[
+            options={[
               {
                 name: 'Most Votes',
                 order: {
@@ -67,14 +65,13 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
                 },
               },
             ]}
-          </FilterDropdown>
+          />
 
           <FilterDropdown
             color="warning"
             Icon={getIconComponent(ClockIcon)}
             handleSort={handleSort}
-          >
-            {[
+            options={[
               {
                 name: 'New Post',
                 order: {
@@ -90,7 +87,7 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
                 },
               },
             ]}
-          </FilterDropdown>
+          />
         </div>
 
         <TagsInput
