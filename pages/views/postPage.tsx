@@ -65,7 +65,7 @@ function PostPage({ postData }: Props) {
             <>[{post._count.comments}]</>
           </div>
 
-          <div className="w-full rounded rounded-lg overflow-hidden shadow-lg p-7 bg-white mt-5">
+          <div className="w-full rounded-lg overflow-hidden shadow-lg p-7 bg-white mt-5">
             <CommentsInput postId={post.id} />
 
             {loading && (
