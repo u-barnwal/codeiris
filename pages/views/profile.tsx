@@ -65,7 +65,7 @@ function Profile() {
               <div className="flex-1 inline-block">
                 <div className="mb-3 text-xs">FAVORITE TAGS</div>
 
-                {/* // TODO: load tags from top posts */}
+                {/* // TODO: @risha load tags from top posts */}
                 <Tag>Tech</Tag>
                 <Tag>IT</Tag>
                 <Tag>Code</Tag>
