@@ -97,7 +97,7 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
           onFilter={onFilter}
           tags={tags}
           setTags={setTags}
-          className="mt-2"
+          className="mt-4 md:mt-2"
         />
       </div>
 

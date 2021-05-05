@@ -80,7 +80,7 @@ function TagsInput({ onFilter, tags, setTags, className = '' }) {
       <div className="flex-1 sm:mr-4"></div>
 
       <Button
-        className="mt-4 bg-warning"
+        className="bg-warning"
         colorClass="text-black"
         onClick={() => {
           if (tag.name !== '') {
