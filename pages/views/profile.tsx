@@ -40,7 +40,7 @@ function Profile() {
   >(GetMePostsCountDocument, { skip: skipper() });
 
   return (
-    <div>
+    <Container className="mt-10">
       {loading && (
         <div className="h-full flex justify-center items-center mt-40">
           <Spinner size={SpinnerSize.large} />
@@ -48,71 +48,64 @@ function Profile() {
       )}
 
       {data && (
-        <Container>
-          <div className="mt-40 bg-white w-2/3 m-auto rounded-lg p-5 relative shadow-lg">
-            <Avatar
-              size="large"
-              label={data.me.firstName[0]}
-              className="absolute top-0 left-0 shadow-md"
-              style={{ marginTop: '-2em', marginLeft: '2em' }}
-            />
+        <div className="mt-32 bg-white w-2/3 m-auto rounded-lg p-5 relative shadow-lg">
+          <Avatar
+            size="large"
+            label={data.me.firstName[0]}
+            className="absolute top-0 left-0 shadow-md"
+            style={{ marginTop: '-2em', marginLeft: '2em' }}
+          />
 
-            <div className="ml-28 text-xl font-semibold">
-              {data.me.firstName} {data.me.lastName}
+          <div className="ml-28 text-xl font-semibold">
+            {data.me.firstName} {data.me.lastName}
+          </div>
+
+          <div className="mt-10 flex">
+            <div className="flex-1 inline-block">
+              <div className="mb-3 text-xs">FAVORITE TAGS</div>
+
+              {/* // TODO: @risha load tags from top posts */}
+              <Tag>Tech</Tag>
+              <Tag>IT</Tag>
+              <Tag>Code</Tag>
             </div>
 
-            <div className="mt-10 flex">
-              <div className="flex-1 inline-block">
-                <div className="mb-3 text-xs">FAVORITE TAGS</div>
+            <div className="flex-1 inline-block pl-5">
+              <div className="mb-3 text-xs text-right">STATS</div>
 
-                {/* // TODO: @risha load tags from top posts */}
-                <Tag>Tech</Tag>
-                <Tag>IT</Tag>
-                <Tag>Code</Tag>
-              </div>
+              <div className="bg-gray-100 py-3 rounded-lg flex">
+                {[
+                  [
+                    'Posts',
+                    postCount.data.getMePosts.totalCount,
+                    animationDocument,
+                  ],
+                  [
+                    'Comments',
+                    commentCount.data.getMeComments.totalCount,
+                    animationComment,
+                  ],
+                ].map((t, index) => (
+                  <div
+                    className="flex-1 text-right flex items-center mx-5"
+                    key={index}
+                  >
+                    <Animation data={t[2]} height={48} width={48} loop={true} />
 
-              <div className="flex-1 inline-block pl-5">
-                <div className="mb-3 text-xs text-right">STATS</div>
+                    <div className="flex-1"></div>
 
-                <div className="bg-gray-100 py-3 rounded-lg flex">
-                  {[
-                    [
-                      'Posts',
-                      postCount.data.getMePosts.totalCount,
-                      animationDocument,
-                    ],
-                    [
-                      'Comments',
-                      commentCount.data.getMeComments.totalCount,
-                      animationComment,
-                    ],
-                  ].map((t, index) => (
-                    <div
-                      className="flex-1 text-right flex items-center mx-5"
-                      key={index}
-                    >
-                      <Animation
-                        data={t[2]}
-                        height={48}
-                        width={48}
-                        loop={true}
-                      />
-
-                      <div className="flex-1"></div>
-
-                      <div>
-                        <div className="text-2xl font-semibold">{t[1]}</div>
-                        <div className="text-sm">{t[0]}</div>
-                      </div>
+                    <div>
+                      <div className="text-2xl font-semibold">{t[1]}</div>
+                      <div className="text-sm">{t[0]}</div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </Container>
+        </div>
       )}
-    </div>
+    </Container>
   );
 }
 
