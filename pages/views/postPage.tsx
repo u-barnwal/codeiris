@@ -12,9 +12,10 @@ import {
   GetCommentsQueryVariables,
 } from '../../gql';
 import CommentListItem from '../../lib/components/Comments/CommentListItem';
-import Button from "../../lib/components/atomic/button";
-import Spinner from "../../lib/components/atomic/spinner";
-import { SpinnerSize } from "../../lib/common/props/SpinnerProps";
+import Button from '../../lib/components/atomic/button';
+import Spinner from '../../lib/components/atomic/spinner';
+import { SpinnerSize } from '../../lib/common/props/SpinnerProps';
+import Container from 'lib/components/atomic/containers/Container';
 
 interface Props {
   postData: string;
@@ -32,7 +33,7 @@ function PostPage({ postData }: Props) {
   });
   console.log(data);
   return (
-    <div className="container mx-auto px-4 mt-10 mb-10">
+    <Container className="mt-10">
       <div>
         <Heading
           size={HeadingSize.H600}
@@ -109,7 +110,7 @@ function PostPage({ postData }: Props) {
           </div>
         )}
       </div>
-    </div>
+    </Container>
   );
 }
 
