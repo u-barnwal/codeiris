@@ -105,7 +105,6 @@ const PostList: React.FC<PostListProps> = ({
           totalComments: ele.node.totalComments,
           ...ele.node,
         }));
-        console.log('New List ', newPosts);
         setPosts((prev) => [...prev, ...newPosts]);
       }
       if (!!error) {
