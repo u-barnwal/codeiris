@@ -1,5 +1,18 @@
-query getPosts($after: String!, $first: Int!) {
-  getPosts(after: $after, first: $first) {
+query getPosts(
+  $after: String!
+  $first: Int!
+  $tags: [String!]
+  $type: PostType
+  $field: PostOrderFeild!
+  $direction: OrderDirection!
+) {
+  getPosts(
+    after: $after
+    first: $first
+    tags: $tags
+    type: $type
+    orderBy: { direction: $direction, field: $field }
+  ) {
     pageInfo {
       endCursor
       hasNextPage
@@ -10,6 +23,11 @@ query getPosts($after: String!, $first: Int!) {
         body
         title
         updatedAt
+        type
+        image {
+          preview
+          source
+        }
         user {
           firstName
           lastName

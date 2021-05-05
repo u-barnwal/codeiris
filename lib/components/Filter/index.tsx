@@ -4,16 +4,16 @@ import Dropdown from '../atomic/dropdown/Dropdown';
 import { useState } from 'react';
 import Button from '../atomic/button';
 
-function Filter() {
-  const [tags, setTags] = useState([]);
+function Filter({ onFilter, tags, setTags }) {
   const [tag, setTag] = useState({ name: '', id: '' });
   const [current, setCurrent] = useState('');
   const { data, error, loading } = useQuery<GetTagsQuery, QueryGetTagsArgs>(
     GetTagsDocument,
     { variables: { after: current, first: 10, contain: tag.name } },
   );
+
   return (
-    <div className="flex flex-row container mx-auto">
+    <div className="flex flex-row container mx-auto mb-5">
       <Dropdown
         className="origin-top-left"
         menu={
@@ -63,8 +63,18 @@ function Filter() {
         </div>
       </Dropdown>
 
-      <div className="self-center">
-        <Button onClick={() => {}}>Filter</Button>
+      <div className="self-center ml-4">
+        <Button
+          onClick={() => {
+            if (tag.name !== '') {
+              setTags((prev) => [...prev, tag.name]);
+              setTag({ id: null, name: '' });
+            }
+            onFilter();
+          }}
+        >
+          Filter
+        </Button>
       </div>
     </div>
   );

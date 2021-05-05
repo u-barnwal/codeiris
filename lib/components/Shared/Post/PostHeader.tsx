@@ -23,13 +23,16 @@ function PostHeader({ user, className, updatedAt }: PostHeaderProps) {
           alt="User"
         />
       ) : (
-        <Avatar size="small" label={user.firstName[0]} />
+        <Avatar
+          size="small"
+          label={user && user.firstName ? user.firstName[0] : 'A'}
+        />
       )}
 
       <div className="ml-3 text-gray-500">
         Posted by{' '}
         <a href="#" className="text-primary">
-          {user.firstName}
+          {user && user.firstName ? user.firstName : 'Anonymous'}
         </a>
       </div>
 

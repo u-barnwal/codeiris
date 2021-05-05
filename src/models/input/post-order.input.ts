@@ -3,7 +3,7 @@ import { Order } from '../../common/order/order';
 
 export enum PostOrderFeild {
   votes = 'votes',
-  updatedAt = 'updatedAt',
+  createdAt = 'createdAt',
 }
 
 registerEnumType(PostOrderFeild, {

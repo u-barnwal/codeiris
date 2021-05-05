@@ -30,7 +30,7 @@ export class Post extends BaseModel {
   @Field()
   userId: string;
   @Field(() => File, { nullable: true })
-  image?: File;
+  image: File;
   @Field()
   deleted: boolean;
   @Field(() => PostStatus)
