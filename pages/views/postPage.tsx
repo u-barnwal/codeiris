@@ -54,7 +54,7 @@ function PostPage({ postData }: Props) {
             totalComments={post.totalComments}
             updatedAt={moment(post.updatedAt).fromNow()}
             tags={post.tags ? post.tags : []}
-            className="mb-5 py-6 px-6"
+            className="mb-5"
             pageMode={true}
           />
 
@@ -69,7 +69,7 @@ function PostPage({ postData }: Props) {
             <CommentsInput postId={post.id} />
 
             {loading && (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center mt-5">
                 <Spinner size={SpinnerSize.small} />
               </div>
             )}

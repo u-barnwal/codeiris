@@ -92,7 +92,7 @@ function CommentListItem({ comment, child }: CommentListItemProps) {
       </Transition>
 
       {loading && (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-5">
           <Spinner size={SpinnerSize.small} />
         </div>
       )}

@@ -44,7 +44,7 @@ function Post({
       .catch((err) => console.log(err));
   };
   return (
-    <div className={clsx(`bg-white rounded-lg p-4 shadow-lg`, className)}>
+    <div className={clsx(`bg-white rounded-lg p-6 shadow-lg`, className)}>
       {!pageMode && (
         <ImageBar
           image="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
@@ -65,6 +65,7 @@ function Post({
           <PostHeader user={user} className="mb-5" updatedAt={updatedAt} />
 
           <PostBody
+            id={id}
             title={title}
             tags={tags.map((ele) => ele.name)}
             postType={type}
