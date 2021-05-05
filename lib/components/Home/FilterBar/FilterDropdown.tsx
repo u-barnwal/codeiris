@@ -21,7 +21,7 @@ function FilterDropdown({
   return (
     <div
       className={clsx(
-        'rounded-full border pl-2 pr-4 py-1 flex items-center',
+        'rounded-full border pl-2 pr-4 py-1 flex items-center mb-2',
         className,
       )}
     >

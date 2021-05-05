@@ -19,9 +19,9 @@ const getIconComponent = (Icon) => <Icon color="white" size={4} />;
 
 function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
   return (
-    <div className={clsx('flex items-center', className)}>
-      <div className="bg-white rounded-lg shadow-lg  flex-1 p-4">
-        <div className="flex">
+    <div className={clsx('lg:flex items-end', className)}>
+      <div className="bg-white rounded-lg shadow-lg flex-1 p-4">
+        <div className="flex flex-wrap">
           <FilterDropdown
             color="success"
             Icon={getIconComponent(StarIcon)}
@@ -97,19 +97,19 @@ function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
           onFilter={onFilter}
           tags={tags}
           setTags={setTags}
-          className="mt-4 md:mt-2"
+          className="mt-2"
         />
       </div>
 
-      <div>
-        <LinkButton
-          icon={<PencilIcon className="mr-2" size={3} />}
-          className="ml-10 shadow-2xl"
-          link="/posts/save"
-        >
-          Write New Thread
-        </LinkButton>
-      </div>
+      {/* <div> */}
+      <LinkButton
+        icon={<PencilIcon className="mr-2" size={3} />}
+        className="lg:ml-10 mt-5 shadow-2xl"
+        link="/posts/save"
+      >
+        Write New Thread
+      </LinkButton>
+      {/* </div> */}
     </div>
   );
 }
