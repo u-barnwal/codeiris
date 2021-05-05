@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-function FilterDropdown({ color, Icon, children, className = '' }) {
+function FilterDropdown({ color, Icon, children, className = '', handleSort }) {
   return (
     <div
       className={clsx(
@@ -14,7 +14,9 @@ function FilterDropdown({ color, Icon, children, className = '' }) {
       </div>
 
       <select className="bg-white text-sm outline-none">
-        <option>{children}</option>
+        {children.map((ele) => (
+          <option onClick={() => handleSort(ele.order)}>{ele.name}</option>
+        ))}
       </select>
     </div>
   );

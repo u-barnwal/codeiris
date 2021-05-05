@@ -3,8 +3,16 @@ query getPosts(
   $first: Int!
   $tags: [String!]
   $type: PostType
+  $field: PostOrderFeild!
+  $direction: OrderDirection!
 ) {
-  getPosts(after: $after, first: $first, tags: $tags, type: $type) {
+  getPosts(
+    after: $after
+    first: $first
+    tags: $tags
+    type: $type
+    orderBy: { direction: $direction, field: $field }
+  ) {
     pageInfo {
       endCursor
       hasNextPage

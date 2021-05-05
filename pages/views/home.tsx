@@ -2,11 +2,11 @@ import React from 'react';
 import DefaultLayout from '../layouts/defaultLayout';
 import { NextPageContext } from 'next';
 import Container from 'pages/components/atomic/containers/Container';
-import FilterBar from 'pages/components/Home/FilterBar';
 import SectionTitle from 'pages/components/Home/SectionTitle';
 import { FireIcon, DiscussionIcon } from 'pages/components/Icons';
 import PostList from 'pages/components/PostList';
 import Filter from 'pages/components/Filter';
+import FilterBar from 'pages/components/Home/FilterBar';
 
 function Home({ data }) {
   return (
@@ -19,15 +19,6 @@ function Home({ data }) {
         Trending
       </SectionTitle>
 
-      <FilterBar />
-
-      <SectionTitle
-        className="my-10"
-        color="primary"
-        icon={<DiscussionIcon color="white" size={4} />}
-      >
-        Threads & Discussions
-      </SectionTitle>
       <PostList
         initialPosts={JSON.parse(data.initialPosts).map((ele) => ({
           ...ele,
@@ -40,7 +31,6 @@ function Home({ data }) {
         }))}
         intialType={data.type}
       />
-
     </Container>
   );
 }

@@ -504,6 +504,8 @@ export type GetPostsQueryVariables = Exact<{
   first: Scalars['Int'];
   tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   type?: Maybe<PostType>;
+  field: PostOrderFeild;
+  direction: OrderDirection;
 }>;
 
 
@@ -859,8 +861,14 @@ export type CreateAssetMutationHookResult = ReturnType<typeof useCreateAssetMuta
 export type CreateAssetMutationResult = Apollo.MutationResult<CreateAssetMutation>;
 export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetMutation, CreateAssetMutationVariables>;
 export const GetPostsDocument = gql`
-    query getPosts($after: String!, $first: Int!, $tags: [String!], $type: PostType) {
-  getPosts(after: $after, first: $first, tags: $tags, type: $type) {
+    query getPosts($after: String!, $first: Int!, $tags: [String!], $type: PostType, $field: PostOrderFeild!, $direction: OrderDirection!) {
+  getPosts(
+    after: $after
+    first: $first
+    tags: $tags
+    type: $type
+    orderBy: {direction: $direction, field: $field}
+  ) {
     pageInfo {
       endCursor
       hasNextPage
@@ -907,6 +915,8 @@ export const GetPostsDocument = gql`
  *      first: // value for 'first'
  *      tags: // value for 'tags'
  *      type: // value for 'type'
+ *      field: // value for 'field'
+ *      direction: // value for 'direction'
  *   },
  * });
  */

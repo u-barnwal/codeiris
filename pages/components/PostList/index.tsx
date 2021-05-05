@@ -10,6 +10,10 @@ import React, { useEffect, useState } from 'react';
 import Spinner from '../atomic/spinner';
 import Filter from '../Filter';
 import Post from '../Shared/Post';
+import FilterBar from 'pages/components/Home/FilterBar';
+import SectionTitle from '../Home/SectionTitle';
+import { DiscussionIcon } from '../Icons';
+import { PostOrder } from 'src/models/input/post-order.input';
 
 export interface PostListProps {
   initialPosts?: PostProps[];
@@ -33,6 +37,8 @@ const PostList: React.FC<PostListProps> = ({
     first: 10,
     tags: tags.map((ele) => ele.name),
     type: postType ? postType : intialType,
+    field: 'createdAt',
+    direction: 'desc',
   });
   const { loading, data, error } = useQuery<GetPostsQuery, QueryGetPostsArgs>(
     GetPostsDocument,
@@ -48,6 +54,19 @@ const PostList: React.FC<PostListProps> = ({
       first: 10,
       tags: tags.map((ele) => ele.name),
       type: intialType,
+      field: 'createdAt',
+      direction: 'asc',
+    });
+  };
+  const handleSort = ({ field, direction }: PostOrder) => {
+    setPosts([]);
+    setVariables({
+      after: '',
+      first: 10,
+      tags: tags.map((ele) => ele.name),
+      type: intialType,
+      field: field,
+      direction: direction,
     });
   };
   useEffect(() => {
@@ -65,6 +84,8 @@ const PostList: React.FC<PostListProps> = ({
             first: 10,
             tags: tags.map((ele) => ele.name),
             type: intialType,
+            field: 'createdAt',
+            direction: 'asc',
           });
         }
       });
@@ -100,6 +121,15 @@ const PostList: React.FC<PostListProps> = ({
   }, [loading, data, error]);
   return (
     <div>
+      <FilterBar handleSort={handleSort} />
+
+      <SectionTitle
+        className="my-10"
+        color="primary"
+        icon={<DiscussionIcon color="white" size={4} />}
+      >
+        Threads & Discussions
+      </SectionTitle>
       <Filter onFilter={handleTagFilter} tags={tags} setTags={setTags}></Filter>
       <div className="container">
         {posts.map((ele) => (
