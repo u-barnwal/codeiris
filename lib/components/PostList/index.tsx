@@ -114,7 +114,12 @@ const PostList: React.FC<PostListProps> = ({
   }, [loading, data, error]);
   return (
     <div>
-      <FilterBar handleSort={handleSort} />
+      <FilterBar
+        handleSort={handleSort}
+        onFilter={handleTagFilter}
+        tags={tags}
+        setTags={setTags}
+      />
 
       <SectionTitle
         className="my-10"
@@ -123,11 +128,7 @@ const PostList: React.FC<PostListProps> = ({
       >
         Threads & Discussions
       </SectionTitle>
-      <TagsInput
-        onFilter={handleTagFilter}
-        tags={tags}
-        setTags={setTags}
-      ></TagsInput>
+
       <div className="container">
         {posts.map((ele) => (
           <div className={clsx('mr-60', className)}>

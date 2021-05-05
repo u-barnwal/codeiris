@@ -8,8 +8,9 @@ import Dropdown from '../../atomic/dropdown/Dropdown';
 import { useState } from 'react';
 import Button from '../../atomic/button';
 import Tag from '../Tag';
+import clsx from 'clsx';
 
-function TagsInput({ onFilter, tags, setTags }) {
+function TagsInput({ onFilter, tags, setTags, className = '' }) {
   const [tag, setTag] = useState({ name: '', id: '' });
 
   const [current, setCurrent] = useState('');
@@ -20,7 +21,9 @@ function TagsInput({ onFilter, tags, setTags }) {
   );
 
   return (
-    <div className="flex items-end flex-wrap container mx-auto mb-5">
+    <div
+      className={clsx('flex items-end flex-wrap container mx-auto', className)}
+    >
       <Dropdown
         className="origin-top-left"
         menu={
@@ -47,7 +50,7 @@ function TagsInput({ onFilter, tags, setTags }) {
             <div className="p-1">
               {tags.map((ele) => (
                 <Tag
-                  className="bg-info pl-2 pr-2 my-1 ml-1"
+                  className="bg-question pl-2 pr-2 my-1 ml-1"
                   color="text-white"
                   closable={true}
                   onClose={() =>
@@ -61,7 +64,7 @@ function TagsInput({ onFilter, tags, setTags }) {
           )}
 
           <input
-            className="p-2 max-w-md outline-none"
+            className="p-2 pb-0 max-w-md outline-none"
             value={tag.name}
             onChange={(event) =>
               setTag((prev) => ({ ...prev, name: event.target.value }))
@@ -85,7 +88,7 @@ function TagsInput({ onFilter, tags, setTags }) {
           onFilter();
         }}
       >
-        Apply Filter
+        Apply Filters
       </Button>
     </div>
   );
