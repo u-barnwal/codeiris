@@ -23,6 +23,7 @@ function Post({
   updatedAt,
   upvoteState,
   tags,
+  type = '',
   className,
 }: PostProps) {
   const [upvotesLocal, setUpvotesLocal] = useState(upvotes);
@@ -60,7 +61,11 @@ function Post({
         <div className="ml-10 flex-1">
           <PostHeader user={user} className="mb-5" updatedAt={updatedAt} />
 
-          <PostBody title={title} tags={tags.map((ele) => ele.name)}>
+          <PostBody
+            title={title}
+            tags={tags.map((ele) => ele.name)}
+            postType={type}
+          >
             {body}
           </PostBody>
         </div>

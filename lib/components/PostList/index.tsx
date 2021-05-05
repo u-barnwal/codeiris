@@ -79,6 +79,7 @@ const PostList: React.FC<PostListProps> = ({
           <Post
             id={ele.id}
             title={ele.title}
+            type={ele.type}
             body={ele.body}
             upvotes={ele.upvotes}
             upvoteState={ele.upvoteState}

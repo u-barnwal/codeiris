@@ -12,4 +12,5 @@ export interface PostProps {
   upvoteState?: 'upvotes' | 'downvotes' | 'notvoted' | 'disabled';
   className?: string;
   tags?: any[];
+  type?: string;
 }

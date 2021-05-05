@@ -39,9 +39,9 @@ function NavBar() {
     <div className="bg-white shadow-lg sticky top-0 z-50">
       <Container className="py-5">
         <div className="flex items-center">
-          <NavItem href="/posts">Posts</NavItem>
-          <NavItem href="/questions">Questions</NavItem>
-          <NavItem href="/jobs">Jobs</NavItem>
+          <NavItem href="/">Posts</NavItem>
+          <NavItem href="/">Questions</NavItem>
+          <NavItem href="/">Jobs</NavItem>
 
           <div className="flex-1"></div>
 
