@@ -7,6 +7,7 @@ import {
 import Dropdown from '../../atomic/dropdown/Dropdown';
 import { useState } from 'react';
 import Button from '../../atomic/button';
+import Tag from '../Tag';
 
 function TagsInput({ onFilter, tags, setTags }) {
   const [tag, setTag] = useState({ name: '', id: '' });
@@ -19,7 +20,7 @@ function TagsInput({ onFilter, tags, setTags }) {
   );
 
   return (
-    <div className="flex flex-row container mx-auto mb-5">
+    <div className="flex items-end flex-wrap container mx-auto mb-5">
       <Dropdown
         className="origin-top-left"
         menu={
@@ -41,23 +42,26 @@ function TagsInput({ onFilter, tags, setTags }) {
             : []
         }
       >
-        <div className="bg-white max-w-md rounded-lg overflow-hidden">
-          {tags.map((ele) => (
-            <span className="rounded-full px-3 mx-1 my-1 bg-primary self-center text-white">
-              {ele.name}
-              <span
-                onClick={() =>
-                  setTags((prev) => prev.filter((ele2) => ele2 !== ele))
-                }
-                className="ml-2"
-              >
-                x
-              </span>
-            </span>
-          ))}
-          <br />
+        <div className="bg-white max-w-md rounded-md overflow-hidden">
+          {tags.length > 0 && (
+            <div className="p-1">
+              {tags.map((ele) => (
+                <Tag
+                  className="bg-info pl-2 pr-2 my-1 ml-1"
+                  color="text-white"
+                  closable={true}
+                  onClose={() =>
+                    setTags((prev) => prev.filter((ele2) => ele2 !== ele))
+                  }
+                >
+                  {ele.name}
+                </Tag>
+              ))}
+            </div>
+          )}
+
           <input
-            className="h-12 px-2 max-w-md outline-none"
+            className="p-2 max-w-md outline-none"
             value={tag.name}
             onChange={(event) =>
               setTag((prev) => ({ ...prev, name: event.target.value }))
@@ -70,19 +74,19 @@ function TagsInput({ onFilter, tags, setTags }) {
         </div>
       </Dropdown>
 
-      <div className="self-center ml-4">
-        <Button
-          onClick={() => {
-            if (tag.name !== '') {
-              setTags((prev) => [...prev, tag.name]);
-              setTag({ id: null, name: '' });
-            }
-            onFilter();
-          }}
-        >
-          Filter
-        </Button>
-      </div>
+      <Button
+        className="sm:ml-4 mt-4 bg-warning"
+        colorClass="text-black"
+        onClick={() => {
+          if (tag.name !== '') {
+            setTags((prev) => [...prev, tag.name]);
+            setTag({ id: null, name: '' });
+          }
+          onFilter();
+        }}
+      >
+        Apply Filter
+      </Button>
     </div>
   );
 }
