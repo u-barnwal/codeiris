@@ -38,7 +38,10 @@ function Button({
         {loading && (
           <div
             className={clsx(
-              'animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-3',
+              `animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-${colorClass.replace(
+                'text-',
+                '',
+              )} mr-3`,
               loaderClass,
             )}
           />

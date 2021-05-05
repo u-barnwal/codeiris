@@ -103,7 +103,7 @@ function NavBar() {
                     role="menuitem"
                     id="menu-item-0"
                   >
-                    Account settings
+                    Account Settings
                   </a>,
                   <a
                     href="javascript:;"
