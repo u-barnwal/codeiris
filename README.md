@@ -49,7 +49,7 @@ yarn dev
 **Production:** https://codeiris.dev/  
 **Developement:** https://dev.codeiris.dev/
 
-# Features
+## Features
 - **Password less Login and Signup:** User should be able to login with using their email address (Magic Link)
   
 - **Link Posts:** User should be able to create link posts and add tags.
@@ -89,3 +89,7 @@ yarn dev
 - **Admin can disable users:** User with role of admin can disable a user if they create inappropriate posts and flagged users
 
 - **Anonymous:** Users can write a thread or post comments without creating any account-->
+
+## Credits
+- Instructor: Naquiuddin Khaja
+- Instructor: Satyam Bansal
