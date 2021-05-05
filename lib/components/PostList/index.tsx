@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import Spinner from '../atomic/spinner';
 import Filter from '../Filter';
 import Post from '../Shared/Post';
-import FilterBar from 'pages/components/Home/FilterBar';
+import FilterBar from 'lib/components/Home/FilterBar';
 import SectionTitle from '../Home/SectionTitle';
 import { DiscussionIcon } from '../Icons';
 import { PostOrder } from 'src/models/input/post-order.input';
