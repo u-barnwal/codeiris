@@ -13,4 +13,5 @@ export interface PostProps {
   className?: string;
   tags?: any[];
   type?: string;
+  pageMode?: boolean;
 }

@@ -16,6 +16,7 @@ import Button from '../../lib/components/atomic/button';
 import Spinner from '../../lib/components/atomic/spinner';
 import { SpinnerSize } from '../../lib/common/props/SpinnerProps';
 import Container from 'lib/components/atomic/containers/Container';
+import Post from './../../lib/components/Shared/Post/';
 
 interface Props {
   postData: string;
@@ -32,6 +33,34 @@ function PostPage({ postData }: Props) {
     pollInterval: 3000,
   });
   console.log(data);
+  return (
+    <div className="relative">
+      <img
+        src="https://images.unsplash.com/photo-1563089145-599997674d42?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+        className="w-full mb-5 h-60 object-cover"
+      />
+
+      <div className="absolute top-0 mt-40 w-full">
+        <Container>
+          <Post
+            id={post.id}
+            title={post.title}
+            type={post.type}
+            body={post.body}
+            upvotes={post.upvotes}
+            upvoteState={post.upvoteState}
+            user={post.user}
+            totalComments={post.totalComments}
+            updatedAt={moment(post.updatedAt).fromNow()}
+            tags={post.tags ? post.tags : []}
+            className="mb-5 py-6 px-6"
+            pageMode={true}
+          />
+        </Container>
+      </div>
+    </div>
+  );
+
   return (
     <Container className="mt-10">
       <div>
