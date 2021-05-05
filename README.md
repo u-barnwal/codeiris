@@ -1,11 +1,53 @@
-# CODEIRIS
-Three lazy programmer create tech post app for other lazy programmers. Build with NestJS.
+<img src="https://ci6.googleusercontent.com/proxy/Zi8z8CS4H8cRvxLe_7I-hLRR3aqgpjdcLfrylG_xCcuQuMZsJ-kTuejam3nRG0_CQk8hkuYmtDv2MLR-2Pof2krDC3uiSULCqD7eoWpxbV9PUFeuvSR6Hi6dgIZUd13WPRaSai0mssfljOPN5PfTWj_oaMZ_NzMKr0kKMgNDiKQ0ff6Xzw=s0-d-e1-ft#https://iaxben.stripocdn.email/content/guids/CABINET_b07acd8878b8350a3c7b0cd12c948a81/images/97161620240232192.png" width="50" height="50"/>
 
-# Links
-## Production
-https://codeiris.dev/
-## Developement
-https://dev.codeiris.dev/
+# CodeIris
+`HackerNews` clone (just the functionality, promise UI/UX is better).
+
+## Documentation
+Click [here](https://www.notion.so/CodeIris-a3b904ef12dd424795f78e87a75e4a20) to see the full documentation for this project or directly see
+- [Database](https://www.notion.so/Database-14be10fb2e5a47aaa7de117a23c638cb)
+- [Roadmap](https://www.notion.so/0b1db2a45d994dd9a22ee55b17f2fed8?v=cb4daf4b8df24dc89d7a1762d4503d29)
+- [Techs Used](https://www.notion.so/Techs-b84007046f514721bb01e1c71d52b1e6)
+- [Design Mocks](https://www.notion.so/Mocks-4cdc910ac3754285aae48db4b08b1217)
+
+## Motivation
+This project was built as the deep-dive project from [Pesto Tech](https://pesto.tech). 
+
+## Samples
+Following mages are linked to their full size
+
+<!-- <a href="./samples/home.png">
+  <img align="center" src="./samples/home.png" width="45%" />
+</a>
+
+<a href="./samples/modal.png">
+  <img align="center" src="./samples/modal.png" width="45%" />
+</a>
+
+<a href="./samples/compare.png">
+  <img align="center" src="./samples/compare.png" width="45%" />
+</a> -->
+
+## Technologies Used
+| Front-end | Back-end | Hosting | Others
+| - | - | - | - |
+| ReactJS | NodeJS | GCS | SharpJS |
+| NextJS | NestJS | AWS | Lottie |
+| Tailwind | Prisma |  | Sentry |
+| Apollo | GraphQL |  | Storybook |
+| MobX |  |  |  |
+| SASS |  |  |  |
+
+## Installation
+Run the dev build
+
+```bash
+yarn dev
+```
+
+## Links
+`Production:` https://codeiris.dev/  
+`Developement:` https://dev.codeiris.dev/
 
 # Features
 - **Password less Login and Signup:** User should be able to login with Google, GitHub etc. using their email address
@@ -27,4 +69,4 @@ https://dev.codeiris.dev/
 - **Flag Inappropriate users:** Users with role of Moderators can flag users when they are creating inappropriate posts.
 - **Admin can Delete and edit any posts:** User with role of admin can delete posts if they are inappropriate and edit posts if they want to. They can also delete and edit flagged posts.
 - **Admin can disable users:** User with role of admin can disable a user if they create inappropriate posts and flagged users
-=======
+- **Anonymous:** Users can write a thread or post comments without creating any account
