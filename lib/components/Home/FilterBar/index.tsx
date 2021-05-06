@@ -7,17 +7,23 @@ import {
   PencilIcon,
 } from 'lib/components/Icons';
 import LinkButton from 'lib/components/Shared/LinkButton';
-import TagsInput from 'lib/components/Shared/TagsInput';
 import React from 'react';
 import FilterDropdown from './FilterDropdown';
+import TagsInput from '../../Shared/TagsInput';
 
-export type FilterProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
+export interface FilterProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
+  handleSort?: any;
+  onFilter?: any;
+  tags: any;
+  setTags: any;
+}
 const getIconComponent = (Icon) => <Icon color="white" size={4} />;
 
-function FilterBar({ className = '', handleSort, onFilter, tags, setTags }) {
+function FilterBar({ className, handleSort, tags, setTags, onFilter }) {
   return (
     <div className={clsx('lg:flex items-end', className)}>
       <div className="bg-white rounded-lg shadow-lg flex-1 p-4">
