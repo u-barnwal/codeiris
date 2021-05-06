@@ -38,6 +38,7 @@ export class AppController {
     const include = {
       user: {
         select: {
+          id: true,
           firstName: true,
           lastName: true,
           image: true,

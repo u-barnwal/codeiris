@@ -7,7 +7,7 @@ import moment from 'moment';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Spinner from '../atomic/spinner';
-import Filter from '../Filter';
+import TagsInput from '../Shared/TagsInput';
 import Post from '../Shared/Post';
 import FilterBar from 'lib/components/Home/FilterBar';
 import SectionTitle from '../Home/SectionTitle';
@@ -105,7 +105,6 @@ const PostList: React.FC<PostListProps> = ({
           totalComments: ele.node.totalComments,
           ...ele.node,
         }));
-        console.log('New List ', newPosts);
         setPosts((prev) => [...prev, ...newPosts]);
       }
       if (!!error) {
@@ -115,7 +114,12 @@ const PostList: React.FC<PostListProps> = ({
   }, [loading, data, error]);
   return (
     <div>
-      <FilterBar handleSort={handleSort} />
+      <FilterBar
+        handleSort={handleSort}
+        onFilter={handleTagFilter}
+        tags={tags}
+        setTags={setTags}
+      />
 
       <SectionTitle
         className="my-10"
@@ -124,10 +128,10 @@ const PostList: React.FC<PostListProps> = ({
       >
         Threads & Discussions
       </SectionTitle>
-      <Filter onFilter={handleTagFilter} tags={tags} setTags={setTags}></Filter>
+
       <div className="container">
         {posts.map((ele) => (
-          <div className={clsx('mr-60', className)}>
+          <div className={clsx('lg:mr-60', className)}>
             <Post
               key={ele.id}
               id={ele.id}
