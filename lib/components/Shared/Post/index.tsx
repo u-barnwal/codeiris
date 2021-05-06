@@ -49,7 +49,6 @@ function Post({
       .catch((err) => console.log(err));
   };
   return (
-
     <div className={clsx(`bg-white rounded-lg p-6 shadow-lg`, className)}>
       {!pageMode && (
         <ImageBar
@@ -84,9 +83,8 @@ function Post({
           <div
             className="cursor-pointer"
             onClick={() => {
-              Router.push(`/posts/${id}`);
+              Router.push(`/posts/` + id);
             }}
-
           >
             <PostBody
               title={title}
