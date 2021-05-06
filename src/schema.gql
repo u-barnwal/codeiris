@@ -110,9 +110,11 @@ type Post {
   createdAt: Date!
   deleted: Boolean!
   id: ID!
+  image: File
   slug: String!
   status: PostStatus!
   tag: [Tag!]
+  tags: [Tag!]!
   title: String!
   totalComments: Int!
   totalVotes: Int!
@@ -152,7 +154,7 @@ input PostOrder {
 }
 
 enum PostOrderFeild {
-  updatedAt
+  createdAt
   votes
 }
 
@@ -175,7 +177,7 @@ type Query {
   getCommentsChildren(after: String, before: String, commentId: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
   getMeComments(after: String, before: String, first: Int, last: Int, orderBy: CommentOrder, skip: Int): CommentConnection!
   getMePosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
-  getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int): PostConnection!
+  getPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, skip: Int, tags: [String!], type: PostType): PostConnection!
   getTags(after: String, before: String, contain: String, first: Int, last: Int, skip: Int): TagConnection!
   getUsers(after: String, before: String, first: Int, last: Int, orderBy: UserOrder, skip: Int): UserConnection!
   me: User
@@ -223,6 +225,7 @@ type User {
   email: String!
   firstName: String!
   id: ID!
+  image: File
   lastName: String
   middleName: String
   role: UserRole!

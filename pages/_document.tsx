@@ -9,9 +9,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <link href="/fonts/stylesheet.css" />
-        </Head>
+        <Head />
         <body className="bg-body-light">
           <Main />
           <NextScript />

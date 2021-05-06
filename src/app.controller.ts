@@ -38,9 +38,16 @@ export class AppController {
     const include = {
       user: {
         select: {
+          id: true,
           firstName: true,
           lastName: true,
           image: true,
+        },
+      },
+      tags: {
+        select: {
+          name: true,
+          id: true,
         },
       },
       _count: {
@@ -58,6 +65,8 @@ export class AppController {
     );
     return {
       initialPosts: JSON.stringify(initialPosts),
+      type: postType ? postType : null,
+      orderBy: orderBy,
     };
   }
 

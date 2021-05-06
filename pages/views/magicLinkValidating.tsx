@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import Spinner from '../components/atomic/spinner';
+import Spinner from '../../lib/components/atomic/spinner';
 import { Intent } from '../../lib/common';
-import Heading, { HeadingSize } from '../components/atomic/typography';
+import Heading, { HeadingSize } from '../../lib/components/atomic/typography';
 import { NextPageContext } from 'next';
 import { Auth } from 'src/models/auth.model';
 import {
@@ -11,6 +11,9 @@ import {
 } from '../../lib/accessToken';
 import moment from 'moment';
 import Router from 'next/router';
+import Animation from 'lib/components/Shared/Animation';
+
+import animationWand from './../static/animations/wand.json';
 
 interface Props {
   data: {
@@ -29,22 +32,29 @@ function MagicLinkValidating({ data }: Props) {
       }, 3000);
     }
   }, []);
+
   return (
-    <React.Fragment>
+    <>
       <div className="w-screen flex justify-center items-center h-screen bg-gray-100">
         <div
           className="bg-white shadow rounded-2xl flex justify-center items-center"
           style={{ width: '70vw', height: '70vh' }}
         >
           <div className="flex flex-col justify-center items-center">
-            <Spinner intent={Intent.PRIMARY} />
-            <Heading size={HeadingSize.H600} className="text-primary">
-              Validating
+            <Animation
+              data={animationWand}
+              height={250}
+              width={300}
+              loop={true}
+            />
+
+            <Heading size={HeadingSize.H600} className="mt-3">
+              Validating your magic link...
             </Heading>
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

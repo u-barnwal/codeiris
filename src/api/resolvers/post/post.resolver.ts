@@ -20,6 +20,9 @@ import { PostCreateInput } from '../../../models/input/post-create-input';
 import slugify from 'slugify';
 import { PostService } from '../../../services/post.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { Tag } from '../../../models/tag.model';
+import { File } from '../../../models/file.model';
+import { PostType } from '.prisma/client';
 
 @Resolver((of) => Post)
 export class PostResolver {
@@ -55,11 +58,43 @@ export class PostResolver {
       nullable: true,
     })
     orderBy: PostOrder,
+    @Args({
+      name: 'tags',
+      type: () => [String],
+      nullable: true,
+    })
+    tags: string[],
+    @Args({
+      name: 'type',
+      type: () => PostType,
+      nullable: true,
+    })
+    type: 'job' | 'link' | 'ask',
   ) {
+    const tagsQuery =
+      tags && tags.length !== 0
+        ? {
+            tags: {
+              some: {
+                OR: tags.map((ele) => ({
+                  name: {
+                    contains: ele,
+                  },
+                })),
+              },
+            },
+          }
+        : {};
     const postCursors = findManyCursorConnection(
       (args) =>
         this.prisma.post.findMany({
           orderBy: orderBy && { [orderBy.field]: orderBy.direction },
+          where: {
+            ...tagsQuery,
+            type: {
+              equals: type ? type : 'ask',
+            },
+          },
           ...args,
         }),
       () => this.prisma.post.count(),
@@ -103,10 +138,24 @@ export class PostResolver {
     return postCursors;
   }
 
+  @ResolveField('image', (returns) => File, { nullable: true })
+  async postImage(@Parent() post: Post) {
+    const { image } = post;
+    return image;
+  }
+
   @ResolveField('user', (returns) => User)
   async user(@Parent() post: Post) {
     const { userId } = post;
-    return this.prisma.user.findUnique({ where: { id: userId } });
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+  }
+
+  @ResolveField('image', (returns) => File, { nullable: true })
+  async userImage(@Parent() user: User) {
+    const { image } = user;
+    return image;
   }
 
   @ResolveField('totalComments', (returns) => Int)
@@ -139,5 +188,14 @@ export class PostResolver {
       if ((current.type = 'upvotes')) return (prev += 1);
       return (prev -= 1);
     }, 0);
+  }
+
+  @ResolveField('tags', (returns) => [Tag])
+  async getTags(@Parent() post: Post) {
+    const { id } = post;
+    const tags = await this.prisma.tag.findMany({
+      where: { post: { some: { id: id } } },
+    });
+    return tags;
   }
 }

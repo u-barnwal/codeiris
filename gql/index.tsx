@@ -158,9 +158,11 @@ export type Post = {
   createdAt: Scalars['Date'];
   deleted: Scalars['Boolean'];
   id: Scalars['ID'];
+  image?: Maybe<File>;
   slug: Scalars['String'];
   status: PostStatus;
   tag?: Maybe<Array<Tag>>;
+  tags: Array<Tag>;
   title: Scalars['String'];
   totalComments: Scalars['Int'];
   totalVotes: Scalars['Int'];
@@ -201,7 +203,7 @@ export type PostOrder = {
 };
 
 export enum PostOrderFeild {
-  UpdatedAt = 'updatedAt',
+  CreatedAt = 'createdAt',
   Votes = 'votes'
 }
 
@@ -281,6 +283,8 @@ export type QueryGetPostsArgs = {
   last?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<PostOrder>;
   skip?: Maybe<Scalars['Int']>;
+  tags?: Maybe<Array<Scalars['String']>>;
+  type?: Maybe<PostType>;
 };
 
 
@@ -346,6 +350,7 @@ export type User = {
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['ID'];
+  image?: Maybe<File>;
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
   role: UserRole;
@@ -497,6 +502,10 @@ export type CreateAssetMutation = (
 export type GetPostsQueryVariables = Exact<{
   after: Scalars['String'];
   first: Scalars['Int'];
+  tags?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  type?: Maybe<PostType>;
+  field: PostOrderFeild;
+  direction: OrderDirection;
 }>;
 
 
@@ -504,15 +513,28 @@ export type GetPostsQuery = (
   { __typename?: 'Query' }
   & { getPosts: (
     { __typename?: 'PostConnection' }
-    & { edges?: Maybe<Array<(
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'endCursor' | 'hasNextPage'>
+    ), edges?: Maybe<Array<(
       { __typename?: 'PostEdge' }
       & { node: (
         { __typename?: 'Post' }
-        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'upvoteState' | 'totalVotes' | 'totalComments'>
-        & { user: (
+        & Pick<Post, 'id' | 'body' | 'title' | 'updatedAt' | 'createdAt' | 'type' | 'upvoteState' | 'totalVotes' | 'totalComments'>
+        & { image?: Maybe<(
+          { __typename?: 'File' }
+          & Pick<File, 'preview' | 'source'>
+        )>, user: (
           { __typename?: 'User' }
           & Pick<User, 'firstName' | 'lastName'>
-        ) }
+          & { image?: Maybe<(
+            { __typename?: 'File' }
+            & Pick<File, 'preview'>
+          )> }
+        ), tags: Array<(
+          { __typename?: 'Tag' }
+          & Pick<Tag, 'id' | 'name'>
+        )> }
       ) }
     )>> }
   ) }
@@ -577,6 +599,27 @@ export type GetCommentsQuery = (
           { __typename?: 'Post' }
           & Pick<Post, 'id'>
         )> }
+      ) }
+    )>> }
+  ) }
+);
+
+export type GetTagsQueryVariables = Exact<{
+  contain?: Maybe<Scalars['String']>;
+  after?: Maybe<Scalars['String']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type GetTagsQuery = (
+  { __typename?: 'Query' }
+  & { getTags: (
+    { __typename?: 'TagConnection' }
+    & { edges?: Maybe<Array<(
+      { __typename?: 'TagEdge' }
+      & { node: (
+        { __typename?: 'Tag' }
+        & Pick<Tag, 'id' | 'name'>
       ) }
     )>> }
   ) }
@@ -821,21 +864,44 @@ export type CreateAssetMutationHookResult = ReturnType<typeof useCreateAssetMuta
 export type CreateAssetMutationResult = Apollo.MutationResult<CreateAssetMutation>;
 export type CreateAssetMutationOptions = Apollo.BaseMutationOptions<CreateAssetMutation, CreateAssetMutationVariables>;
 export const GetPostsDocument = gql`
-    query getPosts($after: String!, $first: Int!) {
-  getPosts(after: $after, first: $first) {
+    query getPosts($after: String!, $first: Int!, $tags: [String!], $type: PostType, $field: PostOrderFeild!, $direction: OrderDirection!) {
+  getPosts(
+    after: $after
+    first: $first
+    tags: $tags
+    type: $type
+    orderBy: {direction: $direction, field: $field}
+  ) {
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
     edges {
       node {
         id
         body
         title
         updatedAt
+        createdAt
+        type
+        image {
+          preview
+          source
+        }
         user {
           firstName
           lastName
+          image {
+            preview
+          }
         }
         upvoteState
         totalVotes
         totalComments
+        tags {
+          id
+          name
+        }
       }
     }
   }
@@ -856,6 +922,10 @@ export const GetPostsDocument = gql`
  *   variables: {
  *      after: // value for 'after'
  *      first: // value for 'first'
+ *      tags: // value for 'tags'
+ *      type: // value for 'type'
+ *      field: // value for 'field'
+ *      direction: // value for 'direction'
  *   },
  * });
  */
@@ -1037,6 +1107,48 @@ export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
 export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
 export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
+export const GetTagsDocument = gql`
+    query getTags($contain: String, $after: String, $first: Int!) {
+  getTags(contain: $contain, after: $after, first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTagsQuery__
+ *
+ * To run a query within a React component, call `useGetTagsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTagsQuery({
+ *   variables: {
+ *      contain: // value for 'contain'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function useGetTagsQuery(baseOptions: Apollo.QueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
+      }
+export function useGetTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTagsQuery, GetTagsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTagsQuery, GetTagsQueryVariables>(GetTagsDocument, options);
+        }
+export type GetTagsQueryHookResult = ReturnType<typeof useGetTagsQuery>;
+export type GetTagsLazyQueryHookResult = ReturnType<typeof useGetTagsLazyQuery>;
+export type GetTagsQueryResult = Apollo.QueryResult<GetTagsQuery, GetTagsQueryVariables>;
 export const GetCommentsChildrenDocument = gql`
     query getCommentsChildren($comment: String, $first: Int!) {
   getCommentsChildren(

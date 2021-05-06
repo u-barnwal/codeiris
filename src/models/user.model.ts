@@ -1,6 +1,7 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { BaseModel } from './base.model';
 import { DeepPartial } from '../common';
+import { File } from './file.model';
 
 export enum UserStatus {
   active = 'active',
@@ -32,6 +33,8 @@ export class User extends BaseModel {
   email: string;
   @Field()
   firstName: string;
+  @Field(() => File, { nullable: true })
+  image?: File;
   @Field({ nullable: true })
   middleName?: string;
   @Field({ nullable: true })

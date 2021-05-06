@@ -1,4 +1,12 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+  "compilerOptions": {
+    "isolatedModules": false,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true
+  },
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts",
+    "node_modules/mobx-react",
+    "node_modules/mobx-react-lite"
+  ]
 }
