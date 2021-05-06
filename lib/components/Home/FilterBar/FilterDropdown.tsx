@@ -8,8 +8,9 @@ export interface FilterDropdownProps
   > {
   color?: string;
   Icon?: React.ReactNode;
-  handleSort: () => {};
-  options: any;
+  handleSort?: any;
+  children?: any[];
+  options?: any;
 }
 
 function FilterDropdown({
