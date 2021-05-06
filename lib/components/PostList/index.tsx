@@ -1,6 +1,13 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
-import { GetPostsDocument, GetPostsQuery, QueryGetPostsArgs } from 'gql';
+import {
+  GetPostsDocument,
+  GetPostsQuery,
+  GetPostsQueryVariables,
+  OrderDirection,
+  PostOrderFeild,
+  PostType,
+} from 'gql';
 import { skipper } from 'lib/accessToken';
 import { PostProps } from 'lib/common/props/PostProps';
 import moment from 'moment';
@@ -26,8 +33,7 @@ const PostList: React.FC<PostListProps> = ({
 }) => {
   const router = useRouter();
   const { postType } = router.query;
-  console.log(postType);
-  const [posts, setPosts] = useState<PostProps[]>(initialPosts);
+  const [posts, setPosts] = useState<any[]>(initialPosts);
   const [cursor, setCursor] = useState('');
   const [hasNextPage, setHasNextPage] = useState(true);
   const [tags, setTags] = useState([]);
@@ -39,13 +45,20 @@ const PostList: React.FC<PostListProps> = ({
     field: 'createdAt',
     direction: 'desc',
   });
-  const { loading, data, error } = useQuery<GetPostsQuery, QueryGetPostsArgs>(
-    GetPostsDocument,
-    {
-      variables: varaiables,
-      skip: skipper(),
+  const { loading, data, error } = useQuery<
+    GetPostsQuery,
+    GetPostsQueryVariables
+  >(GetPostsDocument, {
+    variables: {
+      after: cursor,
+      first: varaiables.first,
+      tags: tags.map((ele) => ele.name),
+      type: postType ? (postType as PostType) : (intialType as PostType),
+      field: 'createdAt' as PostOrderFeild,
+      direction: 'desc' as OrderDirection,
     },
-  );
+    skip: skipper(),
+  });
   const handleTagFilter = () => {
     setPosts([]);
     setVariables((prev) => ({
@@ -66,9 +79,9 @@ const PostList: React.FC<PostListProps> = ({
   useEffect(() => {
     if (hasNextPage)
       window.addEventListener('scroll', function () {
-        var scrollHeight = document.documentElement.scrollHeight;
-        var scrollTop = document.documentElement.scrollTop;
-        var clientHeight = document.documentElement.clientHeight;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
 
         if (scrollTop + clientHeight > scrollHeight - 20 && !loading) {
           console.log('Adding to page');
@@ -119,6 +132,7 @@ const PostList: React.FC<PostListProps> = ({
         onFilter={handleTagFilter}
         tags={tags}
         setTags={setTags}
+        className=""
       />
 
       <SectionTitle
